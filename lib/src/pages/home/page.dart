@@ -6,29 +6,59 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 
 class Home extends ConsumerWidget {
-  const Home({super.key});
+  late WidgetRef widgetRef;
+  Home({super.key});
+
+  ExpansionPanelList buildList(TreeNodeModel parent) {
+    return ExpansionPanelList.radio(
+      expandedHeaderPadding: EdgeInsets.all(0),
+      expansionCallback: (panelIndex, isExpanded) {
+        if (isExpanded) {
+          widgetRef
+              .read(homeProvider.notifier)
+              .list(parent.children[panelIndex]);
+        }
+      },
+      children: parent.children.map<ExpansionPanelRadio>((TreeNodeModel root) {
+        return ExpansionPanelRadio(
+            canTapOnHeader: false,
+            value: root.fileSystemEntityModel.path,
+            headerBuilder: (BuildContext context, bool isExpanded) {
+              return Container(
+                // padding: EdgeInsets.only(left: 16),
+                child: ListTile(
+                    contentPadding: const EdgeInsets.all(0),
+                    minVerticalPadding: 0,
+                    horizontalTitleGap: 0,
+                    minLeadingWidth: 0,
+                    isThreeLine: false,
+                    enableFeedback: true,
+                    style: ListTileTheme.of(context).style,
+                    leading: const Icon(Icons.arrow_right_rounded),
+                    title: Text(root.fileSystemEntityModel.path.replaceFirst(
+                        parent.fileSystemEntityModel.path +
+                            Platform.pathSeparator,
+                        ""))),
+              );
+            },
+            body: ProviderScope(child: buildList(root)));
+      }).toList(),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final files = ref.watch(homeProvider);
+    widgetRef = ref;
+    final treeNodeModel = ref.watch(homeProvider);
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(),
-        body: ListView.separated(
-            itemBuilder: (context, index) {
-              final file = files[index];
-              return ListTile(
-                  contentPadding: EdgeInsets.all(0),
-                  minVerticalPadding: 0,
-                  horizontalTitleGap: 0,
-                  minLeadingWidth: 0,
-                  leading: Icon(Icons.arrow_right_rounded),
-                  title: Text(file.fileSystemEntity.path));
-            },
-            separatorBuilder: (context, index) {
-              return Container();
-            },
-            itemCount: files.length),
+        body: treeNodeModel == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : SingleChildScrollView(child: buildList(treeNodeModel)),
       ),
     );
   }

@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
             GoRoute(
               path: '/',
               builder: (_, state) {
-                return const Home();
+                return Home();
               },
               routes: [
                 // GoRoute(
