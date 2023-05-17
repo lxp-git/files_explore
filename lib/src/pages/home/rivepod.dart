@@ -29,6 +29,11 @@ class TreeNodeModel with _$TreeNodeModel {
 }
 
 @riverpod
+TreeNodeModel currentTreeNodeModel(ref) {
+  throw UnimplementedError();
+}
+
+@riverpod
 class Home extends _$Home {
   @override
   TreeNodeModel? build() {
@@ -38,29 +43,27 @@ class Home extends _$Home {
 
   list(TreeNodeModel treeNodeModel) {
     final directory = Directory(treeNodeModel.fileSystemEntityModel.path);
-    final newState = treeNodeModel.copyWith(
-        children: directory
-            .listSync()
-            .map((e) => TreeNodeModel(
-                children: [],
-                fileSystemEntityModel: FileSystemEntityModel(path: e.path)))
-            .toList());
-    state = newState;
+    List<TreeNodeModel> treeNodeModelList = [];
+    directory.list().listen((FileSystemEntity fileSystemEntity) {
+      treeNodeModelList.add(TreeNodeModel(
+          children: [],
+          fileSystemEntityModel:
+              FileSystemEntityModel(path: fileSystemEntity.path)));
+      final newState = treeNodeModel.copyWith(children: [...treeNodeModelList]);
+      state = newState;
+    });
   }
 
   init() async {
     await [Permission.storage, Permission.manageExternalStorage].request();
     final rootDirectory = await getExternalStorageDirectory();
     if (rootDirectory != null) {
-      state = TreeNodeModel(
-          children: [
-            TreeNodeModel(
-                children: [],
-                fileSystemEntityModel:
-                    FileSystemEntityModel(path: rootDirectory.path))
-          ],
-          fileSystemEntityModel:
-              FileSystemEntityModel(path: rootDirectory.path));
+      state = TreeNodeModel(children: [
+        TreeNodeModel(
+            children: [],
+            fileSystemEntityModel:
+                FileSystemEntityModel(path: rootDirectory.path))
+      ], fileSystemEntityModel: FileSystemEntityModel(path: ""));
     }
   }
 }

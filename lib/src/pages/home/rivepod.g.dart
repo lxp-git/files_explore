@@ -37,7 +37,24 @@ Map<String, dynamic> _$$_TreeNodeModelToJson(_$_TreeNodeModel instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$homeHash() => r'd8217723250a8a05d3a7e1dbe2f397b5319826d7';
+String _$currentTreeNodeModelHash() =>
+    r'97cc092063bb7df87a75d71b26a9b71e0f6ad420';
+
+/// See also [currentTreeNodeModel].
+@ProviderFor(currentTreeNodeModel)
+final currentTreeNodeModelProvider =
+    AutoDisposeProvider<TreeNodeModel>.internal(
+  currentTreeNodeModel,
+  name: r'currentTreeNodeModelProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currentTreeNodeModelHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef CurrentTreeNodeModelRef = AutoDisposeProviderRef<TreeNodeModel>;
+String _$homeHash() => r'da3eb41a1bdf9c45df1fd1d46b946f80bcaa5f0c';
 
 /// See also [Home].
 @ProviderFor(Home)
