@@ -13,7 +13,7 @@ class Items extends ConsumerWidget {
     final node = ref.watch(currentTreeNodeModelProvider);
 
     return ExpansionPanelList.radio(
-      expandedHeaderPadding: const EdgeInsets.all(0),
+      // expandedHeaderPadding: const EdgeInsets.all(0),
       expansionCallback: (panelIndex, isExpanded) {
         if (!isExpanded) {
           ref.read(homeProvider.notifier).list(node.children[panelIndex]);
@@ -36,9 +36,7 @@ class Items extends ConsumerWidget {
               );
             },
             body: ProviderScope(
-              overrides: [
-                currentTreeNodeModelProvider.overrideWith((ref) => root)
-              ],
+              overrides: [currentTreeNodeModelProvider.overrideWithValue(root)],
               child: const Items(),
             ));
       }).toList(),

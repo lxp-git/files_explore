@@ -49,8 +49,14 @@ class Home extends _$Home {
           children: [],
           fileSystemEntityModel:
               FileSystemEntityModel(path: fileSystemEntity.path)));
-      final newState = treeNodeModel.copyWith(children: [...treeNodeModelList]);
-      state = newState;
+    }, onDone: () {
+      print(treeNodeModelList);
+      final newState = treeNodeModel.copyWith(children: treeNodeModelList);
+
+      state = state!.copyWith(
+          children: state!.children
+              .map((e) => e == treeNodeModel ? newState : e)
+              .toList());
     });
   }
 

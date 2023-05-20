@@ -54,7 +54,7 @@ final currentTreeNodeModelProvider =
 );
 
 typedef CurrentTreeNodeModelRef = AutoDisposeProviderRef<TreeNodeModel>;
-String _$homeHash() => r'da3eb41a1bdf9c45df1fd1d46b946f80bcaa5f0c';
+String _$homeHash() => r'59d134fc5b4fd7dd955204009acfc5762150c108';
 
 /// See also [Home].
 @ProviderFor(Home)

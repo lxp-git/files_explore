@@ -24,7 +24,7 @@ class Home extends ConsumerWidget {
                     child: ProviderScope(
                   overrides: [
                     currentTreeNodeModelProvider
-                        .overrideWith((ref) => treeNodeModel)
+                        .overrideWithValue(treeNodeModel)
                   ],
                   child: Items(),
                 )),
