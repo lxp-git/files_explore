@@ -25,12 +25,18 @@ _$_TreeNodeModel _$$_TreeNodeModelFromJson(Map<String, dynamic> json) =>
           .toList(),
       fileSystemEntityModel: FileSystemEntityModel.fromJson(
           json['fileSystemEntityModel'] as Map<String, dynamic>),
+      isExpanded: json['isExpanded'] as bool,
+      parent: json['parent'] == null
+          ? null
+          : TreeNodeModel.fromJson(json['parent'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_TreeNodeModelToJson(_$_TreeNodeModel instance) =>
     <String, dynamic>{
       'children': instance.children,
       'fileSystemEntityModel': instance.fileSystemEntityModel,
+      'isExpanded': instance.isExpanded,
+      'parent': instance.parent,
     };
 
 // **************************************************************************
@@ -38,13 +44,13 @@ Map<String, dynamic> _$$_TreeNodeModelToJson(_$_TreeNodeModel instance) =>
 // **************************************************************************
 
 String _$currentTreeNodeModelHash() =>
-    r'97cc092063bb7df87a75d71b26a9b71e0f6ad420';
+    r'3ef383d1b4a5724e399db76a564a818869aa367a';
 
-/// See also [currentTreeNodeModel].
-@ProviderFor(currentTreeNodeModel)
+/// See also [CurrentTreeNodeModel].
+@ProviderFor(CurrentTreeNodeModel)
 final currentTreeNodeModelProvider =
-    AutoDisposeProvider<TreeNodeModel>.internal(
-  currentTreeNodeModel,
+    AutoDisposeNotifierProvider<CurrentTreeNodeModel, TreeNodeModel?>.internal(
+  CurrentTreeNodeModel.new,
   name: r'currentTreeNodeModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
@@ -53,19 +59,5 @@ final currentTreeNodeModelProvider =
   allTransitiveDependencies: null,
 );
 
-typedef CurrentTreeNodeModelRef = AutoDisposeProviderRef<TreeNodeModel>;
-String _$homeHash() => r'ffa64253b24b0f9e40f48526f989d301eba5528f';
-
-/// See also [Home].
-@ProviderFor(Home)
-final homeProvider = AutoDisposeNotifierProvider<Home, TreeNodeModel?>.internal(
-  Home.new,
-  name: r'homeProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$homeHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$Home = AutoDisposeNotifier<TreeNodeModel?>;
+typedef _$CurrentTreeNodeModel = AutoDisposeNotifier<TreeNodeModel?>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
