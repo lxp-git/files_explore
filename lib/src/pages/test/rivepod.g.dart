@@ -43,21 +43,21 @@ Map<String, dynamic> _$$_TreeNodeModelToJson(_$_TreeNodeModel instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentTreeNodeModelHash() =>
-    r'3ef383d1b4a5724e399db76a564a818869aa367a';
+String _$asyncCurrentTreeNodeModelHash() =>
+    r'613d95c6c7f426a047f6115c0a4feeff48c5afb7';
 
-/// See also [CurrentTreeNodeModel].
-@ProviderFor(CurrentTreeNodeModel)
-final currentTreeNodeModelProvider =
-    AutoDisposeNotifierProvider<CurrentTreeNodeModel, TreeNodeModel?>.internal(
-  CurrentTreeNodeModel.new,
-  name: r'currentTreeNodeModelProvider',
+/// See also [AsyncCurrentTreeNodeModel].
+@ProviderFor(AsyncCurrentTreeNodeModel)
+final asyncCurrentTreeNodeModelProvider = AutoDisposeAsyncNotifierProvider<
+    AsyncCurrentTreeNodeModel, TreeNodeModel>.internal(
+  AsyncCurrentTreeNodeModel.new,
+  name: r'asyncCurrentTreeNodeModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$currentTreeNodeModelHash,
+      : _$asyncCurrentTreeNodeModelHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$CurrentTreeNodeModel = AutoDisposeNotifier<TreeNodeModel?>;
+typedef _$AsyncCurrentTreeNodeModel = AutoDisposeAsyncNotifier<TreeNodeModel>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

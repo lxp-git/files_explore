@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -31,63 +33,86 @@ class TreeNodeModel with _$TreeNodeModel {
 }
 
 @riverpod
-class CurrentTreeNodeModel extends _$CurrentTreeNodeModel {
+class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
+  final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   final TreeNodeModel? defaultState;
-  CurrentTreeNodeModel({this.defaultState});
+  AsyncCurrentTreeNodeModel({this.defaultState});
 
   @override
-  TreeNodeModel? build() {
+  Future<TreeNodeModel> build() async {
     if (defaultState == null) {
-      init();
-    }
-
-    return defaultState;
-  }
-
-  list() {
-    final TreeNodeModel treeNodeModel = state!;
-    state = state!.copyWith(
-        children: state!.children
-            .map((e) => e == treeNodeModel
-                ? treeNodeModel.copyWith(isExpanded: true)
-                : e)
-            .toList());
-    final directory = Directory(treeNodeModel.fileSystemEntityModel.path);
-    List<TreeNodeModel> treeNodeModelList = [];
-    directory.list().listen((FileSystemEntity fileSystemEntity) {
-      treeNodeModelList.add(TreeNodeModel(
-          parent: state!,
-          children: [],
-          isExpanded: false,
-          fileSystemEntityModel:
-              FileSystemEntityModel(path: fileSystemEntity.path)));
-    }, onDone: () {
-      state = state!.copyWith(children: treeNodeModelList);
-    });
-  }
-
-  init() async {
-    await [Permission.storage, Permission.manageExternalStorage].request();
-    final rootDirectory = await getExternalStorageDirectory();
-    if (rootDirectory != null) {
-      state = TreeNodeModel(
+      await [Permission.storage, Permission.manageExternalStorage].request();
+      final rootDirectory = await getExternalStorageDirectory();
+      if (rootDirectory != null) {
+        return TreeNodeModel(
+            children: [
+              TreeNodeModel(
+                  parent: null,
+                  children: [],
+                  isExpanded: false,
+                  fileSystemEntityModel:
+                      FileSystemEntityModel(path: rootDirectory.path)),
+            ],
+            parent: null,
+            isExpanded: false,
+            fileSystemEntityModel: FileSystemEntityModel(path: ""));
+      }
+      return TreeNodeModel(
           parent: null,
-          children: [
-            TreeNodeModel(
-                parent: null,
-                children: [],
-                isExpanded: false,
-                fileSystemEntityModel:
-                    FileSystemEntityModel(path: rootDirectory.path)),
-            TreeNodeModel(
-              parent: null,
-              children: [],
-              isExpanded: false,
-              fileSystemEntityModel: FileSystemEntityModel(path: "/"),
-            ),
-          ],
+          children: [],
           isExpanded: false,
           fileSystemEntityModel: FileSystemEntityModel(path: ""));
     }
+    return defaultState!;
   }
+
+  list() async {
+    final TreeNodeModel treeNodeModel = state.value!;
+    if (treeNodeModel.isExpanded) {
+      state = AsyncValue.data(
+          state.value!.copyWith(isExpanded: false, children: []));
+      listKey.currentState!.removeAllItems(
+        (context, animation) {
+          return Container();
+        },
+      );
+      return;
+    }
+    state = AsyncValue.data(state.value!.copyWith(isExpanded: true));
+// Set the state to loading
+    // state = const AsyncValue.loading();
+    // Add the new todo and reload the todo list from the remote repository
+    // state = await AsyncValue.guard(() async {
+    //   final directory = Directory(treeNodeModel.fileSystemEntityModel.path);
+    //   List<TreeNodeModel> treeNodeModelList = [];
+    //   final completer = Completer<TreeNodeModel>();
+    //   directory.list().listen((FileSystemEntity fileSystemEntity) {
+    //     final oldChildren = state.value!.children;
+    //     oldChildren.add(TreeNodeModel(
+    //         parent: treeNodeModel,
+    //         children: [],
+    //         isExpanded: false,
+    //         fileSystemEntityModel:
+    //             FileSystemEntityModel(path: fileSystemEntity.path)));
+    //   }, onDone: () {
+
+    //   });
+    //   return completer.future;
+    // });
+    final directory = Directory(treeNodeModel.fileSystemEntityModel.path);
+    directory.list().listen((FileSystemEntity fileSystemEntity) {
+      state = AsyncValue.data(state.value!.copyWith(children: [
+        ...state.value!.children,
+        TreeNodeModel(
+            parent: treeNodeModel,
+            children: [],
+            isExpanded: false,
+            fileSystemEntityModel:
+                FileSystemEntityModel(path: fileSystemEntity.path))
+      ]));
+      listKey.currentState!.insertItem(state.value!.children.length - 1);
+    });
+  }
+
+  init() async {}
 }
