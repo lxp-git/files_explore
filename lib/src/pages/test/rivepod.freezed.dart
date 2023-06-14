@@ -165,6 +165,7 @@ mixin _$TreeNodeModel {
       throw _privateConstructorUsedError;
   bool get isExpanded => throw _privateConstructorUsedError;
   TreeNodeModel? get parent => throw _privateConstructorUsedError;
+  bool get isDirectory => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -182,7 +183,8 @@ abstract class $TreeNodeModelCopyWith<$Res> {
       {List<TreeNodeModel> children,
       FileSystemEntityModel fileSystemEntityModel,
       bool isExpanded,
-      TreeNodeModel? parent});
+      TreeNodeModel? parent,
+      bool isDirectory});
 
   $FileSystemEntityModelCopyWith<$Res> get fileSystemEntityModel;
   $TreeNodeModelCopyWith<$Res>? get parent;
@@ -205,6 +207,7 @@ class _$TreeNodeModelCopyWithImpl<$Res, $Val extends TreeNodeModel>
     Object? fileSystemEntityModel = null,
     Object? isExpanded = null,
     Object? parent = freezed,
+    Object? isDirectory = null,
   }) {
     return _then(_value.copyWith(
       children: null == children
@@ -223,6 +226,10 @@ class _$TreeNodeModelCopyWithImpl<$Res, $Val extends TreeNodeModel>
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
               as TreeNodeModel?,
+      isDirectory: null == isDirectory
+          ? _value.isDirectory
+          : isDirectory // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -260,7 +267,8 @@ abstract class _$$_TreeNodeModelCopyWith<$Res>
       {List<TreeNodeModel> children,
       FileSystemEntityModel fileSystemEntityModel,
       bool isExpanded,
-      TreeNodeModel? parent});
+      TreeNodeModel? parent,
+      bool isDirectory});
 
   @override
   $FileSystemEntityModelCopyWith<$Res> get fileSystemEntityModel;
@@ -283,6 +291,7 @@ class __$$_TreeNodeModelCopyWithImpl<$Res>
     Object? fileSystemEntityModel = null,
     Object? isExpanded = null,
     Object? parent = freezed,
+    Object? isDirectory = null,
   }) {
     return _then(_$_TreeNodeModel(
       children: null == children
@@ -301,6 +310,10 @@ class __$$_TreeNodeModelCopyWithImpl<$Res>
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
               as TreeNodeModel?,
+      isDirectory: null == isDirectory
+          ? _value.isDirectory
+          : isDirectory // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -312,7 +325,8 @@ class _$_TreeNodeModel implements _TreeNodeModel {
       {required final List<TreeNodeModel> children,
       required this.fileSystemEntityModel,
       required this.isExpanded,
-      required this.parent})
+      required this.parent,
+      required this.isDirectory})
       : _children = children;
 
   factory _$_TreeNodeModel.fromJson(Map<String, dynamic> json) =>
@@ -332,10 +346,12 @@ class _$_TreeNodeModel implements _TreeNodeModel {
   final bool isExpanded;
   @override
   final TreeNodeModel? parent;
+  @override
+  final bool isDirectory;
 
   @override
   String toString() {
-    return 'TreeNodeModel(children: $children, fileSystemEntityModel: $fileSystemEntityModel, isExpanded: $isExpanded, parent: $parent)';
+    return 'TreeNodeModel(children: $children, fileSystemEntityModel: $fileSystemEntityModel, isExpanded: $isExpanded, parent: $parent, isDirectory: $isDirectory)';
   }
 
   @override
@@ -348,7 +364,9 @@ class _$_TreeNodeModel implements _TreeNodeModel {
                 other.fileSystemEntityModel == fileSystemEntityModel) &&
             (identical(other.isExpanded, isExpanded) ||
                 other.isExpanded == isExpanded) &&
-            (identical(other.parent, parent) || other.parent == parent));
+            (identical(other.parent, parent) || other.parent == parent) &&
+            (identical(other.isDirectory, isDirectory) ||
+                other.isDirectory == isDirectory));
   }
 
   @JsonKey(ignore: true)
@@ -358,7 +376,8 @@ class _$_TreeNodeModel implements _TreeNodeModel {
       const DeepCollectionEquality().hash(_children),
       fileSystemEntityModel,
       isExpanded,
-      parent);
+      parent,
+      isDirectory);
 
   @JsonKey(ignore: true)
   @override
@@ -379,7 +398,8 @@ abstract class _TreeNodeModel implements TreeNodeModel {
       {required final List<TreeNodeModel> children,
       required final FileSystemEntityModel fileSystemEntityModel,
       required final bool isExpanded,
-      required final TreeNodeModel? parent}) = _$_TreeNodeModel;
+      required final TreeNodeModel? parent,
+      required final bool isDirectory}) = _$_TreeNodeModel;
 
   factory _TreeNodeModel.fromJson(Map<String, dynamic> json) =
       _$_TreeNodeModel.fromJson;
@@ -392,6 +412,8 @@ abstract class _TreeNodeModel implements TreeNodeModel {
   bool get isExpanded;
   @override
   TreeNodeModel? get parent;
+  @override
+  bool get isDirectory;
   @override
   @JsonKey(ignore: true)
   _$$_TreeNodeModelCopyWith<_$_TreeNodeModel> get copyWith =>

@@ -29,6 +29,7 @@ _$_TreeNodeModel _$$_TreeNodeModelFromJson(Map<String, dynamic> json) =>
       parent: json['parent'] == null
           ? null
           : TreeNodeModel.fromJson(json['parent'] as Map<String, dynamic>),
+      isDirectory: json['isDirectory'] as bool,
     );
 
 Map<String, dynamic> _$$_TreeNodeModelToJson(_$_TreeNodeModel instance) =>
@@ -37,6 +38,7 @@ Map<String, dynamic> _$$_TreeNodeModelToJson(_$_TreeNodeModel instance) =>
       'fileSystemEntityModel': instance.fileSystemEntityModel,
       'isExpanded': instance.isExpanded,
       'parent': instance.parent,
+      'isDirectory': instance.isDirectory,
     };
 
 // **************************************************************************
@@ -44,7 +46,7 @@ Map<String, dynamic> _$$_TreeNodeModelToJson(_$_TreeNodeModel instance) =>
 // **************************************************************************
 
 String _$asyncCurrentTreeNodeModelHash() =>
-    r'613d95c6c7f426a047f6115c0a4feeff48c5afb7';
+    r'8c7d66609c351a332d4d2714316d11c835ac6e9e';
 
 /// See also [AsyncCurrentTreeNodeModel].
 @ProviderFor(AsyncCurrentTreeNodeModel)
