@@ -17,10 +17,12 @@ class PlatformUtils {
   }
 
   static Future<List<AndroidApplication>> getInstalledApplications() async {
-    final List<dynamic> installedApplications =
-        await methodChannel.invokeMethod("getInstalledApplications");
+    final List<dynamic>? installedApplications = await methodChannel
+        .invokeMethod<List<dynamic>>('getInstalledApplications');
     return installedApplications
-        .map((e) => AndroidApplication.fromJson(e))
-        .toList();
+            ?.map((e) =>
+                AndroidApplication.fromJson(Map<String, dynamic>.from(e)))
+            .toList() ??
+        <AndroidApplication>[];
   }
 }

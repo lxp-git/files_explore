@@ -3,7 +3,6 @@ package com.example.files_explore
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -16,7 +15,6 @@ import androidx.core.content.FileProvider
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
-import lab.neruno.android_package_manager.toMap
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -42,11 +40,11 @@ class MainActivity : FlutterActivity() {
                     }
                     val drawable = applicationInfo.loadIcon(packageManager)
                     val stream = ByteArrayOutputStream()
-                    Thread(Runnable {
+                    Thread {
                         convertToBitmap(drawable, 192, 192)!!.compress(Bitmap.CompressFormat.PNG, 100, stream)
                         val image = stream.toByteArray()
                         result.success(image)
-                    }).start()
+                    }.start()
                 }
             } else if (call.method == "installApk") {
                 // 替换为您要安装的APK文件的路径
@@ -79,9 +77,10 @@ class MainActivity : FlutterActivity() {
                 } else {
                     packageManager.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES)
                 }
-                result.success(applicationInfoList.map {
-                    hashMapOf("name" to it.name, "packageName" to it.packageName, "label" to it.loadLabel(packageManager))
-                }.toList())
+                val applicationInfoListMap = applicationInfoList.map {
+                    mapOf<String, Any?>("name" to it.name, "packageName" to it.packageName, "label" to it.loadLabel(packageManager))
+                }
+                result.success(applicationInfoListMap)
             } else {
                 result.notImplemented()
             }

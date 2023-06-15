@@ -6,39 +6,65 @@ part of 'rivepod.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_FileSystemEntityModel _$$_FileSystemEntityModelFromJson(
+_$TreeNodeFileSystemEntity _$$TreeNodeFileSystemEntityFromJson(
         Map<String, dynamic> json) =>
-    _$_FileSystemEntityModel(
-      path: json['path'] as String,
-    );
-
-Map<String, dynamic> _$$_FileSystemEntityModelToJson(
-        _$_FileSystemEntityModel instance) =>
-    <String, dynamic>{
-      'path': instance.path,
-    };
-
-_$_TreeNodeModel _$$_TreeNodeModelFromJson(Map<String, dynamic> json) =>
-    _$_TreeNodeModel(
-      children: (json['children'] as List<dynamic>)
-          .map((e) => TreeNodeModel.fromJson(e as Map<String, dynamic>))
+    _$TreeNodeFileSystemEntity(
+      fileSystemEntity: const FileSystemEntityJSONConverter()
+          .fromJson(json['fileSystemEntity'] as Map<String, dynamic>),
+      children: (json['children'] as List<dynamic>?)
+          ?.map((e) => TreeNodeModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      fileSystemEntityModel: FileSystemEntityModel.fromJson(
-          json['fileSystemEntityModel'] as Map<String, dynamic>),
-      isExpanded: json['isExpanded'] as bool,
       parent: json['parent'] == null
           ? null
           : TreeNodeModel.fromJson(json['parent'] as Map<String, dynamic>),
-      isDirectory: json['isDirectory'] as bool,
+      expanded: $enumDecodeNullable(_$TreeExpandedEnumMap, json['expanded']),
+      filter: json['filter'] as String?,
+      $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$_TreeNodeModelToJson(_$_TreeNodeModel instance) =>
+Map<String, dynamic> _$$TreeNodeFileSystemEntityToJson(
+        _$TreeNodeFileSystemEntity instance) =>
     <String, dynamic>{
+      'fileSystemEntity': const FileSystemEntityJSONConverter()
+          .toJson(instance.fileSystemEntity),
       'children': instance.children,
-      'fileSystemEntityModel': instance.fileSystemEntityModel,
-      'isExpanded': instance.isExpanded,
       'parent': instance.parent,
-      'isDirectory': instance.isDirectory,
+      'expanded': _$TreeExpandedEnumMap[instance.expanded],
+      'filter': instance.filter,
+      'runtimeType': instance.$type,
+    };
+
+const _$TreeExpandedEnumMap = {
+  TreeExpanded.close: 'close',
+  TreeExpanded.loading: 'loading',
+  TreeExpanded.ok: 'ok',
+};
+
+_$TreeNodeAndroidApplication _$$TreeNodeAndroidApplicationFromJson(
+        Map<String, dynamic> json) =>
+    _$TreeNodeAndroidApplication(
+      androidApplication: AndroidApplication.fromJson(
+          json['androidApplication'] as Map<String, dynamic>),
+      children: (json['children'] as List<dynamic>?)
+          ?.map((e) => TreeNodeModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      expanded: $enumDecodeNullable(_$TreeExpandedEnumMap, json['expanded']),
+      parent: json['parent'] == null
+          ? null
+          : TreeNodeModel.fromJson(json['parent'] as Map<String, dynamic>),
+      filter: json['filter'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$TreeNodeAndroidApplicationToJson(
+        _$TreeNodeAndroidApplication instance) =>
+    <String, dynamic>{
+      'androidApplication': instance.androidApplication,
+      'children': instance.children,
+      'expanded': _$TreeExpandedEnumMap[instance.expanded],
+      'parent': instance.parent,
+      'filter': instance.filter,
+      'runtimeType': instance.$type,
     };
 
 // **************************************************************************
@@ -46,7 +72,7 @@ Map<String, dynamic> _$$_TreeNodeModelToJson(_$_TreeNodeModel instance) =>
 // **************************************************************************
 
 String _$asyncCurrentTreeNodeModelHash() =>
-    r'8c7d66609c351a332d4d2714316d11c835ac6e9e';
+    r'09164d3235f405dfc5d9df796ac61008b5ac0277';
 
 /// See also [AsyncCurrentTreeNodeModel].
 @ProviderFor(AsyncCurrentTreeNodeModel)

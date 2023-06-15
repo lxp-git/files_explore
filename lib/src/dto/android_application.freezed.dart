@@ -21,6 +21,7 @@ AndroidApplication _$AndroidApplicationFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AndroidApplication {
   String get label => throw _privateConstructorUsedError;
+  String get packageName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $AndroidApplicationCopyWith<$Res> {
           AndroidApplication value, $Res Function(AndroidApplication) then) =
       _$AndroidApplicationCopyWithImpl<$Res, AndroidApplication>;
   @useResult
-  $Res call({String label});
+  $Res call({String label, String packageName});
 }
 
 /// @nodoc
@@ -51,11 +52,16 @@ class _$AndroidApplicationCopyWithImpl<$Res, $Val extends AndroidApplication>
   @override
   $Res call({
     Object? label = null,
+    Object? packageName = null,
   }) {
     return _then(_value.copyWith(
       label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
+              as String,
+      packageName: null == packageName
+          ? _value.packageName
+          : packageName // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -69,7 +75,7 @@ abstract class _$$_AndroidApplicationCopyWith<$Res>
       __$$_AndroidApplicationCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String label});
+  $Res call({String label, String packageName});
 }
 
 /// @nodoc
@@ -84,11 +90,16 @@ class __$$_AndroidApplicationCopyWithImpl<$Res>
   @override
   $Res call({
     Object? label = null,
+    Object? packageName = null,
   }) {
     return _then(_$_AndroidApplication(
       label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
+              as String,
+      packageName: null == packageName
+          ? _value.packageName
+          : packageName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -97,17 +108,19 @@ class __$$_AndroidApplicationCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AndroidApplication implements _AndroidApplication {
-  _$_AndroidApplication({required this.label});
+  _$_AndroidApplication({required this.label, required this.packageName});
 
   factory _$_AndroidApplication.fromJson(Map<String, dynamic> json) =>
       _$$_AndroidApplicationFromJson(json);
 
   @override
   final String label;
+  @override
+  final String packageName;
 
   @override
   String toString() {
-    return 'AndroidApplication(label: $label)';
+    return 'AndroidApplication(label: $label, packageName: $packageName)';
   }
 
   @override
@@ -115,12 +128,14 @@ class _$_AndroidApplication implements _AndroidApplication {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AndroidApplication &&
-            (identical(other.label, label) || other.label == label));
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.packageName, packageName) ||
+                other.packageName == packageName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, label);
+  int get hashCode => Object.hash(runtimeType, label, packageName);
 
   @JsonKey(ignore: true)
   @override
@@ -138,14 +153,17 @@ class _$_AndroidApplication implements _AndroidApplication {
 }
 
 abstract class _AndroidApplication implements AndroidApplication {
-  factory _AndroidApplication({required final String label}) =
-      _$_AndroidApplication;
+  factory _AndroidApplication(
+      {required final String label,
+      required final String packageName}) = _$_AndroidApplication;
 
   factory _AndroidApplication.fromJson(Map<String, dynamic> json) =
       _$_AndroidApplication.fromJson;
 
   @override
   String get label;
+  @override
+  String get packageName;
   @override
   @JsonKey(ignore: true)
   _$$_AndroidApplicationCopyWith<_$_AndroidApplication> get copyWith =>

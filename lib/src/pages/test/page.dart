@@ -15,7 +15,7 @@ class TestHome extends ConsumerWidget {
       home: Scaffold(
         appBar: AppBar(),
         body: RefreshIndicator(
-          child: const SingleChildScrollView(
+          child: SingleChildScrollView(
               child: Items(animation: kAlwaysCompleteAnimation)),
           onRefresh: () async {
             await ref.read(asyncCurrentTreeNodeModelProvider.notifier).init();
