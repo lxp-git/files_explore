@@ -25,4 +25,17 @@ class PlatformUtils {
             .toList() ??
         <AndroidApplication>[];
   }
+
+  static Future<List<AndroidActivity>> getActivities(String path) async {
+    return (await methodChannel
+                .invokeMethod<List<dynamic>>('getActivities', {"path": path}))
+            ?.map((e) => AndroidActivity.fromJson(Map<String, dynamic>.from(e)))
+            .toList() ??
+        <AndroidActivity>[];
+  }
+
+  static Future<AndroidApplication> getApplicationInfo(String path) async {
+    return AndroidApplication.fromJson(Map.from((await methodChannel
+        .invokeMethod('getApplicationInfo', {"path": path}))));
+  }
 }

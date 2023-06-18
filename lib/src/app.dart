@@ -6,8 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'pages/test/page.dart';
-
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -43,7 +41,7 @@ class MyApp extends StatelessWidget {
             GoRoute(
               path: '/',
               builder: (_, state) {
-                return TestHome(); // Home();
+                return const Home();
               },
               routes: [
                 // GoRoute(

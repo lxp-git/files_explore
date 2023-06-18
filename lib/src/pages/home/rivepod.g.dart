@@ -6,66 +6,86 @@ part of 'rivepod.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_FileSystemEntityModel _$$_FileSystemEntityModelFromJson(
+_$TreeNodeFileSystemEntity _$$TreeNodeFileSystemEntityFromJson(
         Map<String, dynamic> json) =>
-    _$_FileSystemEntityModel(
-      path: json['path'] as String,
+    _$TreeNodeFileSystemEntity(
+      fileSystemEntity: const FileSystemEntityJSONConverter()
+          .fromJson(json['fileSystemEntity'] as Map<String, dynamic>),
+      children: (json['children'] as List<dynamic>?)
+          ?.map((e) => TreeNodeModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      parent: json['parent'] == null
+          ? null
+          : TreeNodeModel.fromJson(json['parent'] as Map<String, dynamic>),
+      expanded: $enumDecodeNullable(_$TreeExpandedEnumMap, json['expanded']),
+      filter: json['filter'] as String?,
+      $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$_FileSystemEntityModelToJson(
-        _$_FileSystemEntityModel instance) =>
+Map<String, dynamic> _$$TreeNodeFileSystemEntityToJson(
+        _$TreeNodeFileSystemEntity instance) =>
     <String, dynamic>{
-      'path': instance.path,
+      'fileSystemEntity': const FileSystemEntityJSONConverter()
+          .toJson(instance.fileSystemEntity),
+      'children': instance.children,
+      'parent': instance.parent,
+      'expanded': _$TreeExpandedEnumMap[instance.expanded],
+      'filter': instance.filter,
+      'runtimeType': instance.$type,
     };
 
-_$_TreeNodeModel _$$_TreeNodeModelFromJson(Map<String, dynamic> json) =>
-    _$_TreeNodeModel(
-      children: (json['children'] as List<dynamic>)
-          .map((e) => TreeNodeModel.fromJson(e as Map<String, dynamic>))
+const _$TreeExpandedEnumMap = {
+  TreeExpanded.close: 'close',
+  TreeExpanded.loading: 'loading',
+  TreeExpanded.ok: 'ok',
+};
+
+_$TreeNodeAndroidApplication _$$TreeNodeAndroidApplicationFromJson(
+        Map<String, dynamic> json) =>
+    _$TreeNodeAndroidApplication(
+      androidApplication: AndroidApplication.fromJson(
+          json['androidApplication'] as Map<String, dynamic>),
+      children: (json['children'] as List<dynamic>?)
+          ?.map((e) => TreeNodeModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      fileSystemEntityModel: FileSystemEntityModel.fromJson(
-          json['fileSystemEntityModel'] as Map<String, dynamic>),
+      expanded: $enumDecodeNullable(_$TreeExpandedEnumMap, json['expanded']),
+      parent: json['parent'] == null
+          ? null
+          : TreeNodeModel.fromJson(json['parent'] as Map<String, dynamic>),
+      filter: json['filter'] as String?,
+      $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$_TreeNodeModelToJson(_$_TreeNodeModel instance) =>
+Map<String, dynamic> _$$TreeNodeAndroidApplicationToJson(
+        _$TreeNodeAndroidApplication instance) =>
     <String, dynamic>{
+      'androidApplication': instance.androidApplication,
       'children': instance.children,
-      'fileSystemEntityModel': instance.fileSystemEntityModel,
+      'expanded': _$TreeExpandedEnumMap[instance.expanded],
+      'parent': instance.parent,
+      'filter': instance.filter,
+      'runtimeType': instance.$type,
     };
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentTreeNodeModelHash() =>
-    r'97cc092063bb7df87a75d71b26a9b71e0f6ad420';
+String _$asyncCurrentTreeNodeModelHash() =>
+    r'7d189c44a2c8940246d001e17d20f81e203dbdef';
 
-/// See also [currentTreeNodeModel].
-@ProviderFor(currentTreeNodeModel)
-final currentTreeNodeModelProvider =
-    AutoDisposeProvider<TreeNodeModel>.internal(
-  currentTreeNodeModel,
-  name: r'currentTreeNodeModelProvider',
+/// See also [AsyncCurrentTreeNodeModel].
+@ProviderFor(AsyncCurrentTreeNodeModel)
+final asyncCurrentTreeNodeModelProvider = AutoDisposeAsyncNotifierProvider<
+    AsyncCurrentTreeNodeModel, TreeNodeModel>.internal(
+  AsyncCurrentTreeNodeModel.new,
+  name: r'asyncCurrentTreeNodeModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$currentTreeNodeModelHash,
+      : _$asyncCurrentTreeNodeModelHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef CurrentTreeNodeModelRef = AutoDisposeProviderRef<TreeNodeModel>;
-String _$homeHash() => r'ffa64253b24b0f9e40f48526f989d301eba5528f';
-
-/// See also [Home].
-@ProviderFor(Home)
-final homeProvider = AutoDisposeNotifierProvider<Home, TreeNodeModel?>.internal(
-  Home.new,
-  name: r'homeProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$homeHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$Home = AutoDisposeNotifier<TreeNodeModel?>;
+typedef _$AsyncCurrentTreeNodeModel = AutoDisposeAsyncNotifier<TreeNodeModel>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

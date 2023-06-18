@@ -14,156 +14,100 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-FileSystemEntityModel _$FileSystemEntityModelFromJson(
-    Map<String, dynamic> json) {
-  return _FileSystemEntityModel.fromJson(json);
-}
-
-/// @nodoc
-mixin _$FileSystemEntityModel {
-  String get path => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $FileSystemEntityModelCopyWith<FileSystemEntityModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $FileSystemEntityModelCopyWith<$Res> {
-  factory $FileSystemEntityModelCopyWith(FileSystemEntityModel value,
-          $Res Function(FileSystemEntityModel) then) =
-      _$FileSystemEntityModelCopyWithImpl<$Res, FileSystemEntityModel>;
-  @useResult
-  $Res call({String path});
-}
-
-/// @nodoc
-class _$FileSystemEntityModelCopyWithImpl<$Res,
-        $Val extends FileSystemEntityModel>
-    implements $FileSystemEntityModelCopyWith<$Res> {
-  _$FileSystemEntityModelCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? path = null,
-  }) {
-    return _then(_value.copyWith(
-      path: null == path
-          ? _value.path
-          : path // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_FileSystemEntityModelCopyWith<$Res>
-    implements $FileSystemEntityModelCopyWith<$Res> {
-  factory _$$_FileSystemEntityModelCopyWith(_$_FileSystemEntityModel value,
-          $Res Function(_$_FileSystemEntityModel) then) =
-      __$$_FileSystemEntityModelCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String path});
-}
-
-/// @nodoc
-class __$$_FileSystemEntityModelCopyWithImpl<$Res>
-    extends _$FileSystemEntityModelCopyWithImpl<$Res, _$_FileSystemEntityModel>
-    implements _$$_FileSystemEntityModelCopyWith<$Res> {
-  __$$_FileSystemEntityModelCopyWithImpl(_$_FileSystemEntityModel _value,
-      $Res Function(_$_FileSystemEntityModel) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? path = null,
-  }) {
-    return _then(_$_FileSystemEntityModel(
-      path: null == path
-          ? _value.path
-          : path // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_FileSystemEntityModel implements _FileSystemEntityModel {
-  _$_FileSystemEntityModel({required this.path});
-
-  factory _$_FileSystemEntityModel.fromJson(Map<String, dynamic> json) =>
-      _$$_FileSystemEntityModelFromJson(json);
-
-  @override
-  final String path;
-
-  @override
-  String toString() {
-    return 'FileSystemEntityModel(path: $path)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_FileSystemEntityModel &&
-            (identical(other.path, path) || other.path == path));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, path);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_FileSystemEntityModelCopyWith<_$_FileSystemEntityModel> get copyWith =>
-      __$$_FileSystemEntityModelCopyWithImpl<_$_FileSystemEntityModel>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_FileSystemEntityModelToJson(
-      this,
-    );
-  }
-}
-
-abstract class _FileSystemEntityModel implements FileSystemEntityModel {
-  factory _FileSystemEntityModel({required final String path}) =
-      _$_FileSystemEntityModel;
-
-  factory _FileSystemEntityModel.fromJson(Map<String, dynamic> json) =
-      _$_FileSystemEntityModel.fromJson;
-
-  @override
-  String get path;
-  @override
-  @JsonKey(ignore: true)
-  _$$_FileSystemEntityModelCopyWith<_$_FileSystemEntityModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
 TreeNodeModel _$TreeNodeModelFromJson(Map<String, dynamic> json) {
-  return _TreeNodeModel.fromJson(json);
+  switch (json['runtimeType']) {
+    case 'fileSystemEntity':
+      return TreeNodeFileSystemEntity.fromJson(json);
+    case 'androidApplication':
+      return TreeNodeAndroidApplication.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'TreeNodeModel',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
 }
 
 /// @nodoc
 mixin _$TreeNodeModel {
-  List<TreeNodeModel> get children => throw _privateConstructorUsedError;
-  FileSystemEntityModel get fileSystemEntityModel =>
+  List<TreeNodeModel>? get children => throw _privateConstructorUsedError;
+  TreeNodeModel? get parent => throw _privateConstructorUsedError;
+  TreeExpanded? get expanded => throw _privateConstructorUsedError;
+  String? get filter => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)
+        fileSystemEntity,
+    required TResult Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        androidApplication,
+  }) =>
       throw _privateConstructorUsedError;
-
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)?
+        fileSystemEntity,
+    TResult? Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidApplication,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)?
+        fileSystemEntity,
+    TResult Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidApplication,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TreeNodeFileSystemEntity value) fileSystemEntity,
+    required TResult Function(TreeNodeAndroidApplication value)
+        androidApplication,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
+    TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
+    TResult Function(TreeNodeAndroidApplication value)? androidApplication,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $TreeNodeModelCopyWith<TreeNodeModel> get copyWith =>
@@ -177,10 +121,12 @@ abstract class $TreeNodeModelCopyWith<$Res> {
       _$TreeNodeModelCopyWithImpl<$Res, TreeNodeModel>;
   @useResult
   $Res call(
-      {List<TreeNodeModel> children,
-      FileSystemEntityModel fileSystemEntityModel});
+      {List<TreeNodeModel>? children,
+      TreeNodeModel? parent,
+      TreeExpanded? expanded,
+      String? filter});
 
-  $FileSystemEntityModelCopyWith<$Res> get fileSystemEntityModel;
+  $TreeNodeModelCopyWith<$Res>? get parent;
 }
 
 /// @nodoc
@@ -196,145 +142,588 @@ class _$TreeNodeModelCopyWithImpl<$Res, $Val extends TreeNodeModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? children = null,
-    Object? fileSystemEntityModel = null,
+    Object? children = freezed,
+    Object? parent = freezed,
+    Object? expanded = freezed,
+    Object? filter = freezed,
   }) {
     return _then(_value.copyWith(
-      children: null == children
+      children: freezed == children
           ? _value.children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<TreeNodeModel>,
-      fileSystemEntityModel: null == fileSystemEntityModel
-          ? _value.fileSystemEntityModel
-          : fileSystemEntityModel // ignore: cast_nullable_to_non_nullable
-              as FileSystemEntityModel,
+              as List<TreeNodeModel>?,
+      parent: freezed == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as TreeNodeModel?,
+      expanded: freezed == expanded
+          ? _value.expanded
+          : expanded // ignore: cast_nullable_to_non_nullable
+              as TreeExpanded?,
+      filter: freezed == filter
+          ? _value.filter
+          : filter // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $FileSystemEntityModelCopyWith<$Res> get fileSystemEntityModel {
-    return $FileSystemEntityModelCopyWith<$Res>(_value.fileSystemEntityModel,
-        (value) {
-      return _then(_value.copyWith(fileSystemEntityModel: value) as $Val);
+  $TreeNodeModelCopyWith<$Res>? get parent {
+    if (_value.parent == null) {
+      return null;
+    }
+
+    return $TreeNodeModelCopyWith<$Res>(_value.parent!, (value) {
+      return _then(_value.copyWith(parent: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_TreeNodeModelCopyWith<$Res>
+abstract class _$$TreeNodeFileSystemEntityCopyWith<$Res>
     implements $TreeNodeModelCopyWith<$Res> {
-  factory _$$_TreeNodeModelCopyWith(
-          _$_TreeNodeModel value, $Res Function(_$_TreeNodeModel) then) =
-      __$$_TreeNodeModelCopyWithImpl<$Res>;
+  factory _$$TreeNodeFileSystemEntityCopyWith(_$TreeNodeFileSystemEntity value,
+          $Res Function(_$TreeNodeFileSystemEntity) then) =
+      __$$TreeNodeFileSystemEntityCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {List<TreeNodeModel> children,
-      FileSystemEntityModel fileSystemEntityModel});
+      {@FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+      List<TreeNodeModel>? children,
+      TreeNodeModel? parent,
+      TreeExpanded? expanded,
+      String? filter});
 
   @override
-  $FileSystemEntityModelCopyWith<$Res> get fileSystemEntityModel;
+  $TreeNodeModelCopyWith<$Res>? get parent;
 }
 
 /// @nodoc
-class __$$_TreeNodeModelCopyWithImpl<$Res>
-    extends _$TreeNodeModelCopyWithImpl<$Res, _$_TreeNodeModel>
-    implements _$$_TreeNodeModelCopyWith<$Res> {
-  __$$_TreeNodeModelCopyWithImpl(
-      _$_TreeNodeModel _value, $Res Function(_$_TreeNodeModel) _then)
+class __$$TreeNodeFileSystemEntityCopyWithImpl<$Res>
+    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeFileSystemEntity>
+    implements _$$TreeNodeFileSystemEntityCopyWith<$Res> {
+  __$$TreeNodeFileSystemEntityCopyWithImpl(_$TreeNodeFileSystemEntity _value,
+      $Res Function(_$TreeNodeFileSystemEntity) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? children = null,
-    Object? fileSystemEntityModel = null,
+    Object? fileSystemEntity = null,
+    Object? children = freezed,
+    Object? parent = freezed,
+    Object? expanded = freezed,
+    Object? filter = freezed,
   }) {
-    return _then(_$_TreeNodeModel(
-      children: null == children
+    return _then(_$TreeNodeFileSystemEntity(
+      fileSystemEntity: null == fileSystemEntity
+          ? _value.fileSystemEntity
+          : fileSystemEntity // ignore: cast_nullable_to_non_nullable
+              as FileSystemEntity,
+      children: freezed == children
           ? _value._children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<TreeNodeModel>,
-      fileSystemEntityModel: null == fileSystemEntityModel
-          ? _value.fileSystemEntityModel
-          : fileSystemEntityModel // ignore: cast_nullable_to_non_nullable
-              as FileSystemEntityModel,
+              as List<TreeNodeModel>?,
+      parent: freezed == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as TreeNodeModel?,
+      expanded: freezed == expanded
+          ? _value.expanded
+          : expanded // ignore: cast_nullable_to_non_nullable
+              as TreeExpanded?,
+      filter: freezed == filter
+          ? _value.filter
+          : filter // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_TreeNodeModel implements _TreeNodeModel {
-  _$_TreeNodeModel(
-      {required final List<TreeNodeModel> children,
-      required this.fileSystemEntityModel})
-      : _children = children;
+class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
+  _$TreeNodeFileSystemEntity(
+      {@FileSystemEntityJSONConverter() required this.fileSystemEntity,
+      final List<TreeNodeModel>? children,
+      this.parent,
+      this.expanded,
+      this.filter,
+      final String? $type})
+      : _children = children,
+        $type = $type ?? 'fileSystemEntity';
 
-  factory _$_TreeNodeModel.fromJson(Map<String, dynamic> json) =>
-      _$$_TreeNodeModelFromJson(json);
+  factory _$TreeNodeFileSystemEntity.fromJson(Map<String, dynamic> json) =>
+      _$$TreeNodeFileSystemEntityFromJson(json);
 
-  final List<TreeNodeModel> _children;
   @override
-  List<TreeNodeModel> get children {
+  @FileSystemEntityJSONConverter()
+  final FileSystemEntity fileSystemEntity;
+  final List<TreeNodeModel>? _children;
+  @override
+  List<TreeNodeModel>? get children {
+    final value = _children;
+    if (value == null) return null;
     if (_children is EqualUnmodifiableListView) return _children;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_children);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
-  final FileSystemEntityModel fileSystemEntityModel;
+  final TreeNodeModel? parent;
+  @override
+  final TreeExpanded? expanded;
+  @override
+  final String? filter;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
-    return 'TreeNodeModel(children: $children, fileSystemEntityModel: $fileSystemEntityModel)';
+    return 'TreeNodeModel.fileSystemEntity(fileSystemEntity: $fileSystemEntity, children: $children, parent: $parent, expanded: $expanded, filter: $filter)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TreeNodeModel &&
+            other is _$TreeNodeFileSystemEntity &&
+            (identical(other.fileSystemEntity, fileSystemEntity) ||
+                other.fileSystemEntity == fileSystemEntity) &&
             const DeepCollectionEquality().equals(other._children, _children) &&
-            (identical(other.fileSystemEntityModel, fileSystemEntityModel) ||
-                other.fileSystemEntityModel == fileSystemEntityModel));
+            (identical(other.parent, parent) || other.parent == parent) &&
+            (identical(other.expanded, expanded) ||
+                other.expanded == expanded) &&
+            (identical(other.filter, filter) || other.filter == filter));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_children), fileSystemEntityModel);
+  int get hashCode => Object.hash(runtimeType, fileSystemEntity,
+      const DeepCollectionEquality().hash(_children), parent, expanded, filter);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TreeNodeModelCopyWith<_$_TreeNodeModel> get copyWith =>
-      __$$_TreeNodeModelCopyWithImpl<_$_TreeNodeModel>(this, _$identity);
+  _$$TreeNodeFileSystemEntityCopyWith<_$TreeNodeFileSystemEntity>
+      get copyWith =>
+          __$$TreeNodeFileSystemEntityCopyWithImpl<_$TreeNodeFileSystemEntity>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)
+        fileSystemEntity,
+    required TResult Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        androidApplication,
+  }) {
+    return fileSystemEntity(
+        this.fileSystemEntity, children, parent, expanded, filter);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)?
+        fileSystemEntity,
+    TResult? Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidApplication,
+  }) {
+    return fileSystemEntity?.call(
+        this.fileSystemEntity, children, parent, expanded, filter);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)?
+        fileSystemEntity,
+    TResult Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidApplication,
+    required TResult orElse(),
+  }) {
+    if (fileSystemEntity != null) {
+      return fileSystemEntity(
+          this.fileSystemEntity, children, parent, expanded, filter);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TreeNodeFileSystemEntity value) fileSystemEntity,
+    required TResult Function(TreeNodeAndroidApplication value)
+        androidApplication,
+  }) {
+    return fileSystemEntity(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
+    TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
+  }) {
+    return fileSystemEntity?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
+    TResult Function(TreeNodeAndroidApplication value)? androidApplication,
+    required TResult orElse(),
+  }) {
+    if (fileSystemEntity != null) {
+      return fileSystemEntity(this);
+    }
+    return orElse();
+  }
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TreeNodeModelToJson(
+    return _$$TreeNodeFileSystemEntityToJson(
       this,
     );
   }
 }
 
-abstract class _TreeNodeModel implements TreeNodeModel {
-  factory _TreeNodeModel(
-          {required final List<TreeNodeModel> children,
-          required final FileSystemEntityModel fileSystemEntityModel}) =
-      _$_TreeNodeModel;
+abstract class TreeNodeFileSystemEntity implements TreeNodeModel, TreeNode {
+  factory TreeNodeFileSystemEntity(
+      {@FileSystemEntityJSONConverter()
+          required final FileSystemEntity fileSystemEntity,
+      final List<TreeNodeModel>? children,
+      final TreeNodeModel? parent,
+      final TreeExpanded? expanded,
+      final String? filter}) = _$TreeNodeFileSystemEntity;
 
-  factory _TreeNodeModel.fromJson(Map<String, dynamic> json) =
-      _$_TreeNodeModel.fromJson;
+  factory TreeNodeFileSystemEntity.fromJson(Map<String, dynamic> json) =
+      _$TreeNodeFileSystemEntity.fromJson;
 
+  @FileSystemEntityJSONConverter()
+  FileSystemEntity get fileSystemEntity;
   @override
-  List<TreeNodeModel> get children;
+  List<TreeNodeModel>? get children;
   @override
-  FileSystemEntityModel get fileSystemEntityModel;
+  TreeNodeModel? get parent;
+  @override
+  TreeExpanded? get expanded;
+  @override
+  String? get filter;
   @override
   @JsonKey(ignore: true)
-  _$$_TreeNodeModelCopyWith<_$_TreeNodeModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TreeNodeFileSystemEntityCopyWith<_$TreeNodeFileSystemEntity>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TreeNodeAndroidApplicationCopyWith<$Res>
+    implements $TreeNodeModelCopyWith<$Res> {
+  factory _$$TreeNodeAndroidApplicationCopyWith(
+          _$TreeNodeAndroidApplication value,
+          $Res Function(_$TreeNodeAndroidApplication) then) =
+      __$$TreeNodeAndroidApplicationCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {AndroidApplication androidApplication,
+      List<TreeNodeModel>? children,
+      TreeExpanded? expanded,
+      TreeNodeModel? parent,
+      String? filter});
+
+  $AndroidApplicationCopyWith<$Res> get androidApplication;
+  @override
+  $TreeNodeModelCopyWith<$Res>? get parent;
+}
+
+/// @nodoc
+class __$$TreeNodeAndroidApplicationCopyWithImpl<$Res>
+    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeAndroidApplication>
+    implements _$$TreeNodeAndroidApplicationCopyWith<$Res> {
+  __$$TreeNodeAndroidApplicationCopyWithImpl(
+      _$TreeNodeAndroidApplication _value,
+      $Res Function(_$TreeNodeAndroidApplication) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? androidApplication = null,
+    Object? children = freezed,
+    Object? expanded = freezed,
+    Object? parent = freezed,
+    Object? filter = freezed,
+  }) {
+    return _then(_$TreeNodeAndroidApplication(
+      androidApplication: null == androidApplication
+          ? _value.androidApplication
+          : androidApplication // ignore: cast_nullable_to_non_nullable
+              as AndroidApplication,
+      children: freezed == children
+          ? _value._children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<TreeNodeModel>?,
+      expanded: freezed == expanded
+          ? _value.expanded
+          : expanded // ignore: cast_nullable_to_non_nullable
+              as TreeExpanded?,
+      parent: freezed == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as TreeNodeModel?,
+      filter: freezed == filter
+          ? _value.filter
+          : filter // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AndroidApplicationCopyWith<$Res> get androidApplication {
+    return $AndroidApplicationCopyWith<$Res>(_value.androidApplication,
+        (value) {
+      return _then(_value.copyWith(androidApplication: value));
+    });
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
+  _$TreeNodeAndroidApplication(
+      {required this.androidApplication,
+      final List<TreeNodeModel>? children,
+      this.expanded,
+      this.parent,
+      this.filter,
+      final String? $type})
+      : _children = children,
+        $type = $type ?? 'androidApplication';
+
+  factory _$TreeNodeAndroidApplication.fromJson(Map<String, dynamic> json) =>
+      _$$TreeNodeAndroidApplicationFromJson(json);
+
+  @override
+  final AndroidApplication androidApplication;
+  final List<TreeNodeModel>? _children;
+  @override
+  List<TreeNodeModel>? get children {
+    final value = _children;
+    if (value == null) return null;
+    if (_children is EqualUnmodifiableListView) return _children;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final TreeExpanded? expanded;
+  @override
+  final TreeNodeModel? parent;
+  @override
+  final String? filter;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'TreeNodeModel.androidApplication(androidApplication: $androidApplication, children: $children, expanded: $expanded, parent: $parent, filter: $filter)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TreeNodeAndroidApplication &&
+            (identical(other.androidApplication, androidApplication) ||
+                other.androidApplication == androidApplication) &&
+            const DeepCollectionEquality().equals(other._children, _children) &&
+            (identical(other.expanded, expanded) ||
+                other.expanded == expanded) &&
+            (identical(other.parent, parent) || other.parent == parent) &&
+            (identical(other.filter, filter) || other.filter == filter));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, androidApplication,
+      const DeepCollectionEquality().hash(_children), expanded, parent, filter);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TreeNodeAndroidApplicationCopyWith<_$TreeNodeAndroidApplication>
+      get copyWith => __$$TreeNodeAndroidApplicationCopyWithImpl<
+          _$TreeNodeAndroidApplication>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)
+        fileSystemEntity,
+    required TResult Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        androidApplication,
+  }) {
+    return androidApplication(
+        this.androidApplication, children, expanded, parent, filter);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)?
+        fileSystemEntity,
+    TResult? Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidApplication,
+  }) {
+    return androidApplication?.call(
+        this.androidApplication, children, expanded, parent, filter);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)?
+        fileSystemEntity,
+    TResult Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidApplication,
+    required TResult orElse(),
+  }) {
+    if (androidApplication != null) {
+      return androidApplication(
+          this.androidApplication, children, expanded, parent, filter);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TreeNodeFileSystemEntity value) fileSystemEntity,
+    required TResult Function(TreeNodeAndroidApplication value)
+        androidApplication,
+  }) {
+    return androidApplication(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
+    TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
+  }) {
+    return androidApplication?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
+    TResult Function(TreeNodeAndroidApplication value)? androidApplication,
+    required TResult orElse(),
+  }) {
+    if (androidApplication != null) {
+      return androidApplication(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TreeNodeAndroidApplicationToJson(
+      this,
+    );
+  }
+}
+
+abstract class TreeNodeAndroidApplication implements TreeNodeModel, TreeNode {
+  factory TreeNodeAndroidApplication(
+      {required final AndroidApplication androidApplication,
+      final List<TreeNodeModel>? children,
+      final TreeExpanded? expanded,
+      final TreeNodeModel? parent,
+      final String? filter}) = _$TreeNodeAndroidApplication;
+
+  factory TreeNodeAndroidApplication.fromJson(Map<String, dynamic> json) =
+      _$TreeNodeAndroidApplication.fromJson;
+
+  AndroidApplication get androidApplication;
+  @override
+  List<TreeNodeModel>? get children;
+  @override
+  TreeExpanded? get expanded;
+  @override
+  TreeNodeModel? get parent;
+  @override
+  String? get filter;
+  @override
+  @JsonKey(ignore: true)
+  _$$TreeNodeAndroidApplicationCopyWith<_$TreeNodeAndroidApplication>
+      get copyWith => throw _privateConstructorUsedError;
 }

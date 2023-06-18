@@ -22,6 +22,8 @@ AndroidApplication _$AndroidApplicationFromJson(Map<String, dynamic> json) {
 mixin _$AndroidApplication {
   String get label => throw _privateConstructorUsedError;
   String get packageName => throw _privateConstructorUsedError;
+  List<AndroidActivity>? get activities => throw _privateConstructorUsedError;
+  bool get enabled => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +37,11 @@ abstract class $AndroidApplicationCopyWith<$Res> {
           AndroidApplication value, $Res Function(AndroidApplication) then) =
       _$AndroidApplicationCopyWithImpl<$Res, AndroidApplication>;
   @useResult
-  $Res call({String label, String packageName});
+  $Res call(
+      {String label,
+      String packageName,
+      List<AndroidActivity>? activities,
+      bool enabled});
 }
 
 /// @nodoc
@@ -53,6 +59,8 @@ class _$AndroidApplicationCopyWithImpl<$Res, $Val extends AndroidApplication>
   $Res call({
     Object? label = null,
     Object? packageName = null,
+    Object? activities = freezed,
+    Object? enabled = null,
   }) {
     return _then(_value.copyWith(
       label: null == label
@@ -63,6 +71,14 @@ class _$AndroidApplicationCopyWithImpl<$Res, $Val extends AndroidApplication>
           ? _value.packageName
           : packageName // ignore: cast_nullable_to_non_nullable
               as String,
+      activities: freezed == activities
+          ? _value.activities
+          : activities // ignore: cast_nullable_to_non_nullable
+              as List<AndroidActivity>?,
+      enabled: null == enabled
+          ? _value.enabled
+          : enabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -75,7 +91,11 @@ abstract class _$$_AndroidApplicationCopyWith<$Res>
       __$$_AndroidApplicationCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String label, String packageName});
+  $Res call(
+      {String label,
+      String packageName,
+      List<AndroidActivity>? activities,
+      bool enabled});
 }
 
 /// @nodoc
@@ -91,6 +111,8 @@ class __$$_AndroidApplicationCopyWithImpl<$Res>
   $Res call({
     Object? label = null,
     Object? packageName = null,
+    Object? activities = freezed,
+    Object? enabled = null,
   }) {
     return _then(_$_AndroidApplication(
       label: null == label
@@ -101,6 +123,14 @@ class __$$_AndroidApplicationCopyWithImpl<$Res>
           ? _value.packageName
           : packageName // ignore: cast_nullable_to_non_nullable
               as String,
+      activities: freezed == activities
+          ? _value._activities
+          : activities // ignore: cast_nullable_to_non_nullable
+              as List<AndroidActivity>?,
+      enabled: null == enabled
+          ? _value.enabled
+          : enabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -108,7 +138,12 @@ class __$$_AndroidApplicationCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AndroidApplication implements _AndroidApplication {
-  _$_AndroidApplication({required this.label, required this.packageName});
+  _$_AndroidApplication(
+      {required this.label,
+      required this.packageName,
+      required final List<AndroidActivity>? activities,
+      required this.enabled})
+      : _activities = activities;
 
   factory _$_AndroidApplication.fromJson(Map<String, dynamic> json) =>
       _$$_AndroidApplicationFromJson(json);
@@ -117,10 +152,22 @@ class _$_AndroidApplication implements _AndroidApplication {
   final String label;
   @override
   final String packageName;
+  final List<AndroidActivity>? _activities;
+  @override
+  List<AndroidActivity>? get activities {
+    final value = _activities;
+    if (value == null) return null;
+    if (_activities is EqualUnmodifiableListView) return _activities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final bool enabled;
 
   @override
   String toString() {
-    return 'AndroidApplication(label: $label, packageName: $packageName)';
+    return 'AndroidApplication(label: $label, packageName: $packageName, activities: $activities, enabled: $enabled)';
   }
 
   @override
@@ -130,12 +177,16 @@ class _$_AndroidApplication implements _AndroidApplication {
             other is _$_AndroidApplication &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.packageName, packageName) ||
-                other.packageName == packageName));
+                other.packageName == packageName) &&
+            const DeepCollectionEquality()
+                .equals(other._activities, _activities) &&
+            (identical(other.enabled, enabled) || other.enabled == enabled));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, label, packageName);
+  int get hashCode => Object.hash(runtimeType, label, packageName,
+      const DeepCollectionEquality().hash(_activities), enabled);
 
   @JsonKey(ignore: true)
   @override
@@ -155,7 +206,9 @@ class _$_AndroidApplication implements _AndroidApplication {
 abstract class _AndroidApplication implements AndroidApplication {
   factory _AndroidApplication(
       {required final String label,
-      required final String packageName}) = _$_AndroidApplication;
+      required final String packageName,
+      required final List<AndroidActivity>? activities,
+      required final bool enabled}) = _$_AndroidApplication;
 
   factory _AndroidApplication.fromJson(Map<String, dynamic> json) =
       _$_AndroidApplication.fromJson;
@@ -165,7 +218,184 @@ abstract class _AndroidApplication implements AndroidApplication {
   @override
   String get packageName;
   @override
+  List<AndroidActivity>? get activities;
+  @override
+  bool get enabled;
+  @override
   @JsonKey(ignore: true)
   _$$_AndroidApplicationCopyWith<_$_AndroidApplication> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+AndroidActivity _$AndroidActivityFromJson(Map<String, dynamic> json) {
+  return _AndroidActivity.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AndroidActivity {
+  String get name => throw _privateConstructorUsedError;
+  bool get enabled => throw _privateConstructorUsedError;
+  String? get packageName => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AndroidActivityCopyWith<AndroidActivity> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AndroidActivityCopyWith<$Res> {
+  factory $AndroidActivityCopyWith(
+          AndroidActivity value, $Res Function(AndroidActivity) then) =
+      _$AndroidActivityCopyWithImpl<$Res, AndroidActivity>;
+  @useResult
+  $Res call({String name, bool enabled, String? packageName});
+}
+
+/// @nodoc
+class _$AndroidActivityCopyWithImpl<$Res, $Val extends AndroidActivity>
+    implements $AndroidActivityCopyWith<$Res> {
+  _$AndroidActivityCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? enabled = null,
+    Object? packageName = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      enabled: null == enabled
+          ? _value.enabled
+          : enabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      packageName: freezed == packageName
+          ? _value.packageName
+          : packageName // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_AndroidActivityCopyWith<$Res>
+    implements $AndroidActivityCopyWith<$Res> {
+  factory _$$_AndroidActivityCopyWith(
+          _$_AndroidActivity value, $Res Function(_$_AndroidActivity) then) =
+      __$$_AndroidActivityCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, bool enabled, String? packageName});
+}
+
+/// @nodoc
+class __$$_AndroidActivityCopyWithImpl<$Res>
+    extends _$AndroidActivityCopyWithImpl<$Res, _$_AndroidActivity>
+    implements _$$_AndroidActivityCopyWith<$Res> {
+  __$$_AndroidActivityCopyWithImpl(
+      _$_AndroidActivity _value, $Res Function(_$_AndroidActivity) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? enabled = null,
+    Object? packageName = freezed,
+  }) {
+    return _then(_$_AndroidActivity(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      enabled: null == enabled
+          ? _value.enabled
+          : enabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      packageName: freezed == packageName
+          ? _value.packageName
+          : packageName // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AndroidActivity implements _AndroidActivity {
+  _$_AndroidActivity(
+      {required this.name, required this.enabled, required this.packageName});
+
+  factory _$_AndroidActivity.fromJson(Map<String, dynamic> json) =>
+      _$$_AndroidActivityFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final bool enabled;
+  @override
+  final String? packageName;
+
+  @override
+  String toString() {
+    return 'AndroidActivity(name: $name, enabled: $enabled, packageName: $packageName)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AndroidActivity &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.enabled, enabled) || other.enabled == enabled) &&
+            (identical(other.packageName, packageName) ||
+                other.packageName == packageName));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, enabled, packageName);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AndroidActivityCopyWith<_$_AndroidActivity> get copyWith =>
+      __$$_AndroidActivityCopyWithImpl<_$_AndroidActivity>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AndroidActivityToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AndroidActivity implements AndroidActivity {
+  factory _AndroidActivity(
+      {required final String name,
+      required final bool enabled,
+      required final String? packageName}) = _$_AndroidActivity;
+
+  factory _AndroidActivity.fromJson(Map<String, dynamic> json) =
+      _$_AndroidActivity.fromJson;
+
+  @override
+  String get name;
+  @override
+  bool get enabled;
+  @override
+  String? get packageName;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AndroidActivityCopyWith<_$_AndroidActivity> get copyWith =>
       throw _privateConstructorUsedError;
 }

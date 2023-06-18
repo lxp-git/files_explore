@@ -1,8 +1,11 @@
 package com.example.files_explore
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -14,6 +17,7 @@ import android.webkit.MimeTypeMap
 import androidx.core.content.FileProvider
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -27,25 +31,14 @@ class MainActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             if (call.method == "getApkLogo") {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    val apkFilePath = call.argument<String>("path")!!
-                    val applicationInfo: ApplicationInfo
-
-                    if (!apkFilePath.startsWith("/")) {
-                        applicationInfo = packageManager.getApplicationInfo(apkFilePath, PackageManager.ApplicationInfoFlags.of(PackageManager.GET_META_DATA.toLong()))
-                    } else {
-                        applicationInfo = packageManager.getPackageArchiveInfo(apkFilePath, PackageManager.PackageInfoFlags.of(PackageManager.GET_META_DATA.toLong()))!!.applicationInfo
-                        applicationInfo.sourceDir = apkFilePath;
-                        applicationInfo.publicSourceDir = apkFilePath;
-                    }
-                    val drawable = applicationInfo.loadIcon(packageManager)
-                    val stream = ByteArrayOutputStream()
-                    Thread {
-                        convertToBitmap(drawable, 192, 192)!!.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                        val image = stream.toByteArray()
-                        result.success(image)
-                    }.start()
-                }
+                val applicationInfo: ApplicationInfo = getApplicationInfo(call, PackageManager.GET_META_DATA)
+                val drawable = applicationInfo.loadIcon(packageManager)
+                val stream = ByteArrayOutputStream()
+                Thread {
+                    convertToBitmap(drawable, 192, 192)!!.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                    val image = stream.toByteArray()
+                    result.success(image)
+                }.start()
             } else if (call.method == "installApk") {
                 // 替换为您要安装的APK文件的路径
                 val apkFilePath = call.argument<String>("path")!!
@@ -78,9 +71,28 @@ class MainActivity : FlutterActivity() {
                     packageManager.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES)
                 }
                 val applicationInfoListMap = applicationInfoList.map {
-                    mapOf<String, Any?>("name" to it.name, "packageName" to it.packageName, "label" to it.loadLabel(packageManager))
+                    mapOf<String, Any?>("name" to it.name, "packageName" to it.packageName, "label" to it.loadLabel(packageManager), "enabled" to it.enabled)
                 }
                 result.success(applicationInfoListMap)
+            } else if (call.method == "getApplicationInfo") {
+                val applicationInfo = getApplicationInfo(call, PackageManager.GET_META_DATA)
+                result.success(mapOf<String, Any?>("name" to applicationInfo.name, "packageName" to applicationInfo.packageName, "label" to applicationInfo.loadLabel(packageManager), "enabled" to applicationInfo.enabled))
+            } else if (call.method == "getActivities") {
+                val apkFilePath = call.argument<String>("path")!!
+                val activities: Array<ActivityInfo>? = if (!apkFilePath.startsWith("/")) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        packageManager.getPackageInfo(apkFilePath, PackageManager.PackageInfoFlags.of((PackageManager.GET_ACTIVITIES or PackageManager.MATCH_DISABLED_COMPONENTS).toLong())).activities
+                    } else {
+                        packageManager.getPackageInfo(apkFilePath, PackageManager.GET_ACTIVITIES)!!.activities
+                    }
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        packageManager.getPackageArchiveInfo(apkFilePath, PackageManager.PackageInfoFlags.of(PackageManager.GET_ACTIVITIES.toLong()))!!.activities
+                    } else {
+                        packageManager.getPackageArchiveInfo(apkFilePath, PackageManager.GET_ACTIVITIES)!!.activities
+                    }
+                }
+                result.success(activities?.map { mapOf("enabled" to it.enabled, "name" to it.name) }?.toList())
             } else {
                 result.notImplemented()
             }
@@ -110,5 +122,26 @@ class MainActivity : FlutterActivity() {
         drawable.setBounds(0, 0, widthPixels, heightPixels)
         drawable.draw(canvas)
         return mutableBitmap
+    }
+
+    fun getApplicationInfo(call: MethodCall, flags: Int): ApplicationInfo {
+        val apkFilePath = call.argument<String>("path")!!
+        val applicationInfo: ApplicationInfo
+        if (!apkFilePath.startsWith("/")) {
+            applicationInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                packageManager.getApplicationInfo(apkFilePath, PackageManager.ApplicationInfoFlags.of(flags.toLong()))
+            } else {
+                packageManager.getApplicationInfo(apkFilePath, flags)
+            }
+        } else {
+            applicationInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                packageManager.getPackageArchiveInfo(apkFilePath, PackageManager.PackageInfoFlags.of(flags.toLong()))!!.applicationInfo
+            } else {
+                packageManager.getApplicationInfo(apkFilePath, flags)
+            }
+            applicationInfo.sourceDir = apkFilePath;
+            applicationInfo.publicSourceDir = apkFilePath;
+        }
+        return applicationInfo
     }
 }
