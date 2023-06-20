@@ -55,6 +55,13 @@ sealed class TreeNodeModel with _$TreeNodeModel {
       TreeExpanded? expanded,
       TreeNodeModel? parent,
       String? filter}) = TreeNodeAndroidApplication;
+  @Implements<TreeNode>()
+  factory TreeNodeModel.androidActivity(
+      {required AndroidActivity androidActivity,
+      List<TreeNodeModel>? children,
+      TreeExpanded? expanded,
+      TreeNodeModel? parent,
+      String? filter}) = TreeNodeAndroidActivity;
 
   factory TreeNodeModel.fromJson(Map<String, Object?> json) =>
       _$TreeNodeModelFromJson(json);
@@ -145,8 +152,10 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
             return 0;
           });
           return treeNodeModel.copyWith(
-              androidApplication: treeNodeModel.androidApplication
-                  .copyWith(activities: activities),
+              children: activities
+                  .map((e) => TreeNodeAndroidActivity(
+                      androidActivity: e, parent: state.value))
+                  .toList(),
               expanded: TreeExpanded.ok);
         });
         listKey.currentState!.insertAllItems(
@@ -227,6 +236,17 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
         final application = await PlatformUtils.getApplicationInfo(
             node.androidApplication.packageName);
         return node.copyWith(androidApplication: application);
+      });
+    } else if (node is TreeNodeAndroidActivity) {
+      state = await AsyncValue.guard(() async {
+        await exec(
+            'pm ${node.androidActivity.enabled ? "disable" : "enable"} ${(node.parent as TreeNodeAndroidApplication).androidApplication.packageName}/${node.androidActivity.name} --user 0');
+        final androidActivity = await PlatformUtils.getActivityInfo(
+            (node.parent as TreeNodeAndroidApplication)
+                .androidApplication
+                .packageName,
+            node.androidActivity.name);
+        return node.copyWith(androidActivity: androidActivity);
       });
     }
   }

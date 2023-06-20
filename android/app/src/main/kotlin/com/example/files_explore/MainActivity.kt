@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.ApplicationInfo
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -83,7 +82,7 @@ class MainActivity : FlutterActivity() {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         packageManager.getPackageInfo(apkFilePath, PackageManager.PackageInfoFlags.of((PackageManager.GET_ACTIVITIES or PackageManager.MATCH_DISABLED_COMPONENTS).toLong())).activities
                     } else {
-                        packageManager.getPackageInfo(apkFilePath, PackageManager.GET_ACTIVITIES)!!.activities
+                        packageManager.getPackageInfo(apkFilePath, PackageManager.GET_ACTIVITIES or PackageManager.MATCH_DISABLED_COMPONENTS)!!.activities
                     }
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -92,7 +91,42 @@ class MainActivity : FlutterActivity() {
                         packageManager.getPackageArchiveInfo(apkFilePath, PackageManager.GET_ACTIVITIES)!!.activities
                     }
                 }
-                result.success(activities?.map { mapOf("enabled" to it.enabled, "name" to it.name) }?.toList())
+                result.success(activities?.map {
+                    val state = packageManager.getComponentEnabledSetting(ComponentName(it.packageName, it.name))
+                    if (it.name == "com.gskinner.flutter.wonders.MainActivity") {
+                        print(it.name)
+                    }
+                    mapOf("enabled" to (state != PackageManager.COMPONENT_ENABLED_STATE_DISABLED && state != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER), "name" to it.name)
+                }?.toList()
+                )
+            } else if (call.method == "getActivityInfo") {
+                val apkFilePath = call.argument<String>("packageName")!!
+                val name = call.argument<String>("name")!!
+                val state = packageManager.getComponentEnabledSetting(ComponentName(apkFilePath, name))
+                val activities: Array<ActivityInfo>? = if (!apkFilePath.startsWith("/")) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        packageManager.getPackageInfo(apkFilePath, PackageManager.PackageInfoFlags.of((PackageManager.GET_ACTIVITIES or PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER).toLong())).activities
+                    } else {
+                        packageManager.getPackageInfo(apkFilePath, PackageManager.GET_ACTIVITIES or PackageManager.MATCH_DISABLED_COMPONENTS)!!.activities
+                    }
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        packageManager.getPackageArchiveInfo(apkFilePath, PackageManager.PackageInfoFlags.of(PackageManager.GET_ACTIVITIES.toLong()))!!.activities
+                    } else {
+                        packageManager.getPackageArchiveInfo(apkFilePath, PackageManager.GET_ACTIVITIES)!!.activities
+                    }
+                }
+                result.success(activities?.find { it.name == name }?.let {
+                    mapOf("enabled" to (state != PackageManager.COMPONENT_ENABLED_STATE_DISABLED && state != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER), "name" to it.name)
+                })
+            } else if (call.method == "setComponentEnabledSetting") {
+                val packageName = call.argument<String>("packageName")!!
+                val name = call.argument<String>("name")!!
+                val state = packageManager.getComponentEnabledSetting(ComponentName(packageName, name))
+                if (state != PackageManager.COMPONENT_ENABLED_STATE_DISABLED && state != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER) {
+                    packageManager.setComponentEnabledSetting(ComponentName(packageName, name), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.SYNCHRONOUS)
+                }
+                result.success(state)
             } else {
                 result.notImplemented()
             }

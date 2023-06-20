@@ -20,6 +20,8 @@ TreeNodeModel _$TreeNodeModelFromJson(Map<String, dynamic> json) {
       return TreeNodeFileSystemEntity.fromJson(json);
     case 'androidApplication':
       return TreeNodeAndroidApplication.fromJson(json);
+    case 'androidActivity':
+      return TreeNodeAndroidActivity.fromJson(json);
 
     default:
       throw CheckedFromJsonException(json, 'runtimeType', 'TreeNodeModel',
@@ -49,6 +51,13 @@ mixin _$TreeNodeModel {
             TreeNodeModel? parent,
             String? filter)
         androidApplication,
+    required TResult Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        androidActivity,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,6 +76,13 @@ mixin _$TreeNodeModel {
             TreeNodeModel? parent,
             String? filter)?
         androidApplication,
+    TResult? Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidActivity,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -85,6 +101,13 @@ mixin _$TreeNodeModel {
             TreeNodeModel? parent,
             String? filter)?
         androidApplication,
+    TResult Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidActivity,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -93,18 +116,21 @@ mixin _$TreeNodeModel {
     required TResult Function(TreeNodeFileSystemEntity value) fileSystemEntity,
     required TResult Function(TreeNodeAndroidApplication value)
         androidApplication,
+    required TResult Function(TreeNodeAndroidActivity value) androidActivity,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
+    TResult? Function(TreeNodeAndroidActivity value)? androidActivity,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult Function(TreeNodeAndroidApplication value)? androidApplication,
+    TResult Function(TreeNodeAndroidActivity value)? androidActivity,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -329,6 +355,13 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
             TreeNodeModel? parent,
             String? filter)
         androidApplication,
+    required TResult Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        androidActivity,
   }) {
     return fileSystemEntity(
         this.fileSystemEntity, children, parent, expanded, filter);
@@ -351,6 +384,13 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
             TreeNodeModel? parent,
             String? filter)?
         androidApplication,
+    TResult? Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidActivity,
   }) {
     return fileSystemEntity?.call(
         this.fileSystemEntity, children, parent, expanded, filter);
@@ -373,6 +413,13 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
             TreeNodeModel? parent,
             String? filter)?
         androidApplication,
+    TResult Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidActivity,
     required TResult orElse(),
   }) {
     if (fileSystemEntity != null) {
@@ -388,6 +435,7 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
     required TResult Function(TreeNodeFileSystemEntity value) fileSystemEntity,
     required TResult Function(TreeNodeAndroidApplication value)
         androidApplication,
+    required TResult Function(TreeNodeAndroidActivity value) androidActivity,
   }) {
     return fileSystemEntity(this);
   }
@@ -397,6 +445,7 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
+    TResult? Function(TreeNodeAndroidActivity value)? androidActivity,
   }) {
     return fileSystemEntity?.call(this);
   }
@@ -406,6 +455,7 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult Function(TreeNodeAndroidApplication value)? androidApplication,
+    TResult Function(TreeNodeAndroidActivity value)? androidActivity,
     required TResult orElse(),
   }) {
     if (fileSystemEntity != null) {
@@ -609,6 +659,13 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
             TreeNodeModel? parent,
             String? filter)
         androidApplication,
+    required TResult Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        androidActivity,
   }) {
     return androidApplication(
         this.androidApplication, children, expanded, parent, filter);
@@ -631,6 +688,13 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
             TreeNodeModel? parent,
             String? filter)?
         androidApplication,
+    TResult? Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidActivity,
   }) {
     return androidApplication?.call(
         this.androidApplication, children, expanded, parent, filter);
@@ -653,6 +717,13 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
             TreeNodeModel? parent,
             String? filter)?
         androidApplication,
+    TResult Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidActivity,
     required TResult orElse(),
   }) {
     if (androidApplication != null) {
@@ -668,6 +739,7 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
     required TResult Function(TreeNodeFileSystemEntity value) fileSystemEntity,
     required TResult Function(TreeNodeAndroidApplication value)
         androidApplication,
+    required TResult Function(TreeNodeAndroidActivity value) androidActivity,
   }) {
     return androidApplication(this);
   }
@@ -677,6 +749,7 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
+    TResult? Function(TreeNodeAndroidActivity value)? androidActivity,
   }) {
     return androidApplication?.call(this);
   }
@@ -686,6 +759,7 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult Function(TreeNodeAndroidApplication value)? androidApplication,
+    TResult Function(TreeNodeAndroidActivity value)? androidActivity,
     required TResult orElse(),
   }) {
     if (androidApplication != null) {
@@ -726,4 +800,303 @@ abstract class TreeNodeAndroidApplication implements TreeNodeModel, TreeNode {
   @JsonKey(ignore: true)
   _$$TreeNodeAndroidApplicationCopyWith<_$TreeNodeAndroidApplication>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TreeNodeAndroidActivityCopyWith<$Res>
+    implements $TreeNodeModelCopyWith<$Res> {
+  factory _$$TreeNodeAndroidActivityCopyWith(_$TreeNodeAndroidActivity value,
+          $Res Function(_$TreeNodeAndroidActivity) then) =
+      __$$TreeNodeAndroidActivityCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {AndroidActivity androidActivity,
+      List<TreeNodeModel>? children,
+      TreeExpanded? expanded,
+      TreeNodeModel? parent,
+      String? filter});
+
+  $AndroidActivityCopyWith<$Res> get androidActivity;
+  @override
+  $TreeNodeModelCopyWith<$Res>? get parent;
+}
+
+/// @nodoc
+class __$$TreeNodeAndroidActivityCopyWithImpl<$Res>
+    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeAndroidActivity>
+    implements _$$TreeNodeAndroidActivityCopyWith<$Res> {
+  __$$TreeNodeAndroidActivityCopyWithImpl(_$TreeNodeAndroidActivity _value,
+      $Res Function(_$TreeNodeAndroidActivity) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? androidActivity = null,
+    Object? children = freezed,
+    Object? expanded = freezed,
+    Object? parent = freezed,
+    Object? filter = freezed,
+  }) {
+    return _then(_$TreeNodeAndroidActivity(
+      androidActivity: null == androidActivity
+          ? _value.androidActivity
+          : androidActivity // ignore: cast_nullable_to_non_nullable
+              as AndroidActivity,
+      children: freezed == children
+          ? _value._children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<TreeNodeModel>?,
+      expanded: freezed == expanded
+          ? _value.expanded
+          : expanded // ignore: cast_nullable_to_non_nullable
+              as TreeExpanded?,
+      parent: freezed == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as TreeNodeModel?,
+      filter: freezed == filter
+          ? _value.filter
+          : filter // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AndroidActivityCopyWith<$Res> get androidActivity {
+    return $AndroidActivityCopyWith<$Res>(_value.androidActivity, (value) {
+      return _then(_value.copyWith(androidActivity: value));
+    });
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
+  _$TreeNodeAndroidActivity(
+      {required this.androidActivity,
+      final List<TreeNodeModel>? children,
+      this.expanded,
+      this.parent,
+      this.filter,
+      final String? $type})
+      : _children = children,
+        $type = $type ?? 'androidActivity';
+
+  factory _$TreeNodeAndroidActivity.fromJson(Map<String, dynamic> json) =>
+      _$$TreeNodeAndroidActivityFromJson(json);
+
+  @override
+  final AndroidActivity androidActivity;
+  final List<TreeNodeModel>? _children;
+  @override
+  List<TreeNodeModel>? get children {
+    final value = _children;
+    if (value == null) return null;
+    if (_children is EqualUnmodifiableListView) return _children;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final TreeExpanded? expanded;
+  @override
+  final TreeNodeModel? parent;
+  @override
+  final String? filter;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'TreeNodeModel.androidActivity(androidActivity: $androidActivity, children: $children, expanded: $expanded, parent: $parent, filter: $filter)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TreeNodeAndroidActivity &&
+            (identical(other.androidActivity, androidActivity) ||
+                other.androidActivity == androidActivity) &&
+            const DeepCollectionEquality().equals(other._children, _children) &&
+            (identical(other.expanded, expanded) ||
+                other.expanded == expanded) &&
+            (identical(other.parent, parent) || other.parent == parent) &&
+            (identical(other.filter, filter) || other.filter == filter));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, androidActivity,
+      const DeepCollectionEquality().hash(_children), expanded, parent, filter);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TreeNodeAndroidActivityCopyWith<_$TreeNodeAndroidActivity> get copyWith =>
+      __$$TreeNodeAndroidActivityCopyWithImpl<_$TreeNodeAndroidActivity>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)
+        fileSystemEntity,
+    required TResult Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        androidApplication,
+    required TResult Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        androidActivity,
+  }) {
+    return androidActivity(
+        this.androidActivity, children, expanded, parent, filter);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)?
+        fileSystemEntity,
+    TResult? Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidApplication,
+    TResult? Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidActivity,
+  }) {
+    return androidActivity?.call(
+        this.androidActivity, children, expanded, parent, filter);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter)?
+        fileSystemEntity,
+    TResult Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidApplication,
+    TResult Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidActivity,
+    required TResult orElse(),
+  }) {
+    if (androidActivity != null) {
+      return androidActivity(
+          this.androidActivity, children, expanded, parent, filter);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TreeNodeFileSystemEntity value) fileSystemEntity,
+    required TResult Function(TreeNodeAndroidApplication value)
+        androidApplication,
+    required TResult Function(TreeNodeAndroidActivity value) androidActivity,
+  }) {
+    return androidActivity(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
+    TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
+    TResult? Function(TreeNodeAndroidActivity value)? androidActivity,
+  }) {
+    return androidActivity?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
+    TResult Function(TreeNodeAndroidApplication value)? androidApplication,
+    TResult Function(TreeNodeAndroidActivity value)? androidActivity,
+    required TResult orElse(),
+  }) {
+    if (androidActivity != null) {
+      return androidActivity(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TreeNodeAndroidActivityToJson(
+      this,
+    );
+  }
+}
+
+abstract class TreeNodeAndroidActivity implements TreeNodeModel, TreeNode {
+  factory TreeNodeAndroidActivity(
+      {required final AndroidActivity androidActivity,
+      final List<TreeNodeModel>? children,
+      final TreeExpanded? expanded,
+      final TreeNodeModel? parent,
+      final String? filter}) = _$TreeNodeAndroidActivity;
+
+  factory TreeNodeAndroidActivity.fromJson(Map<String, dynamic> json) =
+      _$TreeNodeAndroidActivity.fromJson;
+
+  AndroidActivity get androidActivity;
+  @override
+  List<TreeNodeModel>? get children;
+  @override
+  TreeExpanded? get expanded;
+  @override
+  TreeNodeModel? get parent;
+  @override
+  String? get filter;
+  @override
+  @JsonKey(ignore: true)
+  _$$TreeNodeAndroidActivityCopyWith<_$TreeNodeAndroidActivity> get copyWith =>
+      throw _privateConstructorUsedError;
 }

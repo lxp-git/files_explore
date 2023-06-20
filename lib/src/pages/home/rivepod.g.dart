@@ -67,12 +67,39 @@ Map<String, dynamic> _$$TreeNodeAndroidApplicationToJson(
       'runtimeType': instance.$type,
     };
 
+_$TreeNodeAndroidActivity _$$TreeNodeAndroidActivityFromJson(
+        Map<String, dynamic> json) =>
+    _$TreeNodeAndroidActivity(
+      androidActivity: AndroidActivity.fromJson(
+          json['androidActivity'] as Map<String, dynamic>),
+      children: (json['children'] as List<dynamic>?)
+          ?.map((e) => TreeNodeModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      expanded: $enumDecodeNullable(_$TreeExpandedEnumMap, json['expanded']),
+      parent: json['parent'] == null
+          ? null
+          : TreeNodeModel.fromJson(json['parent'] as Map<String, dynamic>),
+      filter: json['filter'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$TreeNodeAndroidActivityToJson(
+        _$TreeNodeAndroidActivity instance) =>
+    <String, dynamic>{
+      'androidActivity': instance.androidActivity,
+      'children': instance.children,
+      'expanded': _$TreeExpandedEnumMap[instance.expanded],
+      'parent': instance.parent,
+      'filter': instance.filter,
+      'runtimeType': instance.$type,
+    };
+
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$asyncCurrentTreeNodeModelHash() =>
-    r'7d189c44a2c8940246d001e17d20f81e203dbdef';
+    r'5c10df587905f992eba74c4e421f2209760fce19';
 
 /// See also [AsyncCurrentTreeNodeModel].
 @ProviderFor(AsyncCurrentTreeNodeModel)

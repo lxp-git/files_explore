@@ -38,4 +38,10 @@ class PlatformUtils {
     return AndroidApplication.fromJson(Map.from((await methodChannel
         .invokeMethod('getApplicationInfo', {"path": path}))));
   }
+
+  static Future<AndroidActivity> getActivityInfo(
+      String packageName, String name) async {
+    return AndroidActivity.fromJson(Map.from((await methodChannel.invokeMethod(
+        'getActivityInfo', {"packageName": packageName, "name": name}))));
+  }
 }

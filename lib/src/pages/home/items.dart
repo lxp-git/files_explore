@@ -86,14 +86,18 @@ class Items extends ConsumerWidget {
           } else if (path.toLowerCase().endsWith(".crt")) {
             icon = const Icon(Icons.security_outlined);
           } else if (path.toLowerCase().endsWith(".apk")) {
-            icon = FutureBuilder(
-              future: PlatformUtils.getApkLogo(path),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const CircularProgressIndicator(strokeWidth: 10);
-                }
-                return Image.memory(snapshot.data!, width: 20, height: 20);
-              },
+            icon = SizedBox(
+              child: FutureBuilder(
+                future: PlatformUtils.getApkLogo(path),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const CircularProgressIndicator(strokeWidth: 10);
+                  }
+                  return Image.memory(snapshot.data!, width: 20, height: 20);
+                },
+              ),
+              width: 20,
+              height: 20,
             );
           } else if (path.toLowerCase().endsWith(".png") ||
               path.toLowerCase().endsWith(".jpg") ||
@@ -122,17 +126,28 @@ class Items extends ConsumerWidget {
           title = node.androidApplication.label +
               (node.androidApplication.enabled ? "" : " (Disabled)");
           if (path.isNotEmpty && node.parent != null) {
-            icon = FutureBuilder(
-              future:
-                  PlatformUtils.getApkLogo(node.androidApplication.packageName),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const CircularProgressIndicator(strokeWidth: 10);
-                }
-                return Image.memory(snapshot.data!, width: 20, height: 20);
-              },
+            icon = SizedBox(
+              child: FutureBuilder(
+                future: Future.delayed(
+                    Duration(seconds: 2),
+                    () => PlatformUtils.getApkLogo(
+                        node.androidApplication.packageName)),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const CircularProgressIndicator(strokeWidth: 2);
+                  }
+                  return Image.memory(snapshot.data!, width: 20, height: 20);
+                },
+              ),
+              width: 20,
+              height: 20,
             );
           }
+        } else if (node is TreeNodeAndroidActivity) {
+          path = node.androidActivity.name;
+          icon = const Icon(Icons.android_outlined);
+          title = node.androidActivity.name +
+              (node.androidActivity.enabled ? "" : " (Disabled)");
         }
         if (node.expanded == TreeExpanded.loading) {
           expandedIcon = Container(
@@ -173,9 +188,6 @@ class Items extends ConsumerWidget {
                     Expanded(child: Text(title))
                   ],
                 )));
-        animation.addListener(() {
-          print("animation:" + animation.value.toString());
-        });
         return Padding(
             padding: EdgeInsets.only(left: node.parent == null ? 0 : 16),
             child: Column(
@@ -185,45 +197,24 @@ class Items extends ConsumerWidget {
                       opacity: animation,
                       child: SizeTransition(
                           sizeFactor: animation, child: content)),
-                if (node is TreeNodeAndroidApplication &&
-                    node.androidApplication.activities != null &&
-                    node.androidApplication.packageName.isNotEmpty)
-                  SizedBox(
-                      height: 400,
-                      child: PageView(
-                        children: [
-                          ListView.separated(
-                              itemBuilder: (context, index) {
-                                final item =
-                                    node.androidApplication.activities![index];
-                                return Text(item.name +
-                                    ((item.enabled) ? "" : " (Disabled)"));
-                              },
-                              separatorBuilder: (context, index) =>
-                                  Divider(height: 1),
-                              itemCount:
-                                  node.androidApplication.activities!.length)
-                        ],
-                      ))
-                else
-                  AnimatedList(
-                    key: ref
-                        .read(asyncCurrentTreeNodeModelProvider.notifier)
-                        .listKey,
-                    physics: const ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    initialItemCount: node.children?.length ?? 0,
-                    itemBuilder: (context, index, animation) {
-                      return ProviderScope(
-                        overrides: [
-                          asyncCurrentTreeNodeModelProvider.overrideWith(() =>
-                              AsyncCurrentTreeNodeModel(
-                                  defaultState: node.children?[index]))
-                        ],
-                        child: Items(animation: animation),
-                      );
-                    },
-                  ),
+                AnimatedList(
+                  key: ref
+                      .read(asyncCurrentTreeNodeModelProvider.notifier)
+                      .listKey,
+                  physics: const ClampingScrollPhysics(),
+                  shrinkWrap: true,
+                  initialItemCount: node.children?.length ?? 0,
+                  itemBuilder: (context, index, animation) {
+                    return ProviderScope(
+                      overrides: [
+                        asyncCurrentTreeNodeModelProvider.overrideWith(() =>
+                            AsyncCurrentTreeNodeModel(
+                                defaultState: node.children?[index]))
+                      ],
+                      child: Items(animation: animation),
+                    );
+                  },
+                ),
               ],
             ));
       },
@@ -282,6 +273,21 @@ class Items extends ConsumerWidget {
             child: Row(
               children: [
                 Text(node.androidApplication.enabled ? 'Disable' : "Enable")
+              ],
+            ),
+            onTap: () {
+              ref
+                  .read(asyncCurrentTreeNodeModelProvider.notifier)
+                  .disableOrEnableIt();
+            },
+          ),
+        if (node is TreeNodeAndroidActivity &&
+            node.androidActivity.name.isNotEmpty)
+          PopupMenuItem(
+            //value: this._index,
+            child: Row(
+              children: [
+                Text(node.androidActivity.enabled ? 'Disable' : "Enable")
               ],
             ),
             onTap: () {
