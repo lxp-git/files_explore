@@ -52,8 +52,8 @@ class Items extends ConsumerWidget {
   // Tap location will be used use to position the context menu
   Offset _tapPosition = Offset.zero;
   void _getTapPosition(TapDownDetails details) {
-    final RenderBox referenceBox = context.findRenderObject() as RenderBox;
-    _tapPosition = referenceBox.globalToLocal(details.globalPosition);
+    _tapPosition = details.globalPosition;
+    print(_tapPosition);
   }
 
   @override
@@ -72,6 +72,7 @@ class Items extends ConsumerWidget {
             : Icons.arrow_right_rounded);
 
         String title = "";
+        TextStyle? titleTextStyle = Theme.of(context).textTheme.bodyMedium;
         var path = "";
         if (node is TreeNodeFileSystemEntity) {
           path = node.fileSystemEntity.path;
@@ -91,7 +92,7 @@ class Items extends ConsumerWidget {
                 future: PlatformUtils.getApkLogo(path),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return const CircularProgressIndicator(strokeWidth: 10);
+                    return const CircularProgressIndicator(strokeWidth: 2);
                   }
                   return Image.memory(snapshot.data!, width: 20, height: 20);
                 },
@@ -120,6 +121,9 @@ class Items extends ConsumerWidget {
                       "") +
                   Platform.pathSeparator,
               "");
+          if (title.startsWith(".")) {
+            titleTextStyle = TextStyle(color: Colors.grey);
+          }
         } else if (node is TreeNodeAndroidApplication) {
           path = node.androidApplication.label;
           icon = const Icon(Icons.android_outlined);
@@ -148,6 +152,10 @@ class Items extends ConsumerWidget {
           icon = const Icon(Icons.android_outlined);
           title = node.androidActivity.name +
               (node.androidActivity.enabled ? "" : " (Disabled)");
+        } else if (node is TreeNodeSftp) {
+          path = node.sftp.filename;
+          icon = const Icon(Icons.cloud_circle_outlined);
+          title = node.sftp.filename;
         }
         if (node.expanded == TreeExpanded.loading) {
           expandedIcon = Container(
@@ -178,14 +186,19 @@ class Items extends ConsumerWidget {
                 ref.read(asyncCurrentTreeNodeModelProvider.notifier).list();
               }
             },
-            child: Padding(
-                padding: EdgeInsets.only(top: 8, bottom: 8),
+            child: Container(
+                color: (node is TreeNodeFileSystemEntity &&
+                        node.selected != null &&
+                        node.selected!)
+                    ? Theme.of(context).focusColor
+                    : Colors.transparent,
+                padding: const EdgeInsets.only(top: 8, bottom: 8),
                 child: Row(
                   children: [
                     expandedIcon,
                     icon,
                     const SizedBox(width: 4),
-                    Expanded(child: Text(title))
+                    Expanded(child: Text(title, style: titleTextStyle))
                   ],
                 )));
         return Padding(
@@ -263,8 +276,11 @@ class Items extends ConsumerWidget {
         });
   }
 
-  showContextMenu(TreeNodeModel node) {
-    showMenu(
+  showContextMenu(TreeNodeModel node) async {
+    ref.read(asyncCurrentTreeNodeModelProvider.notifier).select();
+    final width = overlay?.paintBounds.size.width ?? 0;
+    final height = overlay?.paintBounds.size.height ?? 0;
+    final needSelect = await showMenu(
       items: <PopupMenuEntry>[
         if (node is TreeNodeAndroidApplication &&
             node.androidApplication.packageName.isNotEmpty)
@@ -305,28 +321,156 @@ class Items extends ConsumerWidget {
             showSearchDialog(node);
           },
         ),
-        PopupMenuItem(
-          onTap: () {
-            if (node is TreeNodeAndroidApplication) {
+        if (node is TreeNodeFileSystemEntity)
+          PopupMenuItem(
+            onTap: () {},
+            //value: this._index,
+            child: Row(
+              children: const [Text("Copy")],
+            ),
+          ),
+        if (node is TreeNodeFileSystemEntity)
+          PopupMenuItem(
+            onTap: () {},
+            //value: this._index,
+            child: Row(
+              children: const [Text("Rename")],
+            ),
+          ),
+        if (node is TreeNodeFileSystemEntity)
+          PopupMenuItem(
+            onTap: () {},
+            //value: this._index,
+            child: Row(
+              children: const [Text("New folder")],
+            ),
+          ),
+        if (node is TreeNodeFileSystemEntity)
+          PopupMenuItem(
+            onTap: () {
+              File(node.fileSystemEntity.path).deleteSync();
+            },
+            //value: this._index,
+            child: Row(
+              children: const [Text("Delete")],
+            ),
+          ),
+        if (node is TreeNodeAndroidApplication)
+          PopupMenuItem(
+            onTap: () {
               AndroidIntent intent = AndroidIntent(
                 action: "android.settings.APPLICATION_DETAILS_SETTINGS",
                 package: node.androidApplication.packageName,
                 data: "package:${node.androidApplication.packageName}",
               );
               intent.launch();
-            }
-          },
-          //value: this._index,
-          child: Row(
-            children: const [Text("App System Info")],
+            },
+            //value: this._index,
+            child: Row(
+              children: const [Text("App System Info")],
+            ),
           ),
-        )
+        if (node is TreeNodeSftp && node.sftp.longname.isEmpty)
+          PopupMenuItem(
+            onTap: () {
+              showNewSftpServerDialog();
+            },
+            //value: this._index,
+            child: Row(
+              children: const [Text("Add")],
+            ),
+          ),
       ],
       context: context,
       position: RelativeRect.fromRect(
           Rect.fromLTWH(_tapPosition.dx, _tapPosition.dy, 30, 30),
-          Rect.fromLTWH(0, 0, overlay?.paintBounds.size.width ?? 0,
-              overlay?.paintBounds.size.height ?? 0)),
+          Rect.fromLTWH(0, 0, width, height)),
     );
+    ref.read(asyncCurrentTreeNodeModelProvider.notifier).select();
+  }
+
+  showNewSftpServerDialog() {
+    final hostTextEditingController = TextEditingController();
+    final passwordTextEditingController = TextEditingController();
+    final portTextEditingController = TextEditingController(text: "22");
+    final privateKeyPath = "";
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('New Server'),
+            content: SizedBox(
+              height: 200,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                          child: TextField(
+                              controller: hostTextEditingController,
+                              decoration: const InputDecoration(
+                                  filled: true,
+                                  hintText: "host name or ip",
+                                  labelText: "Host")),
+                          flex: 9),
+                      Flexible(
+                          child: TextField(
+                              controller: portTextEditingController,
+                              decoration: const InputDecoration(
+                                  filled: true,
+                                  hintText: "host name or ip",
+                                  labelText: "Port")),
+                          flex: 1)
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: TextField(
+                              controller: passwordTextEditingController,
+                              decoration: const InputDecoration(
+                                  filled: true,
+                                  hintText: "password",
+                                  labelText: "Password"))),
+                      MaterialButton(
+                          onPressed: () {}, child: Text("Private key")),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              Expanded(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  child: const Text('Test'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Confirm'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }

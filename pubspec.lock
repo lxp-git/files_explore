@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  asn1lib:
+    dependency: transitive
+    description:
+      name: asn1lib
+      sha256: b74e3842a52c61f8819a1ec8444b4de5419b41a7465e69d4aa681445377398b0
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.1"
   async:
     dependency: transitive
     description:
@@ -225,6 +233,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  dartssh2:
+    dependency: "direct main"
+    description:
+      name: dartssh2
+      sha256: "53a230c7dd6f487b704ceef1b29323ad64d19be89e786ccbc81e157a70417a56"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.8.2"
   dynamic_color:
     dependency: "direct main"
     description:
@@ -481,10 +497,10 @@ packages:
     dependency: "direct main"
     description:
       name: mmkv
-      sha256: "80ab321759b268dd5a23e8be33bd924032c51ff0b49f3522f218aee738306455"
+      sha256: e798184bb949a1f1cec8157e4d1a15967eb52cae3d714cf5e404496026673a8a
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.17"
+    version: "1.3.0"
   package_config:
     dependency: transitive
     description:
@@ -589,6 +605,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.2"
+  pinenacl:
+    dependency: transitive
+    description:
+      name: pinenacl
+      sha256: "3a5503637587d635647c93ea9a8fecf48a420cc7deebe6f1fc85c2a5637ab327"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.1"
   platform:
     dependency: transitive
     description:
@@ -605,6 +629,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "7c1e5f0d23c9016c5bbd8b1473d0d3fb3fc851b876046039509e18e0c7485f2c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.7.3"
   pool:
     dependency: transitive
     description:

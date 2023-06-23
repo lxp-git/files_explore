@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dartssh2/dartssh2.dart';
 import 'package:files_explore/src/dto/android_application.dart';
 import 'package:files_explore/src/utils/constants.dart';
 import 'package:files_explore/src/utils/platform.dart';
@@ -36,6 +37,26 @@ class FileSystemEntityJSONConverter
   Map<String, dynamic> toJson(FileSystemEntity data) => {"path": data.path};
 }
 
+class SftpJSONConverter
+    implements JsonConverter<SftpName, Map<String, dynamic>> {
+  const SftpJSONConverter();
+
+  @override
+  SftpName fromJson(Map<String, dynamic> json) {
+    return SftpName(
+        filename: json["filename"],
+        longname: json["longname"],
+        attr: json["attr"]);
+  }
+
+  @override
+  Map<String, dynamic> toJson(SftpName sftpName) => {
+        "filename": sftpName.filename,
+        "longname": sftpName.longname,
+        "attr": sftpName.attr
+      };
+}
+
 enum TreeExpanded { close, loading, ok }
 
 @freezed
@@ -47,7 +68,8 @@ sealed class TreeNodeModel with _$TreeNodeModel {
       List<TreeNodeModel>? children,
       TreeNodeModel? parent,
       TreeExpanded? expanded,
-      String? filter}) = TreeNodeFileSystemEntity;
+      String? filter,
+      bool? selected}) = TreeNodeFileSystemEntity;
   @Implements<TreeNode>()
   factory TreeNodeModel.androidApplication(
       {required AndroidApplication androidApplication,
@@ -62,6 +84,13 @@ sealed class TreeNodeModel with _$TreeNodeModel {
       TreeExpanded? expanded,
       TreeNodeModel? parent,
       String? filter}) = TreeNodeAndroidActivity;
+  @Implements<TreeNode>()
+  factory TreeNodeModel.sftp(
+      {@SftpJSONConverter() required SftpName sftp,
+      List<TreeNodeModel>? children,
+      TreeExpanded? expanded,
+      TreeNodeModel? parent,
+      String? filter}) = TreeNodeSftp;
 
   factory TreeNodeModel.fromJson(Map<String, Object?> json) =>
       _$TreeNodeModelFromJson(json);
@@ -92,6 +121,11 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
                   packageName: "",
                   activities: [],
                   enabled: true)),
+          TreeNodeModel.sftp(
+              parent: null,
+              children: [],
+              sftp: SftpName(
+                  filename: "SFTP", longname: "", attr: SftpFileAttrs())),
         ], parent: null, fileSystemEntity: Directory(""));
       }
       return TreeNodeModel.fileSystemEntity(
@@ -138,7 +172,9 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
         listKey.currentState!.insertAllItems(
             treeNodeModel.children?.length ?? 0,
             state.value!.children?.length ??
-                0 - (treeNodeModel.children?.length ?? 0));
+                0 - (treeNodeModel.children?.length ?? 0),
+            duration: const Duration(milliseconds: 600),
+            isAsync: true);
       } else {
         state = await AsyncValue.guard(() async {
           final activities = await PlatformUtils.getActivities(
@@ -158,31 +194,71 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
                   .toList(),
               expanded: TreeExpanded.ok);
         });
-        listKey.currentState!.insertAllItems(
-            treeNodeModel.children?.length ?? 0,
-            state.value!.children?.length ??
-                0 - (treeNodeModel.children?.length ?? 0));
+        for (int i = 0;
+            i <
+                (state.value!.children?.length ??
+                    0 - (treeNodeModel.children?.length ?? 0));
+            i++) {
+          listKey.currentState!
+              .insertItem((treeNodeModel.children?.length ?? 0) + i);
+        }
+        final client = SSHClient(
+          await SSHSocket.connect('localhost', 22),
+          username: '<username>',
+          onPasswordRequest: () => '<password>',
+        );
+        final sftp = await client.sftp();
+        sftp.listdir("/");
+        // listKey.currentState!.insertAllItems(
+        //     treeNodeModel.children?.length ?? 0,
+        //     state.value!.children?.length ??
+        //         0 - (treeNodeModel.children?.length ?? 0),
+        //     isAsync: true);
       }
       return;
-    }
-    if (treeNodeModel is TreeNodeFileSystemEntity) {
+    } else if (treeNodeModel is TreeNodeFileSystemEntity) {
       final directory = Directory(treeNodeModel.fileSystemEntity.path);
-      directory.list().listen(
-        (FileSystemEntity fileSystemEntity) async {
-          print("fileSystemEntity:" + fileSystemEntity.toString());
-          bool isDirectory = await FileSystemEntity.isDirectory(
-              fileSystemEntity.absolute.path);
-          state = AsyncValue.data(state.value!.copyWith(children: [
-            ...?state.value!.children,
-            TreeNodeModel.fileSystemEntity(
-                parent: treeNodeModel, fileSystemEntity: fileSystemEntity)
-          ], expanded: TreeExpanded.ok));
-          listKey.currentState!
-              .insertItem((state.value!.children?.length ?? 1) - 1);
-        },
-        onDone: () {},
-      );
-    }
+      final fileSystemEntitys = directory.listSync();
+      fileSystemEntitys.sort((a, b) {
+        final aIsDir = FileSystemEntity.isDirectorySync(a.path);
+        final bIsDir = FileSystemEntity.isDirectorySync(b.path);
+        final aFileName =
+            a.path.replaceFirst(treeNodeModel.fileSystemEntity.path, "");
+        final bFileName =
+            b.path.replaceFirst(treeNodeModel.fileSystemEntity.path, "");
+        if (aIsDir && bIsDir) {
+          return aFileName.compareTo(bFileName);
+        } else if (aIsDir) {
+          return -1;
+        } else if (bIsDir) {
+          return 1;
+        } else {
+          return aFileName.compareTo(bFileName);
+        }
+      });
+      state = AsyncValue.data(state.value!.copyWith(
+          children: fileSystemEntitys
+              .map((e) => TreeNodeModel.fileSystemEntity(
+                  parent: treeNodeModel, fileSystemEntity: e))
+              .toList(),
+          expanded: TreeExpanded.ok));
+      final newDataCount = ((state.value!.children?.length ?? 1) -
+          (treeNodeModel.children?.length ?? 0));
+      listKey.currentState!
+          .insertAllItems(treeNodeModel.children?.length ?? 0, newDataCount);
+      // directory.list().listen(
+      //   (FileSystemEntity fileSystemEntity) async {
+      //     state = AsyncValue.data(state.value!.copyWith(children: [
+      //       ...?state.value!.children,
+      //       TreeNodeModel.fileSystemEntity(
+      //           parent: treeNodeModel, fileSystemEntity: fileSystemEntity)
+      //     ], expanded: TreeExpanded.ok));
+      //     listKey.currentState!
+      //         .insertItem((state.value!.children?.length ?? 1) - 1);
+      //   },
+      //   onDone: () {},
+      // );
+    } else if (treeNodeModel is TreeNodeSftp) {}
   }
 
   search(String text) {
@@ -248,6 +324,16 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
             node.androidActivity.name);
         return node.copyWith(androidActivity: androidActivity);
       });
+    }
+  }
+
+  select() {
+    TreeNodeModel treeNodeModel = state.value!;
+    if (treeNodeModel is TreeNodeFileSystemEntity) {
+      state = AsyncValue.data(treeNodeModel.copyWith(
+          selected: treeNodeModel.selected == null
+              ? true
+              : !treeNodeModel.selected!));
     }
   }
 

@@ -3,9 +3,15 @@ import 'package:flutter/services.dart';
 
 class PlatformUtils {
   static const methodChannel = MethodChannel("app.pasteshare.flutter/utils");
-  static Future<Uint8List> getApkLogo(String path) async {
+  static Future<Uint8List?> getApkLogo(String path) async {
     // bytes
-    return await methodChannel.invokeMethod("getApkLogo", {"path": path});
+    try {
+      return await methodChannel.invokeMethod("getApkLogo", {"path": path});
+    } catch (error) {
+      print("error:" + error.toString());
+    }
+
+    return null;
   }
 
   static Future<dynamic> installApk(String path) async {

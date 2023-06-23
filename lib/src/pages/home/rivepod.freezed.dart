@@ -22,6 +22,8 @@ TreeNodeModel _$TreeNodeModelFromJson(Map<String, dynamic> json) {
       return TreeNodeAndroidApplication.fromJson(json);
     case 'androidActivity':
       return TreeNodeAndroidActivity.fromJson(json);
+    case 'sftp':
+      return TreeNodeSftp.fromJson(json);
 
     default:
       throw CheckedFromJsonException(json, 'runtimeType', 'TreeNodeModel',
@@ -42,7 +44,8 @@ mixin _$TreeNodeModel {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)
+            String? filter,
+            bool? selected)
         fileSystemEntity,
     required TResult Function(
             AndroidApplication androidApplication,
@@ -58,6 +61,13 @@ mixin _$TreeNodeModel {
             TreeNodeModel? parent,
             String? filter)
         androidActivity,
+    required TResult Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        sftp,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,7 +77,8 @@ mixin _$TreeNodeModel {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)?
+            String? filter,
+            bool? selected)?
         fileSystemEntity,
     TResult? Function(
             AndroidApplication androidApplication,
@@ -83,6 +94,13 @@ mixin _$TreeNodeModel {
             TreeNodeModel? parent,
             String? filter)?
         androidActivity,
+    TResult? Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        sftp,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -92,7 +110,8 @@ mixin _$TreeNodeModel {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)?
+            String? filter,
+            bool? selected)?
         fileSystemEntity,
     TResult Function(
             AndroidApplication androidApplication,
@@ -108,6 +127,13 @@ mixin _$TreeNodeModel {
             TreeNodeModel? parent,
             String? filter)?
         androidActivity,
+    TResult Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        sftp,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -117,6 +143,7 @@ mixin _$TreeNodeModel {
     required TResult Function(TreeNodeAndroidApplication value)
         androidApplication,
     required TResult Function(TreeNodeAndroidActivity value) androidActivity,
+    required TResult Function(TreeNodeSftp value) sftp,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -124,6 +151,7 @@ mixin _$TreeNodeModel {
     TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
     TResult? Function(TreeNodeAndroidActivity value)? androidActivity,
+    TResult? Function(TreeNodeSftp value)? sftp,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -131,6 +159,7 @@ mixin _$TreeNodeModel {
     TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult Function(TreeNodeAndroidApplication value)? androidApplication,
     TResult Function(TreeNodeAndroidActivity value)? androidActivity,
+    TResult Function(TreeNodeSftp value)? sftp,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -219,7 +248,8 @@ abstract class _$$TreeNodeFileSystemEntityCopyWith<$Res>
       List<TreeNodeModel>? children,
       TreeNodeModel? parent,
       TreeExpanded? expanded,
-      String? filter});
+      String? filter,
+      bool? selected});
 
   @override
   $TreeNodeModelCopyWith<$Res>? get parent;
@@ -241,6 +271,7 @@ class __$$TreeNodeFileSystemEntityCopyWithImpl<$Res>
     Object? parent = freezed,
     Object? expanded = freezed,
     Object? filter = freezed,
+    Object? selected = freezed,
   }) {
     return _then(_$TreeNodeFileSystemEntity(
       fileSystemEntity: null == fileSystemEntity
@@ -263,6 +294,10 @@ class __$$TreeNodeFileSystemEntityCopyWithImpl<$Res>
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
               as String?,
+      selected: freezed == selected
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -276,6 +311,7 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
       this.parent,
       this.expanded,
       this.filter,
+      this.selected,
       final String? $type})
       : _children = children,
         $type = $type ?? 'fileSystemEntity';
@@ -302,13 +338,15 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
   final TreeExpanded? expanded;
   @override
   final String? filter;
+  @override
+  final bool? selected;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'TreeNodeModel.fileSystemEntity(fileSystemEntity: $fileSystemEntity, children: $children, parent: $parent, expanded: $expanded, filter: $filter)';
+    return 'TreeNodeModel.fileSystemEntity(fileSystemEntity: $fileSystemEntity, children: $children, parent: $parent, expanded: $expanded, filter: $filter, selected: $selected)';
   }
 
   @override
@@ -322,13 +360,21 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
             (identical(other.parent, parent) || other.parent == parent) &&
             (identical(other.expanded, expanded) ||
                 other.expanded == expanded) &&
-            (identical(other.filter, filter) || other.filter == filter));
+            (identical(other.filter, filter) || other.filter == filter) &&
+            (identical(other.selected, selected) ||
+                other.selected == selected));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, fileSystemEntity,
-      const DeepCollectionEquality().hash(_children), parent, expanded, filter);
+  int get hashCode => Object.hash(
+      runtimeType,
+      fileSystemEntity,
+      const DeepCollectionEquality().hash(_children),
+      parent,
+      expanded,
+      filter,
+      selected);
 
   @JsonKey(ignore: true)
   @override
@@ -346,7 +392,8 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)
+            String? filter,
+            bool? selected)
         fileSystemEntity,
     required TResult Function(
             AndroidApplication androidApplication,
@@ -362,9 +409,16 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
             TreeNodeModel? parent,
             String? filter)
         androidActivity,
+    required TResult Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        sftp,
   }) {
     return fileSystemEntity(
-        this.fileSystemEntity, children, parent, expanded, filter);
+        this.fileSystemEntity, children, parent, expanded, filter, selected);
   }
 
   @override
@@ -375,7 +429,8 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)?
+            String? filter,
+            bool? selected)?
         fileSystemEntity,
     TResult? Function(
             AndroidApplication androidApplication,
@@ -391,9 +446,16 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
             TreeNodeModel? parent,
             String? filter)?
         androidActivity,
+    TResult? Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        sftp,
   }) {
     return fileSystemEntity?.call(
-        this.fileSystemEntity, children, parent, expanded, filter);
+        this.fileSystemEntity, children, parent, expanded, filter, selected);
   }
 
   @override
@@ -404,7 +466,8 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)?
+            String? filter,
+            bool? selected)?
         fileSystemEntity,
     TResult Function(
             AndroidApplication androidApplication,
@@ -420,11 +483,18 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
             TreeNodeModel? parent,
             String? filter)?
         androidActivity,
+    TResult Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        sftp,
     required TResult orElse(),
   }) {
     if (fileSystemEntity != null) {
       return fileSystemEntity(
-          this.fileSystemEntity, children, parent, expanded, filter);
+          this.fileSystemEntity, children, parent, expanded, filter, selected);
     }
     return orElse();
   }
@@ -436,6 +506,7 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
     required TResult Function(TreeNodeAndroidApplication value)
         androidApplication,
     required TResult Function(TreeNodeAndroidActivity value) androidActivity,
+    required TResult Function(TreeNodeSftp value) sftp,
   }) {
     return fileSystemEntity(this);
   }
@@ -446,6 +517,7 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
     TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
     TResult? Function(TreeNodeAndroidActivity value)? androidActivity,
+    TResult? Function(TreeNodeSftp value)? sftp,
   }) {
     return fileSystemEntity?.call(this);
   }
@@ -456,6 +528,7 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
     TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult Function(TreeNodeAndroidApplication value)? androidApplication,
     TResult Function(TreeNodeAndroidActivity value)? androidActivity,
+    TResult Function(TreeNodeSftp value)? sftp,
     required TResult orElse(),
   }) {
     if (fileSystemEntity != null) {
@@ -479,7 +552,8 @@ abstract class TreeNodeFileSystemEntity implements TreeNodeModel, TreeNode {
       final List<TreeNodeModel>? children,
       final TreeNodeModel? parent,
       final TreeExpanded? expanded,
-      final String? filter}) = _$TreeNodeFileSystemEntity;
+      final String? filter,
+      final bool? selected}) = _$TreeNodeFileSystemEntity;
 
   factory TreeNodeFileSystemEntity.fromJson(Map<String, dynamic> json) =
       _$TreeNodeFileSystemEntity.fromJson;
@@ -494,6 +568,7 @@ abstract class TreeNodeFileSystemEntity implements TreeNodeModel, TreeNode {
   TreeExpanded? get expanded;
   @override
   String? get filter;
+  bool? get selected;
   @override
   @JsonKey(ignore: true)
   _$$TreeNodeFileSystemEntityCopyWith<_$TreeNodeFileSystemEntity>
@@ -650,7 +725,8 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)
+            String? filter,
+            bool? selected)
         fileSystemEntity,
     required TResult Function(
             AndroidApplication androidApplication,
@@ -666,6 +742,13 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
             TreeNodeModel? parent,
             String? filter)
         androidActivity,
+    required TResult Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        sftp,
   }) {
     return androidApplication(
         this.androidApplication, children, expanded, parent, filter);
@@ -679,7 +762,8 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)?
+            String? filter,
+            bool? selected)?
         fileSystemEntity,
     TResult? Function(
             AndroidApplication androidApplication,
@@ -695,6 +779,13 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
             TreeNodeModel? parent,
             String? filter)?
         androidActivity,
+    TResult? Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        sftp,
   }) {
     return androidApplication?.call(
         this.androidApplication, children, expanded, parent, filter);
@@ -708,7 +799,8 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)?
+            String? filter,
+            bool? selected)?
         fileSystemEntity,
     TResult Function(
             AndroidApplication androidApplication,
@@ -724,6 +816,13 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
             TreeNodeModel? parent,
             String? filter)?
         androidActivity,
+    TResult Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        sftp,
     required TResult orElse(),
   }) {
     if (androidApplication != null) {
@@ -740,6 +839,7 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
     required TResult Function(TreeNodeAndroidApplication value)
         androidApplication,
     required TResult Function(TreeNodeAndroidActivity value) androidActivity,
+    required TResult Function(TreeNodeSftp value) sftp,
   }) {
     return androidApplication(this);
   }
@@ -750,6 +850,7 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
     TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
     TResult? Function(TreeNodeAndroidActivity value)? androidActivity,
+    TResult? Function(TreeNodeSftp value)? sftp,
   }) {
     return androidApplication?.call(this);
   }
@@ -760,6 +861,7 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
     TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult Function(TreeNodeAndroidApplication value)? androidApplication,
     TResult Function(TreeNodeAndroidActivity value)? androidActivity,
+    TResult Function(TreeNodeSftp value)? sftp,
     required TResult orElse(),
   }) {
     if (androidApplication != null) {
@@ -949,7 +1051,8 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)
+            String? filter,
+            bool? selected)
         fileSystemEntity,
     required TResult Function(
             AndroidApplication androidApplication,
@@ -965,6 +1068,13 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
             TreeNodeModel? parent,
             String? filter)
         androidActivity,
+    required TResult Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        sftp,
   }) {
     return androidActivity(
         this.androidActivity, children, expanded, parent, filter);
@@ -978,7 +1088,8 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)?
+            String? filter,
+            bool? selected)?
         fileSystemEntity,
     TResult? Function(
             AndroidApplication androidApplication,
@@ -994,6 +1105,13 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
             TreeNodeModel? parent,
             String? filter)?
         androidActivity,
+    TResult? Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        sftp,
   }) {
     return androidActivity?.call(
         this.androidActivity, children, expanded, parent, filter);
@@ -1007,7 +1125,8 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
             List<TreeNodeModel>? children,
             TreeNodeModel? parent,
             TreeExpanded? expanded,
-            String? filter)?
+            String? filter,
+            bool? selected)?
         fileSystemEntity,
     TResult Function(
             AndroidApplication androidApplication,
@@ -1023,6 +1142,13 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
             TreeNodeModel? parent,
             String? filter)?
         androidActivity,
+    TResult Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        sftp,
     required TResult orElse(),
   }) {
     if (androidActivity != null) {
@@ -1039,6 +1165,7 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
     required TResult Function(TreeNodeAndroidApplication value)
         androidApplication,
     required TResult Function(TreeNodeAndroidActivity value) androidActivity,
+    required TResult Function(TreeNodeSftp value) sftp,
   }) {
     return androidActivity(this);
   }
@@ -1049,6 +1176,7 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
     TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
     TResult? Function(TreeNodeAndroidActivity value)? androidActivity,
+    TResult? Function(TreeNodeSftp value)? sftp,
   }) {
     return androidActivity?.call(this);
   }
@@ -1059,6 +1187,7 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
     TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
     TResult Function(TreeNodeAndroidApplication value)? androidApplication,
     TResult Function(TreeNodeAndroidActivity value)? androidActivity,
+    TResult Function(TreeNodeSftp value)? sftp,
     required TResult orElse(),
   }) {
     if (androidActivity != null) {
@@ -1098,5 +1227,319 @@ abstract class TreeNodeAndroidActivity implements TreeNodeModel, TreeNode {
   @override
   @JsonKey(ignore: true)
   _$$TreeNodeAndroidActivityCopyWith<_$TreeNodeAndroidActivity> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TreeNodeSftpCopyWith<$Res>
+    implements $TreeNodeModelCopyWith<$Res> {
+  factory _$$TreeNodeSftpCopyWith(
+          _$TreeNodeSftp value, $Res Function(_$TreeNodeSftp) then) =
+      __$$TreeNodeSftpCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@SftpJSONConverter() SftpName sftp,
+      List<TreeNodeModel>? children,
+      TreeExpanded? expanded,
+      TreeNodeModel? parent,
+      String? filter});
+
+  @override
+  $TreeNodeModelCopyWith<$Res>? get parent;
+}
+
+/// @nodoc
+class __$$TreeNodeSftpCopyWithImpl<$Res>
+    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeSftp>
+    implements _$$TreeNodeSftpCopyWith<$Res> {
+  __$$TreeNodeSftpCopyWithImpl(
+      _$TreeNodeSftp _value, $Res Function(_$TreeNodeSftp) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? sftp = null,
+    Object? children = freezed,
+    Object? expanded = freezed,
+    Object? parent = freezed,
+    Object? filter = freezed,
+  }) {
+    return _then(_$TreeNodeSftp(
+      sftp: null == sftp
+          ? _value.sftp
+          : sftp // ignore: cast_nullable_to_non_nullable
+              as SftpName,
+      children: freezed == children
+          ? _value._children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<TreeNodeModel>?,
+      expanded: freezed == expanded
+          ? _value.expanded
+          : expanded // ignore: cast_nullable_to_non_nullable
+              as TreeExpanded?,
+      parent: freezed == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as TreeNodeModel?,
+      filter: freezed == filter
+          ? _value.filter
+          : filter // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TreeNodeSftp implements TreeNodeSftp {
+  _$TreeNodeSftp(
+      {@SftpJSONConverter() required this.sftp,
+      final List<TreeNodeModel>? children,
+      this.expanded,
+      this.parent,
+      this.filter,
+      final String? $type})
+      : _children = children,
+        $type = $type ?? 'sftp';
+
+  factory _$TreeNodeSftp.fromJson(Map<String, dynamic> json) =>
+      _$$TreeNodeSftpFromJson(json);
+
+  @override
+  @SftpJSONConverter()
+  final SftpName sftp;
+  final List<TreeNodeModel>? _children;
+  @override
+  List<TreeNodeModel>? get children {
+    final value = _children;
+    if (value == null) return null;
+    if (_children is EqualUnmodifiableListView) return _children;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final TreeExpanded? expanded;
+  @override
+  final TreeNodeModel? parent;
+  @override
+  final String? filter;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'TreeNodeModel.sftp(sftp: $sftp, children: $children, expanded: $expanded, parent: $parent, filter: $filter)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TreeNodeSftp &&
+            (identical(other.sftp, sftp) || other.sftp == sftp) &&
+            const DeepCollectionEquality().equals(other._children, _children) &&
+            (identical(other.expanded, expanded) ||
+                other.expanded == expanded) &&
+            (identical(other.parent, parent) || other.parent == parent) &&
+            (identical(other.filter, filter) || other.filter == filter));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, sftp,
+      const DeepCollectionEquality().hash(_children), expanded, parent, filter);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TreeNodeSftpCopyWith<_$TreeNodeSftp> get copyWith =>
+      __$$TreeNodeSftpCopyWithImpl<_$TreeNodeSftp>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter,
+            bool? selected)
+        fileSystemEntity,
+    required TResult Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        androidApplication,
+    required TResult Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        androidActivity,
+    required TResult Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)
+        sftp,
+  }) {
+    return sftp(this.sftp, children, expanded, parent, filter);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter,
+            bool? selected)?
+        fileSystemEntity,
+    TResult? Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidApplication,
+    TResult? Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidActivity,
+    TResult? Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        sftp,
+  }) {
+    return sftp?.call(this.sftp, children, expanded, parent, filter);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            @FileSystemEntityJSONConverter() FileSystemEntity fileSystemEntity,
+            List<TreeNodeModel>? children,
+            TreeNodeModel? parent,
+            TreeExpanded? expanded,
+            String? filter,
+            bool? selected)?
+        fileSystemEntity,
+    TResult Function(
+            AndroidApplication androidApplication,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidApplication,
+    TResult Function(
+            AndroidActivity androidActivity,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        androidActivity,
+    TResult Function(
+            @SftpJSONConverter() SftpName sftp,
+            List<TreeNodeModel>? children,
+            TreeExpanded? expanded,
+            TreeNodeModel? parent,
+            String? filter)?
+        sftp,
+    required TResult orElse(),
+  }) {
+    if (sftp != null) {
+      return sftp(this.sftp, children, expanded, parent, filter);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TreeNodeFileSystemEntity value) fileSystemEntity,
+    required TResult Function(TreeNodeAndroidApplication value)
+        androidApplication,
+    required TResult Function(TreeNodeAndroidActivity value) androidActivity,
+    required TResult Function(TreeNodeSftp value) sftp,
+  }) {
+    return sftp(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
+    TResult? Function(TreeNodeAndroidApplication value)? androidApplication,
+    TResult? Function(TreeNodeAndroidActivity value)? androidActivity,
+    TResult? Function(TreeNodeSftp value)? sftp,
+  }) {
+    return sftp?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TreeNodeFileSystemEntity value)? fileSystemEntity,
+    TResult Function(TreeNodeAndroidApplication value)? androidApplication,
+    TResult Function(TreeNodeAndroidActivity value)? androidActivity,
+    TResult Function(TreeNodeSftp value)? sftp,
+    required TResult orElse(),
+  }) {
+    if (sftp != null) {
+      return sftp(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TreeNodeSftpToJson(
+      this,
+    );
+  }
+}
+
+abstract class TreeNodeSftp implements TreeNodeModel, TreeNode {
+  factory TreeNodeSftp(
+      {@SftpJSONConverter() required final SftpName sftp,
+      final List<TreeNodeModel>? children,
+      final TreeExpanded? expanded,
+      final TreeNodeModel? parent,
+      final String? filter}) = _$TreeNodeSftp;
+
+  factory TreeNodeSftp.fromJson(Map<String, dynamic> json) =
+      _$TreeNodeSftp.fromJson;
+
+  @SftpJSONConverter()
+  SftpName get sftp;
+  @override
+  List<TreeNodeModel>? get children;
+  @override
+  TreeExpanded? get expanded;
+  @override
+  TreeNodeModel? get parent;
+  @override
+  String? get filter;
+  @override
+  @JsonKey(ignore: true)
+  _$$TreeNodeSftpCopyWith<_$TreeNodeSftp> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -19,6 +19,7 @@ _$TreeNodeFileSystemEntity _$$TreeNodeFileSystemEntityFromJson(
           : TreeNodeModel.fromJson(json['parent'] as Map<String, dynamic>),
       expanded: $enumDecodeNullable(_$TreeExpandedEnumMap, json['expanded']),
       filter: json['filter'] as String?,
+      selected: json['selected'] as bool?,
       $type: json['runtimeType'] as String?,
     );
 
@@ -31,6 +32,7 @@ Map<String, dynamic> _$$TreeNodeFileSystemEntityToJson(
       'parent': instance.parent,
       'expanded': _$TreeExpandedEnumMap[instance.expanded],
       'filter': instance.filter,
+      'selected': instance.selected,
       'runtimeType': instance.$type,
     };
 
@@ -94,12 +96,37 @@ Map<String, dynamic> _$$TreeNodeAndroidActivityToJson(
       'runtimeType': instance.$type,
     };
 
+_$TreeNodeSftp _$$TreeNodeSftpFromJson(Map<String, dynamic> json) =>
+    _$TreeNodeSftp(
+      sftp: const SftpJSONConverter()
+          .fromJson(json['sftp'] as Map<String, dynamic>),
+      children: (json['children'] as List<dynamic>?)
+          ?.map((e) => TreeNodeModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      expanded: $enumDecodeNullable(_$TreeExpandedEnumMap, json['expanded']),
+      parent: json['parent'] == null
+          ? null
+          : TreeNodeModel.fromJson(json['parent'] as Map<String, dynamic>),
+      filter: json['filter'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$TreeNodeSftpToJson(_$TreeNodeSftp instance) =>
+    <String, dynamic>{
+      'sftp': const SftpJSONConverter().toJson(instance.sftp),
+      'children': instance.children,
+      'expanded': _$TreeExpandedEnumMap[instance.expanded],
+      'parent': instance.parent,
+      'filter': instance.filter,
+      'runtimeType': instance.$type,
+    };
+
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$asyncCurrentTreeNodeModelHash() =>
-    r'5c10df587905f992eba74c4e421f2209760fce19';
+    r'a5d5f95be5398bc352ef9e9addbbf925b509a78d';
 
 /// See also [AsyncCurrentTreeNodeModel].
 @ProviderFor(AsyncCurrentTreeNodeModel)

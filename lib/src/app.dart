@@ -5,10 +5,24 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mmkv/mmkv.dart';
+
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _MyApp();
+}
 
 /// The Widget that configures your application.
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _MyApp extends State<MyApp> {
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _isLoading = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +63,7 @@ class MyApp extends StatelessWidget {
                 //   builder: (_, __) => const GuidePage(),
                 // ),
               ],
-            ),
+            )
           ],
         ),
       );
