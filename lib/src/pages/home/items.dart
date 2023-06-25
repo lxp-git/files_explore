@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:android_intent_plus/android_intent.dart';
+import 'package:files_explore/src/dto/sftp_server.dart';
 import 'package:files_explore/src/pages/home/rivepod.dart';
+import 'package:files_explore/src/utils/local_storage_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -66,7 +68,7 @@ class Items extends ConsumerWidget {
       orElse: () => Container(),
       loading: () => Container(),
       data: (node) {
-        Widget icon = const Icon(Icons.question_mark_outlined);
+        Widget icon = const Icon(Icons.insert_drive_file_outlined);
         Widget expandedIcon = Icon((node.expanded == TreeExpanded.ok)
             ? Icons.arrow_drop_down_rounded
             : Icons.arrow_right_rounded);
@@ -152,10 +154,18 @@ class Items extends ConsumerWidget {
           icon = const Icon(Icons.android_outlined);
           title = node.androidActivity.name +
               (node.androidActivity.enabled ? "" : " (Disabled)");
-        } else if (node is TreeNodeSftp) {
-          path = node.sftp.filename;
+        } else if (node is TreeNodeSftpServer) {
+          path = node.sftpServer.host.isEmpty
+              ? node.sftpServer.label!
+              : node.sftpServer.host;
           icon = const Icon(Icons.cloud_circle_outlined);
-          title = node.sftp.filename;
+          title = node.sftpServer.label!.isEmpty
+              ? node.sftpServer.host
+              : node.sftpServer.label!;
+        } else if (node is TreeNodeSftpName) {
+          path = node.sftpName.longname;
+          icon = const Icon(Icons.cloud_circle_outlined);
+          title = node.sftpName.filename;
         }
         if (node.expanded == TreeExpanded.loading) {
           expandedIcon = Container(
@@ -182,9 +192,9 @@ class Items extends ConsumerWidget {
                   return;
                 }
                 PlatformUtils.openFile(path);
-              } else if (node is TreeNodeAndroidApplication) {
-                ref.read(asyncCurrentTreeNodeModelProvider.notifier).list();
+                return;
               }
+              ref.read(asyncCurrentTreeNodeModelProvider.notifier).list();
             },
             child: Container(
                 color: (node is TreeNodeFileSystemEntity &&
@@ -222,7 +232,11 @@ class Items extends ConsumerWidget {
                       overrides: [
                         asyncCurrentTreeNodeModelProvider.overrideWith(() =>
                             AsyncCurrentTreeNodeModel(
-                                defaultState: node.children?[index]))
+                                defaultState: node.children?[index],
+                                sftpClient: ref
+                                    .read(asyncCurrentTreeNodeModelProvider
+                                        .notifier)
+                                    .sftpClient))
                       ],
                       child: Items(animation: animation),
                     );
@@ -370,7 +384,7 @@ class Items extends ConsumerWidget {
               children: const [Text("App System Info")],
             ),
           ),
-        if (node is TreeNodeSftp && node.sftp.longname.isEmpty)
+        if (node is TreeNodeSftpServer && node.sftpServer.host.isEmpty)
           PopupMenuItem(
             onTap: () {
               showNewSftpServerDialog();
@@ -382,94 +396,145 @@ class Items extends ConsumerWidget {
           ),
       ],
       context: context,
-      position: RelativeRect.fromRect(
-          Rect.fromLTWH(_tapPosition.dx, _tapPosition.dy, 30, 30),
-          Rect.fromLTWH(0, 0, width, height)),
+      position: RelativeRect.fromLTRB(
+        _tapPosition.dx,
+        _tapPosition.dy,
+        width - _tapPosition.dx,
+        height - _tapPosition.dy,
+      ),
     );
     ref.read(asyncCurrentTreeNodeModelProvider.notifier).select();
   }
 
   showNewSftpServerDialog() {
+    final labelTextEditingController = TextEditingController();
     final hostTextEditingController = TextEditingController();
+    final pathTextEditingController = TextEditingController();
+    final usernameTextEditingController = TextEditingController();
     final passwordTextEditingController = TextEditingController();
     final portTextEditingController = TextEditingController(text: "22");
     final privateKeyPath = "";
     showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            title: const Text('New Server'),
-            content: SizedBox(
-              height: 200,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Flexible(
-                          child: TextField(
-                              controller: hostTextEditingController,
-                              decoration: const InputDecoration(
-                                  filled: true,
-                                  hintText: "host name or ip",
-                                  labelText: "Host")),
-                          flex: 9),
-                      Flexible(
-                          child: TextField(
-                              controller: portTextEditingController,
-                              decoration: const InputDecoration(
-                                  filled: true,
-                                  hintText: "host name or ip",
-                                  labelText: "Port")),
-                          flex: 1)
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: TextField(
-                              controller: passwordTextEditingController,
-                              decoration: const InputDecoration(
-                                  filled: true,
-                                  hintText: "password",
-                                  labelText: "Password"))),
-                      MaterialButton(
-                          onPressed: () {}, child: Text("Private key")),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              Expanded(
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                  ),
-                  child: const Text('Test'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+          String host = "";
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return Dialog(
+                  child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('New Server'),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Flexible(
+                            child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            TextField(
+                                controller: labelTextEditingController,
+                                decoration: const InputDecoration(
+                                    filled: true,
+                                    hintText: "",
+                                    labelText: "Label")),
+                            TextField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    host = value;
+                                  });
+                                },
+                                controller: hostTextEditingController,
+                                decoration: const InputDecoration(
+                                    filled: true,
+                                    hintText: "",
+                                    labelText: "Host name or ip address")),
+                            TextField(
+                                controller: pathTextEditingController,
+                                decoration: const InputDecoration(
+                                    filled: true,
+                                    hintText: "",
+                                    labelText: "Path")),
+                          ],
+                        )),
+                        SizedBox(width: 10),
+                        Flexible(
+                            child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            TextField(
+                                controller: usernameTextEditingController,
+                                decoration: const InputDecoration(
+                                    filled: true,
+                                    hintText: "",
+                                    labelText: "Username")),
+                            TextField(
+                                controller: passwordTextEditingController,
+                                decoration: const InputDecoration(
+                                    filled: true,
+                                    hintText: "",
+                                    labelText: "Password")),
+                            MaterialButton(
+                              onPressed: () {},
+                              child: Text("Private key"),
+                            )
+                          ],
+                        ))
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                            ),
+                            child: const Text('Test'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          child: const Text('Cancel'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          child: const Text('Save'),
+                          onPressed: host.isEmpty
+                              ? null
+                              : () {
+                                  LocalStorageHelper.sftpServers = [
+                                    ...LocalStorageHelper.sftpServers,
+                                    SftpServer(
+                                        label: labelTextEditingController.text,
+                                        host: hostTextEditingController.text,
+                                        username:
+                                            usernameTextEditingController.text,
+                                        port: int.parse(
+                                            portTextEditingController.text),
+                                        password:
+                                            passwordTextEditingController.text)
+                                  ];
+                                  Navigator.of(context).pop();
+                                },
+                        ),
+                      ],
+                    )
+                  ],
                 ),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: Theme.of(context).textTheme.labelLarge,
-                ),
-                child: const Text('Cancel'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: Theme.of(context).textTheme.labelLarge,
-                ),
-                child: const Text('Confirm'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
+              ));
+            },
           );
         });
   }

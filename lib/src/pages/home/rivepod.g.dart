@@ -96,10 +96,10 @@ Map<String, dynamic> _$$TreeNodeAndroidActivityToJson(
       'runtimeType': instance.$type,
     };
 
-_$TreeNodeSftp _$$TreeNodeSftpFromJson(Map<String, dynamic> json) =>
-    _$TreeNodeSftp(
-      sftp: const SftpJSONConverter()
-          .fromJson(json['sftp'] as Map<String, dynamic>),
+_$TreeNodeSftpName _$$TreeNodeSftpNameFromJson(Map<String, dynamic> json) =>
+    _$TreeNodeSftpName(
+      sftpName: const SftpJSONConverter()
+          .fromJson(json['sftpName'] as Map<String, dynamic>),
       children: (json['children'] as List<dynamic>?)
           ?.map((e) => TreeNodeModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -111,9 +111,35 @@ _$TreeNodeSftp _$$TreeNodeSftpFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TreeNodeSftpToJson(_$TreeNodeSftp instance) =>
+Map<String, dynamic> _$$TreeNodeSftpNameToJson(_$TreeNodeSftpName instance) =>
     <String, dynamic>{
-      'sftp': const SftpJSONConverter().toJson(instance.sftp),
+      'sftpName': const SftpJSONConverter().toJson(instance.sftpName),
+      'children': instance.children,
+      'expanded': _$TreeExpandedEnumMap[instance.expanded],
+      'parent': instance.parent,
+      'filter': instance.filter,
+      'runtimeType': instance.$type,
+    };
+
+_$TreeNodeSftpServer _$$TreeNodeSftpServerFromJson(Map<String, dynamic> json) =>
+    _$TreeNodeSftpServer(
+      sftpServer:
+          SftpServer.fromJson(json['sftpServer'] as Map<String, dynamic>),
+      children: (json['children'] as List<dynamic>?)
+          ?.map((e) => TreeNodeModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      expanded: $enumDecodeNullable(_$TreeExpandedEnumMap, json['expanded']),
+      parent: json['parent'] == null
+          ? null
+          : TreeNodeModel.fromJson(json['parent'] as Map<String, dynamic>),
+      filter: json['filter'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$TreeNodeSftpServerToJson(
+        _$TreeNodeSftpServer instance) =>
+    <String, dynamic>{
+      'sftpServer': instance.sftpServer,
       'children': instance.children,
       'expanded': _$TreeExpandedEnumMap[instance.expanded],
       'parent': instance.parent,
@@ -126,7 +152,7 @@ Map<String, dynamic> _$$TreeNodeSftpToJson(_$TreeNodeSftp instance) =>
 // **************************************************************************
 
 String _$asyncCurrentTreeNodeModelHash() =>
-    r'a5d5f95be5398bc352ef9e9addbbf925b509a78d';
+    r'1c5041ac55b3ec538b30c19f99de1f8df0f772cf';
 
 /// See also [AsyncCurrentTreeNodeModel].
 @ProviderFor(AsyncCurrentTreeNodeModel)

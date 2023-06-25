@@ -4,7 +4,9 @@ import 'dart:io';
 
 import 'package:dartssh2/dartssh2.dart';
 import 'package:files_explore/src/dto/android_application.dart';
+import 'package:files_explore/src/dto/sftp_server.dart';
 import 'package:files_explore/src/utils/constants.dart';
+import 'package:files_explore/src/utils/local_storage_helper.dart';
 import 'package:files_explore/src/utils/platform.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -86,11 +88,18 @@ sealed class TreeNodeModel with _$TreeNodeModel {
       String? filter}) = TreeNodeAndroidActivity;
   @Implements<TreeNode>()
   factory TreeNodeModel.sftp(
-      {@SftpJSONConverter() required SftpName sftp,
+      {@SftpJSONConverter() required SftpName sftpName,
       List<TreeNodeModel>? children,
       TreeExpanded? expanded,
       TreeNodeModel? parent,
-      String? filter}) = TreeNodeSftp;
+      String? filter}) = TreeNodeSftpName;
+  @Implements<TreeNode>()
+  factory TreeNodeModel.sftpServer(
+      {@SftpJSONConverter() required SftpServer sftpServer,
+      List<TreeNodeModel>? children,
+      TreeExpanded? expanded,
+      TreeNodeModel? parent,
+      String? filter}) = TreeNodeSftpServer;
 
   factory TreeNodeModel.fromJson(Map<String, Object?> json) =>
       _$TreeNodeModelFromJson(json);
@@ -100,7 +109,8 @@ sealed class TreeNodeModel with _$TreeNodeModel {
 class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   final TreeNodeModel? defaultState;
-  AsyncCurrentTreeNodeModel({this.defaultState});
+  SftpClient? sftpClient;
+  AsyncCurrentTreeNodeModel({this.defaultState, this.sftpClient});
 
   @override
   Future<TreeNodeModel> build() async {
@@ -121,11 +131,10 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
                   packageName: "",
                   activities: [],
                   enabled: true)),
-          TreeNodeModel.sftp(
+          TreeNodeModel.sftpServer(
               parent: null,
               children: [],
-              sftp: SftpName(
-                  filename: "SFTP", longname: "", attr: SftpFileAttrs())),
+              sftpServer: SftpServer(label: "SFTP", host: "", username: "")),
         ], parent: null, fileSystemEntity: Directory(""));
       }
       return TreeNodeModel.fileSystemEntity(
@@ -202,13 +211,7 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
           listKey.currentState!
               .insertItem((treeNodeModel.children?.length ?? 0) + i);
         }
-        final client = SSHClient(
-          await SSHSocket.connect('localhost', 22),
-          username: '<username>',
-          onPasswordRequest: () => '<password>',
-        );
-        final sftp = await client.sftp();
-        sftp.listdir("/");
+
         // listKey.currentState!.insertAllItems(
         //     treeNodeModel.children?.length ?? 0,
         //     state.value!.children?.length ??
@@ -258,7 +261,61 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
       //   },
       //   onDone: () {},
       // );
-    } else if (treeNodeModel is TreeNodeSftp) {}
+    } else if (treeNodeModel is TreeNodeSftpServer) {
+      print("LocalStorageHelper.sftpServers:" +
+          LocalStorageHelper.sftpServers.toString());
+      if (treeNodeModel.sftpServer.host.isEmpty) {
+        state = AsyncValue.data(treeNodeModel.copyWith(
+            expanded: TreeExpanded.ok,
+            children: LocalStorageHelper.sftpServers
+                .map((e) =>
+                    TreeNodeSftpServer(sftpServer: e, parent: state.value))
+                .toList()));
+        final newDataCount = ((state.value!.children?.length ?? 1) -
+            (treeNodeModel.children?.length ?? 0));
+        listKey.currentState!
+            .insertAllItems(treeNodeModel.children?.length ?? 0, newDataCount);
+      } else {
+        state = await AsyncValue.guard(() async {
+          final sshClient = SSHClient(
+            await SSHSocket.connect(
+                treeNodeModel.sftpServer.host, treeNodeModel.sftpServer.port),
+            username: treeNodeModel.sftpServer.username,
+            onPasswordRequest: () => treeNodeModel.sftpServer.password,
+          );
+          sftpClient = await sshClient.sftp();
+          final files = await sftpClient!.listdir("/");
+          return treeNodeModel.copyWith(
+              children: files.map((sftpName) {
+            return TreeNodeSftpName(sftpName: sftpName, parent: state.value);
+          }).toList());
+        });
+        final newDataCount = ((state.value!.children?.length ?? 1) -
+            (treeNodeModel.children?.length ?? 0));
+        listKey.currentState!
+            .insertAllItems(treeNodeModel.children?.length ?? 0, newDataCount);
+      }
+    } else if (treeNodeModel is TreeNodeSftpName) {
+      state = await AsyncValue.guard(() async {
+        String currentPath = "/" + treeNodeModel.sftpName.filename;
+        TreeNodeModel? temp = treeNodeModel.parent;
+        while (temp != null) {
+          if (temp is TreeNodeSftpName) {
+            currentPath = temp.sftpName.filename + "/" + currentPath;
+          }
+          temp = temp.parent;
+        }
+        final files = await sftpClient!.listdir(currentPath);
+        return treeNodeModel.copyWith(
+            children: files.map((sftpName) {
+          return TreeNodeSftpName(sftpName: sftpName, parent: state.value);
+        }).toList());
+      });
+      final newDataCount = ((state.value!.children?.length ?? 1) -
+          (treeNodeModel.children?.length ?? 0));
+      listKey.currentState!
+          .insertAllItems(treeNodeModel.children?.length ?? 0, newDataCount);
+    }
   }
 
   search(String text) {
