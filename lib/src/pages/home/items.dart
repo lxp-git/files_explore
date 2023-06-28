@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:files_explore/src/dto/sftp_server.dart';
 import 'package:files_explore/src/pages/home/rivepod.dart';
+import 'package:files_explore/src/utils/custom_clipboard.dart';
 import 'package:files_explore/src/utils/local_storage_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:collection/collection.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:path/path.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../utils/platform.dart';
@@ -337,10 +339,34 @@ class Items extends ConsumerWidget {
         ),
         if (node is TreeNodeFileSystemEntity)
           PopupMenuItem(
-            onTap: () {},
+            onTap: () {
+              CustomClipboard.setData(node);
+              // Clipboard.setData(ClipboardData(text: node.toJson().toString()));
+            },
             //value: this._index,
             child: Row(
               children: const [Text("Copy")],
+            ),
+          ),
+        if (node is TreeNodeFileSystemEntity)
+          PopupMenuItem(
+            onTap: () async {
+              final clipboardData = CustomClipboard.getData();
+              if (clipboardData is TreeNodeFileSystemEntity) {
+                clipboardData.fileSystemEntity;
+                if (node is TreeNodeFileSystemEntity) {
+                  final result = await File(
+                          clipboardData.fileSystemEntity.absolute.path)
+                      .copy(node.fileSystemEntity.absolute.path +
+                          "/" +
+                          basename(
+                              clipboardData.fileSystemEntity.absolute.path));
+                }
+              }
+            },
+            //value: this._index,
+            child: Row(
+              children: const [Text("Paste")],
             ),
           ),
         if (node is TreeNodeFileSystemEntity)
@@ -362,7 +388,9 @@ class Items extends ConsumerWidget {
         if (node is TreeNodeFileSystemEntity)
           PopupMenuItem(
             onTap: () {
-              File(node.fileSystemEntity.path).deleteSync();
+              try {
+                File(node.fileSystemEntity.path).deleteSync();
+              } catch (error) {}
             },
             //value: this._index,
             child: Row(
@@ -392,6 +420,14 @@ class Items extends ConsumerWidget {
             //value: this._index,
             child: Row(
               children: const [Text("Add")],
+            ),
+          ),
+        if (node is TreeNodeSftpServer && node.sftpServer.host.isNotEmpty)
+          PopupMenuItem(
+            onTap: () {},
+            //value: this._index,
+            child: Row(
+              children: const [Text("Shell")],
             ),
           ),
       ],
