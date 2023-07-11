@@ -116,29 +116,25 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
   Future<TreeNodeModel> build() async {
     if (defaultState == null) {
       await [Permission.storage, Permission.manageExternalStorage].request();
-      final rootDirectory = await getExternalStorageDirectory();
-      if (rootDirectory != null) {
-        return TreeNodeModel.fileSystemEntity(children: [
-          TreeNodeModel.fileSystemEntity(
-              parent: null,
-              children: [],
-              fileSystemEntity: Directory(rootDirectory.path)),
-          TreeNodeModel.androidApplication(
-              parent: null,
-              children: [],
-              androidApplication: AndroidApplication(
-                  label: "App manager",
-                  packageName: "",
-                  activities: [],
-                  enabled: true)),
-          TreeNodeModel.sftpServer(
-              parent: null,
-              children: [],
-              sftpServer: SftpServer(label: "SFTP", host: "", username: "")),
-        ], parent: null, fileSystemEntity: Directory(""));
-      }
-      return TreeNodeModel.fileSystemEntity(
-          parent: null, children: [], fileSystemEntity: Directory(""));
+      final rootDirectory = await PlatformUtils.getExternalStorageDirectory();
+      return TreeNodeModel.fileSystemEntity(children: [
+        TreeNodeModel.fileSystemEntity(
+            parent: null,
+            children: [],
+            fileSystemEntity: Directory(rootDirectory)),
+        TreeNodeModel.androidApplication(
+            parent: null,
+            children: [],
+            androidApplication: AndroidApplication(
+                label: "App manager",
+                packageName: "",
+                activities: [],
+                enabled: true)),
+        TreeNodeModel.sftpServer(
+            parent: null,
+            children: [],
+            sftpServer: SftpServer(label: "SFTP", host: "", username: "")),
+      ], parent: null, fileSystemEntity: Directory(""));
     }
     return defaultState!;
   }

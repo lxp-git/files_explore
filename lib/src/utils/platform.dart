@@ -50,4 +50,8 @@ class PlatformUtils {
     return AndroidActivity.fromJson(Map.from((await methodChannel.invokeMethod(
         'getActivityInfo', {"packageName": packageName, "name": name}))));
   }
+
+  static Future<String> getExternalStorageDirectory() async {
+    return await methodChannel.invokeMethod('getExternalStorageDirectory');
+  }
 }

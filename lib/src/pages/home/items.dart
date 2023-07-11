@@ -355,12 +355,16 @@ class Items extends ConsumerWidget {
               if (clipboardData is TreeNodeFileSystemEntity) {
                 clipboardData.fileSystemEntity;
                 if (node is TreeNodeFileSystemEntity) {
-                  final result = await File(
-                          clipboardData.fileSystemEntity.absolute.path)
-                      .copy(node.fileSystemEntity.absolute.path +
-                          "/" +
-                          basename(
-                              clipboardData.fileSystemEntity.absolute.path));
+                  final newPath = node.fileSystemEntity.absolute.path +
+                      "/" +
+                      basename(clipboardData.fileSystemEntity.absolute.path);
+                  // File(newPath).asS final result = await
+                  File(clipboardData.fileSystemEntity.absolute.path)
+                      .copy(newPath)
+                      .asStream()
+                      .listen((event) {
+                    print(event);
+                  });
                 }
               }
             },

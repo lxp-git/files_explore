@@ -11,6 +11,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.Settings
 import android.webkit.MimeTypeMap
 import androidx.core.content.FileProvider
@@ -127,6 +128,8 @@ class MainActivity : FlutterActivity() {
                     packageManager.setComponentEnabledSetting(ComponentName(packageName, name), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.SYNCHRONOUS)
                 }
                 result.success(state)
+            } else if (call.method == "getExternalStorageDirectory") {
+                result.success(Environment.getExternalStorageDirectory().absolutePath)
             } else {
                 result.notImplemented()
             }
