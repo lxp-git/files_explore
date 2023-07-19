@@ -389,12 +389,10 @@ class Items extends ConsumerWidget {
               children: const [Text("New folder")],
             ),
           ),
-        if (node is TreeNodeFileSystemEntity)
+        if (node is TreeNodeFileSystemEntity || node is TreeNodeSftpServer)
           PopupMenuItem(
             onTap: () {
-              try {
-                File(node.fileSystemEntity.path).deleteSync();
-              } catch (error) {}
+              ref.read(asyncCurrentTreeNodeModelProvider.notifier).delete();
             },
             //value: this._index,
             child: Row(
@@ -554,18 +552,26 @@ class Items extends ConsumerWidget {
                           onPressed: host.isEmpty
                               ? null
                               : () {
-                                  LocalStorageHelper.sftpServers = [
-                                    ...LocalStorageHelper.sftpServers,
-                                    SftpServer(
-                                        label: labelTextEditingController.text,
-                                        host: hostTextEditingController.text,
-                                        username:
-                                            usernameTextEditingController.text,
-                                        port: int.parse(
-                                            portTextEditingController.text),
-                                        password:
-                                            passwordTextEditingController.text)
-                                  ];
+                                  final hostAndPort =
+                                      hostTextEditingController.text.split(":");
+                                  int? port = int.tryParse(hostAndPort[1]);
+                                  ref
+                                      .read(asyncCurrentTreeNodeModelProvider
+                                          .notifier)
+                                      .insert(
+                                          sftpServer: SftpServer(
+                                              id: DateTime.now()
+                                                  .millisecondsSinceEpoch,
+                                              label: labelTextEditingController
+                                                  .text,
+                                              host: hostAndPort[0],
+                                              username:
+                                                  usernameTextEditingController
+                                                      .text,
+                                              port: port ?? 22,
+                                              password:
+                                                  passwordTextEditingController
+                                                      .text));
                                   Navigator.of(context).pop();
                                 },
                         ),

@@ -391,4 +391,26 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
   }
 
   init() async {}
+
+  insert({SftpServer? sftpServer}) {
+    final node = state.value!;
+    if (node is TreeNodeFileSystemEntity) {
+      File(node.fileSystemEntity.path).deleteSync();
+    } else if (node is TreeNodeSftpServer) {
+      LocalStorageHelper.sftpServers = [
+        ...LocalStorageHelper.sftpServers,
+      ];
+    }
+  }
+
+  delete() {
+    final node = state.value!;
+    if (node is TreeNodeFileSystemEntity) {
+      File(node.fileSystemEntity.path).deleteSync();
+    } else if (node is TreeNodeSftpServer) {
+      LocalStorageHelper.sftpServers = LocalStorageHelper.sftpServers
+          .where((element) => element.id != node.sftpServer.id)
+          .toList();
+    }
+  }
 }

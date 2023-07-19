@@ -20,6 +20,7 @@ SftpServer _$SftpServerFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SftpServer {
+  int get id => throw _privateConstructorUsedError;
   String get host => throw _privateConstructorUsedError;
   int get port => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
@@ -40,7 +41,8 @@ abstract class $SftpServerCopyWith<$Res> {
       _$SftpServerCopyWithImpl<$Res, SftpServer>;
   @useResult
   $Res call(
-      {String host,
+      {int id,
+      String host,
       int port,
       String username,
       String? password,
@@ -61,6 +63,7 @@ class _$SftpServerCopyWithImpl<$Res, $Val extends SftpServer>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? host = null,
     Object? port = null,
     Object? username = null,
@@ -69,6 +72,10 @@ class _$SftpServerCopyWithImpl<$Res, $Val extends SftpServer>
     Object? label = freezed,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       host: null == host
           ? _value.host
           : host // ignore: cast_nullable_to_non_nullable
@@ -106,7 +113,8 @@ abstract class _$$_SftpServerCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String host,
+      {int id,
+      String host,
       int port,
       String username,
       String? password,
@@ -125,6 +133,7 @@ class __$$_SftpServerCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? host = null,
     Object? port = null,
     Object? username = null,
@@ -133,6 +142,10 @@ class __$$_SftpServerCopyWithImpl<$Res>
     Object? label = freezed,
   }) {
     return _then(_$_SftpServer(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       host: null == host
           ? _value.host
           : host // ignore: cast_nullable_to_non_nullable
@@ -165,7 +178,8 @@ class __$$_SftpServerCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SftpServer implements _SftpServer {
   _$_SftpServer(
-      {required this.host,
+      {required this.id,
+      required this.host,
       this.port = 22,
       required this.username,
       this.password,
@@ -175,6 +189,8 @@ class _$_SftpServer implements _SftpServer {
   factory _$_SftpServer.fromJson(Map<String, dynamic> json) =>
       _$$_SftpServerFromJson(json);
 
+  @override
+  final int id;
   @override
   final String host;
   @override
@@ -191,7 +207,7 @@ class _$_SftpServer implements _SftpServer {
 
   @override
   String toString() {
-    return 'SftpServer(host: $host, port: $port, username: $username, password: $password, privateKeyFile: $privateKeyFile, label: $label)';
+    return 'SftpServer(id: $id, host: $host, port: $port, username: $username, password: $password, privateKeyFile: $privateKeyFile, label: $label)';
   }
 
   @override
@@ -199,6 +215,7 @@ class _$_SftpServer implements _SftpServer {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SftpServer &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.host, host) || other.host == host) &&
             (identical(other.port, port) || other.port == port) &&
             (identical(other.username, username) ||
@@ -213,7 +230,7 @@ class _$_SftpServer implements _SftpServer {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, host, port, username, password, privateKeyFile, label);
+      runtimeType, id, host, port, username, password, privateKeyFile, label);
 
   @JsonKey(ignore: true)
   @override
@@ -231,7 +248,8 @@ class _$_SftpServer implements _SftpServer {
 
 abstract class _SftpServer implements SftpServer {
   factory _SftpServer(
-      {required final String host,
+      {required final int id,
+      required final String host,
       final int port,
       required final String username,
       final String? password,
@@ -241,6 +259,8 @@ abstract class _SftpServer implements SftpServer {
   factory _SftpServer.fromJson(Map<String, dynamic> json) =
       _$_SftpServer.fromJson;
 
+  @override
+  int get id;
   @override
   String get host;
   @override

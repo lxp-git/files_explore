@@ -8,6 +8,7 @@ part of 'sftp_server.dart';
 
 _$_SftpServer _$$_SftpServerFromJson(Map<String, dynamic> json) =>
     _$_SftpServer(
+      id: json['id'] as int,
       host: json['host'] as String,
       port: json['port'] as int? ?? 22,
       username: json['username'] as String,
@@ -18,6 +19,7 @@ _$_SftpServer _$$_SftpServerFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_SftpServerToJson(_$_SftpServer instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'host': instance.host,
       'port': instance.port,
       'username': instance.username,

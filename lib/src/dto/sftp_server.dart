@@ -6,7 +6,8 @@ part "sftp_server.freezed.dart";
 @freezed
 class SftpServer with _$SftpServer {
   factory SftpServer(
-      {required String host,
+      {required int id,
+      required String host,
       @Default(22) int port,
       required String username,
       String? password,
