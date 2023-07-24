@@ -133,7 +133,11 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
         TreeNodeModel.sftpServer(
             parent: null,
             children: [],
-            sftpServer: SftpServer(label: "SFTP", host: "", username: "")),
+            sftpServer: SftpServer(
+                id: DateTime.now().millisecondsSinceEpoch,
+                label: "SFTP",
+                host: "",
+                username: "")),
       ], parent: null, fileSystemEntity: Directory(""));
     }
     return defaultState!;
@@ -258,8 +262,6 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
       //   onDone: () {},
       // );
     } else if (treeNodeModel is TreeNodeSftpServer) {
-      print("LocalStorageHelper.sftpServers:" +
-          LocalStorageHelper.sftpServers.toString());
       if (treeNodeModel.sftpServer.host.isEmpty) {
         state = AsyncValue.data(treeNodeModel.copyWith(
             expanded: TreeExpanded.ok,
@@ -282,9 +284,11 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
           sftpClient = await sshClient.sftp();
           final files = await sftpClient!.listdir("/");
           return treeNodeModel.copyWith(
+              expanded: TreeExpanded.ok,
               children: files.map((sftpName) {
-            return TreeNodeSftpName(sftpName: sftpName, parent: state.value);
-          }).toList());
+                return TreeNodeSftpName(
+                    sftpName: sftpName, parent: state.value);
+              }).toList());
         });
         final newDataCount = ((state.value!.children?.length ?? 1) -
             (treeNodeModel.children?.length ?? 0));
@@ -398,6 +402,7 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
       File(node.fileSystemEntity.path).deleteSync();
     } else if (node is TreeNodeSftpServer) {
       LocalStorageHelper.sftpServers = [
+        sftpServer!,
         ...LocalStorageHelper.sftpServers,
       ];
     }

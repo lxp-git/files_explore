@@ -152,7 +152,7 @@ Map<String, dynamic> _$$TreeNodeSftpServerToJson(
 // **************************************************************************
 
 String _$asyncCurrentTreeNodeModelHash() =>
-    r'0dbbd23d1ba7c711b8be25f97cf988cc89adaf41';
+    r'ad4ad844af709b2b4b12876dbb52081c39e68f76';
 
 /// See also [AsyncCurrentTreeNodeModel].
 @ProviderFor(AsyncCurrentTreeNodeModel)
