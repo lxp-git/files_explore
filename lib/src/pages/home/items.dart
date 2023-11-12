@@ -127,7 +127,7 @@ class Items extends ConsumerWidget {
                   Platform.pathSeparator,
               "");
           if (title.startsWith(".")) {
-            titleTextStyle = TextStyle(color: Colors.grey);
+            titleTextStyle = const TextStyle(color: Colors.grey);
           }
         } else if (node is TreeNodeAndroidApplication) {
           path = node.androidApplication.label;
@@ -136,9 +136,11 @@ class Items extends ConsumerWidget {
               (node.androidApplication.enabled ? "" : " (Disabled)");
           if (path.isNotEmpty && node.parent != null) {
             icon = SizedBox(
+              width: 20,
+              height: 20,
               child: FutureBuilder(
                 future: Future.delayed(
-                    Duration(seconds: 2),
+                    const Duration(seconds: 2),
                     () => PlatformUtils.getApkLogo(
                         node.androidApplication.packageName)),
                 builder: (context, snapshot) {
@@ -148,8 +150,6 @@ class Items extends ConsumerWidget {
                   return Image.memory(snapshot.data!, width: 20, height: 20);
                 },
               ),
-              width: 20,
-              height: 20,
             );
           }
         } else if (node is TreeNodeAndroidActivity) {

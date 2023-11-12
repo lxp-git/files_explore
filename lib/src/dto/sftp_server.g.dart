@@ -6,8 +6,8 @@ part of 'sftp_server.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SftpServer _$$_SftpServerFromJson(Map<String, dynamic> json) =>
-    _$_SftpServer(
+_$SftpServerImpl _$$SftpServerImplFromJson(Map<String, dynamic> json) =>
+    _$SftpServerImpl(
       id: json['id'] as int,
       host: json['host'] as String,
       port: json['port'] as int? ?? 22,
@@ -17,7 +17,7 @@ _$_SftpServer _$$_SftpServerFromJson(Map<String, dynamic> json) =>
       label: json['label'] as String?,
     );
 
-Map<String, dynamic> _$$_SftpServerToJson(_$_SftpServer instance) =>
+Map<String, dynamic> _$$SftpServerImplToJson(_$SftpServerImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'host': instance.host,

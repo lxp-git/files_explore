@@ -5,12 +5,10 @@ import 'dart:io';
 import 'package:dartssh2/dartssh2.dart';
 import 'package:files_explore/src/dto/android_application.dart';
 import 'package:files_explore/src/dto/sftp_server.dart';
-import 'package:files_explore/src/utils/constants.dart';
 import 'package:files_explore/src/utils/local_storage_helper.dart';
 import 'package:files_explore/src/utils/platform.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -129,6 +127,17 @@ class AsyncCurrentTreeNodeModel extends _$AsyncCurrentTreeNodeModel {
                 label: "App manager",
                 packageName: "",
                 activities: [],
+                files: [
+                  Directory("/data/data/com.github.lxp-git.files_explore"),
+                  Directory(
+                      "/sdcard/Android/data/com.github.lxp-git.files_explore"),
+                  Directory(
+                      "/sdcard/Android/media/com.github.lxp-git.files_explore"),
+                  Directory(
+                      "/sdcard/Android/obb/com.github.lxp-git.files_explore"),
+                  Directory(
+                      "/sdcard/Android/obj/com.github.lxp-git.files_explore")
+                ],
                 enabled: true)),
         TreeNodeModel.sftpServer(
             parent: null,

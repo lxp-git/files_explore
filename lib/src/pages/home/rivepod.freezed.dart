@@ -262,11 +262,12 @@ class _$TreeNodeModelCopyWithImpl<$Res, $Val extends TreeNodeModel>
 }
 
 /// @nodoc
-abstract class _$$TreeNodeFileSystemEntityCopyWith<$Res>
+abstract class _$$TreeNodeFileSystemEntityImplCopyWith<$Res>
     implements $TreeNodeModelCopyWith<$Res> {
-  factory _$$TreeNodeFileSystemEntityCopyWith(_$TreeNodeFileSystemEntity value,
-          $Res Function(_$TreeNodeFileSystemEntity) then) =
-      __$$TreeNodeFileSystemEntityCopyWithImpl<$Res>;
+  factory _$$TreeNodeFileSystemEntityImplCopyWith(
+          _$TreeNodeFileSystemEntityImpl value,
+          $Res Function(_$TreeNodeFileSystemEntityImpl) then) =
+      __$$TreeNodeFileSystemEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -282,11 +283,12 @@ abstract class _$$TreeNodeFileSystemEntityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TreeNodeFileSystemEntityCopyWithImpl<$Res>
-    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeFileSystemEntity>
-    implements _$$TreeNodeFileSystemEntityCopyWith<$Res> {
-  __$$TreeNodeFileSystemEntityCopyWithImpl(_$TreeNodeFileSystemEntity _value,
-      $Res Function(_$TreeNodeFileSystemEntity) _then)
+class __$$TreeNodeFileSystemEntityImplCopyWithImpl<$Res>
+    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeFileSystemEntityImpl>
+    implements _$$TreeNodeFileSystemEntityImplCopyWith<$Res> {
+  __$$TreeNodeFileSystemEntityImplCopyWithImpl(
+      _$TreeNodeFileSystemEntityImpl _value,
+      $Res Function(_$TreeNodeFileSystemEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -299,7 +301,7 @@ class __$$TreeNodeFileSystemEntityCopyWithImpl<$Res>
     Object? filter = freezed,
     Object? selected = freezed,
   }) {
-    return _then(_$TreeNodeFileSystemEntity(
+    return _then(_$TreeNodeFileSystemEntityImpl(
       fileSystemEntity: null == fileSystemEntity
           ? _value.fileSystemEntity
           : fileSystemEntity // ignore: cast_nullable_to_non_nullable
@@ -330,8 +332,8 @@ class __$$TreeNodeFileSystemEntityCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
-  _$TreeNodeFileSystemEntity(
+class _$TreeNodeFileSystemEntityImpl implements TreeNodeFileSystemEntity {
+  _$TreeNodeFileSystemEntityImpl(
       {@FileSystemEntityJSONConverter() required this.fileSystemEntity,
       final List<TreeNodeModel>? children,
       this.parent,
@@ -342,8 +344,8 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
       : _children = children,
         $type = $type ?? 'fileSystemEntity';
 
-  factory _$TreeNodeFileSystemEntity.fromJson(Map<String, dynamic> json) =>
-      _$$TreeNodeFileSystemEntityFromJson(json);
+  factory _$TreeNodeFileSystemEntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TreeNodeFileSystemEntityImplFromJson(json);
 
   @override
   @FileSystemEntityJSONConverter()
@@ -379,7 +381,7 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TreeNodeFileSystemEntity &&
+            other is _$TreeNodeFileSystemEntityImpl &&
             (identical(other.fileSystemEntity, fileSystemEntity) ||
                 other.fileSystemEntity == fileSystemEntity) &&
             const DeepCollectionEquality().equals(other._children, _children) &&
@@ -405,10 +407,9 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TreeNodeFileSystemEntityCopyWith<_$TreeNodeFileSystemEntity>
-      get copyWith =>
-          __$$TreeNodeFileSystemEntityCopyWithImpl<_$TreeNodeFileSystemEntity>(
-              this, _$identity);
+  _$$TreeNodeFileSystemEntityImplCopyWith<_$TreeNodeFileSystemEntityImpl>
+      get copyWith => __$$TreeNodeFileSystemEntityImplCopyWithImpl<
+          _$TreeNodeFileSystemEntityImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -589,7 +590,7 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TreeNodeFileSystemEntityToJson(
+    return _$$TreeNodeFileSystemEntityImplToJson(
       this,
     );
   }
@@ -598,15 +599,15 @@ class _$TreeNodeFileSystemEntity implements TreeNodeFileSystemEntity {
 abstract class TreeNodeFileSystemEntity implements TreeNodeModel, TreeNode {
   factory TreeNodeFileSystemEntity(
       {@FileSystemEntityJSONConverter()
-          required final FileSystemEntity fileSystemEntity,
+      required final FileSystemEntity fileSystemEntity,
       final List<TreeNodeModel>? children,
       final TreeNodeModel? parent,
       final TreeExpanded? expanded,
       final String? filter,
-      final bool? selected}) = _$TreeNodeFileSystemEntity;
+      final bool? selected}) = _$TreeNodeFileSystemEntityImpl;
 
   factory TreeNodeFileSystemEntity.fromJson(Map<String, dynamic> json) =
-      _$TreeNodeFileSystemEntity.fromJson;
+      _$TreeNodeFileSystemEntityImpl.fromJson;
 
   @FileSystemEntityJSONConverter()
   FileSystemEntity get fileSystemEntity;
@@ -621,17 +622,17 @@ abstract class TreeNodeFileSystemEntity implements TreeNodeModel, TreeNode {
   bool? get selected;
   @override
   @JsonKey(ignore: true)
-  _$$TreeNodeFileSystemEntityCopyWith<_$TreeNodeFileSystemEntity>
+  _$$TreeNodeFileSystemEntityImplCopyWith<_$TreeNodeFileSystemEntityImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$TreeNodeAndroidApplicationCopyWith<$Res>
+abstract class _$$TreeNodeAndroidApplicationImplCopyWith<$Res>
     implements $TreeNodeModelCopyWith<$Res> {
-  factory _$$TreeNodeAndroidApplicationCopyWith(
-          _$TreeNodeAndroidApplication value,
-          $Res Function(_$TreeNodeAndroidApplication) then) =
-      __$$TreeNodeAndroidApplicationCopyWithImpl<$Res>;
+  factory _$$TreeNodeAndroidApplicationImplCopyWith(
+          _$TreeNodeAndroidApplicationImpl value,
+          $Res Function(_$TreeNodeAndroidApplicationImpl) then) =
+      __$$TreeNodeAndroidApplicationImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -647,12 +648,12 @@ abstract class _$$TreeNodeAndroidApplicationCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TreeNodeAndroidApplicationCopyWithImpl<$Res>
-    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeAndroidApplication>
-    implements _$$TreeNodeAndroidApplicationCopyWith<$Res> {
-  __$$TreeNodeAndroidApplicationCopyWithImpl(
-      _$TreeNodeAndroidApplication _value,
-      $Res Function(_$TreeNodeAndroidApplication) _then)
+class __$$TreeNodeAndroidApplicationImplCopyWithImpl<$Res>
+    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeAndroidApplicationImpl>
+    implements _$$TreeNodeAndroidApplicationImplCopyWith<$Res> {
+  __$$TreeNodeAndroidApplicationImplCopyWithImpl(
+      _$TreeNodeAndroidApplicationImpl _value,
+      $Res Function(_$TreeNodeAndroidApplicationImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -664,7 +665,7 @@ class __$$TreeNodeAndroidApplicationCopyWithImpl<$Res>
     Object? parent = freezed,
     Object? filter = freezed,
   }) {
-    return _then(_$TreeNodeAndroidApplication(
+    return _then(_$TreeNodeAndroidApplicationImpl(
       androidApplication: null == androidApplication
           ? _value.androidApplication
           : androidApplication // ignore: cast_nullable_to_non_nullable
@@ -700,8 +701,8 @@ class __$$TreeNodeAndroidApplicationCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
-  _$TreeNodeAndroidApplication(
+class _$TreeNodeAndroidApplicationImpl implements TreeNodeAndroidApplication {
+  _$TreeNodeAndroidApplicationImpl(
       {required this.androidApplication,
       final List<TreeNodeModel>? children,
       this.expanded,
@@ -711,8 +712,9 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
       : _children = children,
         $type = $type ?? 'androidApplication';
 
-  factory _$TreeNodeAndroidApplication.fromJson(Map<String, dynamic> json) =>
-      _$$TreeNodeAndroidApplicationFromJson(json);
+  factory _$TreeNodeAndroidApplicationImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$TreeNodeAndroidApplicationImplFromJson(json);
 
   @override
   final AndroidApplication androidApplication;
@@ -745,7 +747,7 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TreeNodeAndroidApplication &&
+            other is _$TreeNodeAndroidApplicationImpl &&
             (identical(other.androidApplication, androidApplication) ||
                 other.androidApplication == androidApplication) &&
             const DeepCollectionEquality().equals(other._children, _children) &&
@@ -763,9 +765,9 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TreeNodeAndroidApplicationCopyWith<_$TreeNodeAndroidApplication>
-      get copyWith => __$$TreeNodeAndroidApplicationCopyWithImpl<
-          _$TreeNodeAndroidApplication>(this, _$identity);
+  _$$TreeNodeAndroidApplicationImplCopyWith<_$TreeNodeAndroidApplicationImpl>
+      get copyWith => __$$TreeNodeAndroidApplicationImplCopyWithImpl<
+          _$TreeNodeAndroidApplicationImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -946,7 +948,7 @@ class _$TreeNodeAndroidApplication implements TreeNodeAndroidApplication {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TreeNodeAndroidApplicationToJson(
+    return _$$TreeNodeAndroidApplicationImplToJson(
       this,
     );
   }
@@ -958,10 +960,10 @@ abstract class TreeNodeAndroidApplication implements TreeNodeModel, TreeNode {
       final List<TreeNodeModel>? children,
       final TreeExpanded? expanded,
       final TreeNodeModel? parent,
-      final String? filter}) = _$TreeNodeAndroidApplication;
+      final String? filter}) = _$TreeNodeAndroidApplicationImpl;
 
   factory TreeNodeAndroidApplication.fromJson(Map<String, dynamic> json) =
-      _$TreeNodeAndroidApplication.fromJson;
+      _$TreeNodeAndroidApplicationImpl.fromJson;
 
   AndroidApplication get androidApplication;
   @override
@@ -974,16 +976,17 @@ abstract class TreeNodeAndroidApplication implements TreeNodeModel, TreeNode {
   String? get filter;
   @override
   @JsonKey(ignore: true)
-  _$$TreeNodeAndroidApplicationCopyWith<_$TreeNodeAndroidApplication>
+  _$$TreeNodeAndroidApplicationImplCopyWith<_$TreeNodeAndroidApplicationImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$TreeNodeAndroidActivityCopyWith<$Res>
+abstract class _$$TreeNodeAndroidActivityImplCopyWith<$Res>
     implements $TreeNodeModelCopyWith<$Res> {
-  factory _$$TreeNodeAndroidActivityCopyWith(_$TreeNodeAndroidActivity value,
-          $Res Function(_$TreeNodeAndroidActivity) then) =
-      __$$TreeNodeAndroidActivityCopyWithImpl<$Res>;
+  factory _$$TreeNodeAndroidActivityImplCopyWith(
+          _$TreeNodeAndroidActivityImpl value,
+          $Res Function(_$TreeNodeAndroidActivityImpl) then) =
+      __$$TreeNodeAndroidActivityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -999,11 +1002,12 @@ abstract class _$$TreeNodeAndroidActivityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TreeNodeAndroidActivityCopyWithImpl<$Res>
-    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeAndroidActivity>
-    implements _$$TreeNodeAndroidActivityCopyWith<$Res> {
-  __$$TreeNodeAndroidActivityCopyWithImpl(_$TreeNodeAndroidActivity _value,
-      $Res Function(_$TreeNodeAndroidActivity) _then)
+class __$$TreeNodeAndroidActivityImplCopyWithImpl<$Res>
+    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeAndroidActivityImpl>
+    implements _$$TreeNodeAndroidActivityImplCopyWith<$Res> {
+  __$$TreeNodeAndroidActivityImplCopyWithImpl(
+      _$TreeNodeAndroidActivityImpl _value,
+      $Res Function(_$TreeNodeAndroidActivityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1015,7 +1019,7 @@ class __$$TreeNodeAndroidActivityCopyWithImpl<$Res>
     Object? parent = freezed,
     Object? filter = freezed,
   }) {
-    return _then(_$TreeNodeAndroidActivity(
+    return _then(_$TreeNodeAndroidActivityImpl(
       androidActivity: null == androidActivity
           ? _value.androidActivity
           : androidActivity // ignore: cast_nullable_to_non_nullable
@@ -1050,8 +1054,8 @@ class __$$TreeNodeAndroidActivityCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
-  _$TreeNodeAndroidActivity(
+class _$TreeNodeAndroidActivityImpl implements TreeNodeAndroidActivity {
+  _$TreeNodeAndroidActivityImpl(
       {required this.androidActivity,
       final List<TreeNodeModel>? children,
       this.expanded,
@@ -1061,8 +1065,8 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
       : _children = children,
         $type = $type ?? 'androidActivity';
 
-  factory _$TreeNodeAndroidActivity.fromJson(Map<String, dynamic> json) =>
-      _$$TreeNodeAndroidActivityFromJson(json);
+  factory _$TreeNodeAndroidActivityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TreeNodeAndroidActivityImplFromJson(json);
 
   @override
   final AndroidActivity androidActivity;
@@ -1095,7 +1099,7 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TreeNodeAndroidActivity &&
+            other is _$TreeNodeAndroidActivityImpl &&
             (identical(other.androidActivity, androidActivity) ||
                 other.androidActivity == androidActivity) &&
             const DeepCollectionEquality().equals(other._children, _children) &&
@@ -1113,9 +1117,9 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TreeNodeAndroidActivityCopyWith<_$TreeNodeAndroidActivity> get copyWith =>
-      __$$TreeNodeAndroidActivityCopyWithImpl<_$TreeNodeAndroidActivity>(
-          this, _$identity);
+  _$$TreeNodeAndroidActivityImplCopyWith<_$TreeNodeAndroidActivityImpl>
+      get copyWith => __$$TreeNodeAndroidActivityImplCopyWithImpl<
+          _$TreeNodeAndroidActivityImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1296,7 +1300,7 @@ class _$TreeNodeAndroidActivity implements TreeNodeAndroidActivity {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TreeNodeAndroidActivityToJson(
+    return _$$TreeNodeAndroidActivityImplToJson(
       this,
     );
   }
@@ -1308,10 +1312,10 @@ abstract class TreeNodeAndroidActivity implements TreeNodeModel, TreeNode {
       final List<TreeNodeModel>? children,
       final TreeExpanded? expanded,
       final TreeNodeModel? parent,
-      final String? filter}) = _$TreeNodeAndroidActivity;
+      final String? filter}) = _$TreeNodeAndroidActivityImpl;
 
   factory TreeNodeAndroidActivity.fromJson(Map<String, dynamic> json) =
-      _$TreeNodeAndroidActivity.fromJson;
+      _$TreeNodeAndroidActivityImpl.fromJson;
 
   AndroidActivity get androidActivity;
   @override
@@ -1324,16 +1328,16 @@ abstract class TreeNodeAndroidActivity implements TreeNodeModel, TreeNode {
   String? get filter;
   @override
   @JsonKey(ignore: true)
-  _$$TreeNodeAndroidActivityCopyWith<_$TreeNodeAndroidActivity> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TreeNodeAndroidActivityImplCopyWith<_$TreeNodeAndroidActivityImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$TreeNodeSftpNameCopyWith<$Res>
+abstract class _$$TreeNodeSftpNameImplCopyWith<$Res>
     implements $TreeNodeModelCopyWith<$Res> {
-  factory _$$TreeNodeSftpNameCopyWith(
-          _$TreeNodeSftpName value, $Res Function(_$TreeNodeSftpName) then) =
-      __$$TreeNodeSftpNameCopyWithImpl<$Res>;
+  factory _$$TreeNodeSftpNameImplCopyWith(_$TreeNodeSftpNameImpl value,
+          $Res Function(_$TreeNodeSftpNameImpl) then) =
+      __$$TreeNodeSftpNameImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1348,11 +1352,11 @@ abstract class _$$TreeNodeSftpNameCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TreeNodeSftpNameCopyWithImpl<$Res>
-    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeSftpName>
-    implements _$$TreeNodeSftpNameCopyWith<$Res> {
-  __$$TreeNodeSftpNameCopyWithImpl(
-      _$TreeNodeSftpName _value, $Res Function(_$TreeNodeSftpName) _then)
+class __$$TreeNodeSftpNameImplCopyWithImpl<$Res>
+    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeSftpNameImpl>
+    implements _$$TreeNodeSftpNameImplCopyWith<$Res> {
+  __$$TreeNodeSftpNameImplCopyWithImpl(_$TreeNodeSftpNameImpl _value,
+      $Res Function(_$TreeNodeSftpNameImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1364,7 +1368,7 @@ class __$$TreeNodeSftpNameCopyWithImpl<$Res>
     Object? parent = freezed,
     Object? filter = freezed,
   }) {
-    return _then(_$TreeNodeSftpName(
+    return _then(_$TreeNodeSftpNameImpl(
       sftpName: null == sftpName
           ? _value.sftpName
           : sftpName // ignore: cast_nullable_to_non_nullable
@@ -1391,8 +1395,8 @@ class __$$TreeNodeSftpNameCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TreeNodeSftpName implements TreeNodeSftpName {
-  _$TreeNodeSftpName(
+class _$TreeNodeSftpNameImpl implements TreeNodeSftpName {
+  _$TreeNodeSftpNameImpl(
       {@SftpJSONConverter() required this.sftpName,
       final List<TreeNodeModel>? children,
       this.expanded,
@@ -1402,8 +1406,8 @@ class _$TreeNodeSftpName implements TreeNodeSftpName {
       : _children = children,
         $type = $type ?? 'sftp';
 
-  factory _$TreeNodeSftpName.fromJson(Map<String, dynamic> json) =>
-      _$$TreeNodeSftpNameFromJson(json);
+  factory _$TreeNodeSftpNameImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TreeNodeSftpNameImplFromJson(json);
 
   @override
   @SftpJSONConverter()
@@ -1437,7 +1441,7 @@ class _$TreeNodeSftpName implements TreeNodeSftpName {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TreeNodeSftpName &&
+            other is _$TreeNodeSftpNameImpl &&
             (identical(other.sftpName, sftpName) ||
                 other.sftpName == sftpName) &&
             const DeepCollectionEquality().equals(other._children, _children) &&
@@ -1455,8 +1459,9 @@ class _$TreeNodeSftpName implements TreeNodeSftpName {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TreeNodeSftpNameCopyWith<_$TreeNodeSftpName> get copyWith =>
-      __$$TreeNodeSftpNameCopyWithImpl<_$TreeNodeSftpName>(this, _$identity);
+  _$$TreeNodeSftpNameImplCopyWith<_$TreeNodeSftpNameImpl> get copyWith =>
+      __$$TreeNodeSftpNameImplCopyWithImpl<_$TreeNodeSftpNameImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1634,7 +1639,7 @@ class _$TreeNodeSftpName implements TreeNodeSftpName {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TreeNodeSftpNameToJson(
+    return _$$TreeNodeSftpNameImplToJson(
       this,
     );
   }
@@ -1646,10 +1651,10 @@ abstract class TreeNodeSftpName implements TreeNodeModel, TreeNode {
       final List<TreeNodeModel>? children,
       final TreeExpanded? expanded,
       final TreeNodeModel? parent,
-      final String? filter}) = _$TreeNodeSftpName;
+      final String? filter}) = _$TreeNodeSftpNameImpl;
 
   factory TreeNodeSftpName.fromJson(Map<String, dynamic> json) =
-      _$TreeNodeSftpName.fromJson;
+      _$TreeNodeSftpNameImpl.fromJson;
 
   @SftpJSONConverter()
   SftpName get sftpName;
@@ -1663,16 +1668,16 @@ abstract class TreeNodeSftpName implements TreeNodeModel, TreeNode {
   String? get filter;
   @override
   @JsonKey(ignore: true)
-  _$$TreeNodeSftpNameCopyWith<_$TreeNodeSftpName> get copyWith =>
+  _$$TreeNodeSftpNameImplCopyWith<_$TreeNodeSftpNameImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$TreeNodeSftpServerCopyWith<$Res>
+abstract class _$$TreeNodeSftpServerImplCopyWith<$Res>
     implements $TreeNodeModelCopyWith<$Res> {
-  factory _$$TreeNodeSftpServerCopyWith(_$TreeNodeSftpServer value,
-          $Res Function(_$TreeNodeSftpServer) then) =
-      __$$TreeNodeSftpServerCopyWithImpl<$Res>;
+  factory _$$TreeNodeSftpServerImplCopyWith(_$TreeNodeSftpServerImpl value,
+          $Res Function(_$TreeNodeSftpServerImpl) then) =
+      __$$TreeNodeSftpServerImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1688,11 +1693,11 @@ abstract class _$$TreeNodeSftpServerCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TreeNodeSftpServerCopyWithImpl<$Res>
-    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeSftpServer>
-    implements _$$TreeNodeSftpServerCopyWith<$Res> {
-  __$$TreeNodeSftpServerCopyWithImpl(
-      _$TreeNodeSftpServer _value, $Res Function(_$TreeNodeSftpServer) _then)
+class __$$TreeNodeSftpServerImplCopyWithImpl<$Res>
+    extends _$TreeNodeModelCopyWithImpl<$Res, _$TreeNodeSftpServerImpl>
+    implements _$$TreeNodeSftpServerImplCopyWith<$Res> {
+  __$$TreeNodeSftpServerImplCopyWithImpl(_$TreeNodeSftpServerImpl _value,
+      $Res Function(_$TreeNodeSftpServerImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1704,7 +1709,7 @@ class __$$TreeNodeSftpServerCopyWithImpl<$Res>
     Object? parent = freezed,
     Object? filter = freezed,
   }) {
-    return _then(_$TreeNodeSftpServer(
+    return _then(_$TreeNodeSftpServerImpl(
       sftpServer: null == sftpServer
           ? _value.sftpServer
           : sftpServer // ignore: cast_nullable_to_non_nullable
@@ -1739,8 +1744,8 @@ class __$$TreeNodeSftpServerCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TreeNodeSftpServer implements TreeNodeSftpServer {
-  _$TreeNodeSftpServer(
+class _$TreeNodeSftpServerImpl implements TreeNodeSftpServer {
+  _$TreeNodeSftpServerImpl(
       {@SftpJSONConverter() required this.sftpServer,
       final List<TreeNodeModel>? children,
       this.expanded,
@@ -1750,8 +1755,8 @@ class _$TreeNodeSftpServer implements TreeNodeSftpServer {
       : _children = children,
         $type = $type ?? 'sftpServer';
 
-  factory _$TreeNodeSftpServer.fromJson(Map<String, dynamic> json) =>
-      _$$TreeNodeSftpServerFromJson(json);
+  factory _$TreeNodeSftpServerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TreeNodeSftpServerImplFromJson(json);
 
   @override
   @SftpJSONConverter()
@@ -1785,7 +1790,7 @@ class _$TreeNodeSftpServer implements TreeNodeSftpServer {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TreeNodeSftpServer &&
+            other is _$TreeNodeSftpServerImpl &&
             (identical(other.sftpServer, sftpServer) ||
                 other.sftpServer == sftpServer) &&
             const DeepCollectionEquality().equals(other._children, _children) &&
@@ -1803,8 +1808,8 @@ class _$TreeNodeSftpServer implements TreeNodeSftpServer {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TreeNodeSftpServerCopyWith<_$TreeNodeSftpServer> get copyWith =>
-      __$$TreeNodeSftpServerCopyWithImpl<_$TreeNodeSftpServer>(
+  _$$TreeNodeSftpServerImplCopyWith<_$TreeNodeSftpServerImpl> get copyWith =>
+      __$$TreeNodeSftpServerImplCopyWithImpl<_$TreeNodeSftpServerImpl>(
           this, _$identity);
 
   @override
@@ -1984,7 +1989,7 @@ class _$TreeNodeSftpServer implements TreeNodeSftpServer {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TreeNodeSftpServerToJson(
+    return _$$TreeNodeSftpServerImplToJson(
       this,
     );
   }
@@ -1996,10 +2001,10 @@ abstract class TreeNodeSftpServer implements TreeNodeModel, TreeNode {
       final List<TreeNodeModel>? children,
       final TreeExpanded? expanded,
       final TreeNodeModel? parent,
-      final String? filter}) = _$TreeNodeSftpServer;
+      final String? filter}) = _$TreeNodeSftpServerImpl;
 
   factory TreeNodeSftpServer.fromJson(Map<String, dynamic> json) =
-      _$TreeNodeSftpServer.fromJson;
+      _$TreeNodeSftpServerImpl.fromJson;
 
   @SftpJSONConverter()
   SftpServer get sftpServer;
@@ -2013,6 +2018,6 @@ abstract class TreeNodeSftpServer implements TreeNodeModel, TreeNode {
   String? get filter;
   @override
   @JsonKey(ignore: true)
-  _$$TreeNodeSftpServerCopyWith<_$TreeNodeSftpServer> get copyWith =>
+  _$$TreeNodeSftpServerImplCopyWith<_$TreeNodeSftpServerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

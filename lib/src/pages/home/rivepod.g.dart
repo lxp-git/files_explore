@@ -6,9 +6,9 @@ part of 'rivepod.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TreeNodeFileSystemEntity _$$TreeNodeFileSystemEntityFromJson(
+_$TreeNodeFileSystemEntityImpl _$$TreeNodeFileSystemEntityImplFromJson(
         Map<String, dynamic> json) =>
-    _$TreeNodeFileSystemEntity(
+    _$TreeNodeFileSystemEntityImpl(
       fileSystemEntity: const FileSystemEntityJSONConverter()
           .fromJson(json['fileSystemEntity'] as Map<String, dynamic>),
       children: (json['children'] as List<dynamic>?)
@@ -23,8 +23,8 @@ _$TreeNodeFileSystemEntity _$$TreeNodeFileSystemEntityFromJson(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TreeNodeFileSystemEntityToJson(
-        _$TreeNodeFileSystemEntity instance) =>
+Map<String, dynamic> _$$TreeNodeFileSystemEntityImplToJson(
+        _$TreeNodeFileSystemEntityImpl instance) =>
     <String, dynamic>{
       'fileSystemEntity': const FileSystemEntityJSONConverter()
           .toJson(instance.fileSystemEntity),
@@ -42,9 +42,9 @@ const _$TreeExpandedEnumMap = {
   TreeExpanded.ok: 'ok',
 };
 
-_$TreeNodeAndroidApplication _$$TreeNodeAndroidApplicationFromJson(
+_$TreeNodeAndroidApplicationImpl _$$TreeNodeAndroidApplicationImplFromJson(
         Map<String, dynamic> json) =>
-    _$TreeNodeAndroidApplication(
+    _$TreeNodeAndroidApplicationImpl(
       androidApplication: AndroidApplication.fromJson(
           json['androidApplication'] as Map<String, dynamic>),
       children: (json['children'] as List<dynamic>?)
@@ -58,8 +58,8 @@ _$TreeNodeAndroidApplication _$$TreeNodeAndroidApplicationFromJson(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TreeNodeAndroidApplicationToJson(
-        _$TreeNodeAndroidApplication instance) =>
+Map<String, dynamic> _$$TreeNodeAndroidApplicationImplToJson(
+        _$TreeNodeAndroidApplicationImpl instance) =>
     <String, dynamic>{
       'androidApplication': instance.androidApplication,
       'children': instance.children,
@@ -69,9 +69,9 @@ Map<String, dynamic> _$$TreeNodeAndroidApplicationToJson(
       'runtimeType': instance.$type,
     };
 
-_$TreeNodeAndroidActivity _$$TreeNodeAndroidActivityFromJson(
+_$TreeNodeAndroidActivityImpl _$$TreeNodeAndroidActivityImplFromJson(
         Map<String, dynamic> json) =>
-    _$TreeNodeAndroidActivity(
+    _$TreeNodeAndroidActivityImpl(
       androidActivity: AndroidActivity.fromJson(
           json['androidActivity'] as Map<String, dynamic>),
       children: (json['children'] as List<dynamic>?)
@@ -85,8 +85,8 @@ _$TreeNodeAndroidActivity _$$TreeNodeAndroidActivityFromJson(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TreeNodeAndroidActivityToJson(
-        _$TreeNodeAndroidActivity instance) =>
+Map<String, dynamic> _$$TreeNodeAndroidActivityImplToJson(
+        _$TreeNodeAndroidActivityImpl instance) =>
     <String, dynamic>{
       'androidActivity': instance.androidActivity,
       'children': instance.children,
@@ -96,8 +96,9 @@ Map<String, dynamic> _$$TreeNodeAndroidActivityToJson(
       'runtimeType': instance.$type,
     };
 
-_$TreeNodeSftpName _$$TreeNodeSftpNameFromJson(Map<String, dynamic> json) =>
-    _$TreeNodeSftpName(
+_$TreeNodeSftpNameImpl _$$TreeNodeSftpNameImplFromJson(
+        Map<String, dynamic> json) =>
+    _$TreeNodeSftpNameImpl(
       sftpName: const SftpJSONConverter()
           .fromJson(json['sftpName'] as Map<String, dynamic>),
       children: (json['children'] as List<dynamic>?)
@@ -111,7 +112,8 @@ _$TreeNodeSftpName _$$TreeNodeSftpNameFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TreeNodeSftpNameToJson(_$TreeNodeSftpName instance) =>
+Map<String, dynamic> _$$TreeNodeSftpNameImplToJson(
+        _$TreeNodeSftpNameImpl instance) =>
     <String, dynamic>{
       'sftpName': const SftpJSONConverter().toJson(instance.sftpName),
       'children': instance.children,
@@ -121,8 +123,9 @@ Map<String, dynamic> _$$TreeNodeSftpNameToJson(_$TreeNodeSftpName instance) =>
       'runtimeType': instance.$type,
     };
 
-_$TreeNodeSftpServer _$$TreeNodeSftpServerFromJson(Map<String, dynamic> json) =>
-    _$TreeNodeSftpServer(
+_$TreeNodeSftpServerImpl _$$TreeNodeSftpServerImplFromJson(
+        Map<String, dynamic> json) =>
+    _$TreeNodeSftpServerImpl(
       sftpServer:
           SftpServer.fromJson(json['sftpServer'] as Map<String, dynamic>),
       children: (json['children'] as List<dynamic>?)
@@ -136,8 +139,8 @@ _$TreeNodeSftpServer _$$TreeNodeSftpServerFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TreeNodeSftpServerToJson(
-        _$TreeNodeSftpServer instance) =>
+Map<String, dynamic> _$$TreeNodeSftpServerImplToJson(
+        _$TreeNodeSftpServerImpl instance) =>
     <String, dynamic>{
       'sftpServer': instance.sftpServer,
       'children': instance.children,
@@ -152,7 +155,7 @@ Map<String, dynamic> _$$TreeNodeSftpServerToJson(
 // **************************************************************************
 
 String _$asyncCurrentTreeNodeModelHash() =>
-    r'ad4ad844af709b2b4b12876dbb52081c39e68f76';
+    r'4eda5324eadf8d8c23aabf92d0f214be605cea5e';
 
 /// See also [AsyncCurrentTreeNodeModel].
 @ProviderFor(AsyncCurrentTreeNodeModel)
@@ -168,4 +171,5 @@ final asyncCurrentTreeNodeModelProvider = AutoDisposeAsyncNotifierProvider<
 );
 
 typedef _$AsyncCurrentTreeNodeModel = AutoDisposeAsyncNotifier<TreeNodeModel>;
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

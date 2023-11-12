@@ -105,11 +105,11 @@ class _$SftpServerCopyWithImpl<$Res, $Val extends SftpServer>
 }
 
 /// @nodoc
-abstract class _$$_SftpServerCopyWith<$Res>
+abstract class _$$SftpServerImplCopyWith<$Res>
     implements $SftpServerCopyWith<$Res> {
-  factory _$$_SftpServerCopyWith(
-          _$_SftpServer value, $Res Function(_$_SftpServer) then) =
-      __$$_SftpServerCopyWithImpl<$Res>;
+  factory _$$SftpServerImplCopyWith(
+          _$SftpServerImpl value, $Res Function(_$SftpServerImpl) then) =
+      __$$SftpServerImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -123,11 +123,11 @@ abstract class _$$_SftpServerCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SftpServerCopyWithImpl<$Res>
-    extends _$SftpServerCopyWithImpl<$Res, _$_SftpServer>
-    implements _$$_SftpServerCopyWith<$Res> {
-  __$$_SftpServerCopyWithImpl(
-      _$_SftpServer _value, $Res Function(_$_SftpServer) _then)
+class __$$SftpServerImplCopyWithImpl<$Res>
+    extends _$SftpServerCopyWithImpl<$Res, _$SftpServerImpl>
+    implements _$$SftpServerImplCopyWith<$Res> {
+  __$$SftpServerImplCopyWithImpl(
+      _$SftpServerImpl _value, $Res Function(_$SftpServerImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -141,7 +141,7 @@ class __$$_SftpServerCopyWithImpl<$Res>
     Object? privateKeyFile = freezed,
     Object? label = freezed,
   }) {
-    return _then(_$_SftpServer(
+    return _then(_$SftpServerImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -176,8 +176,8 @@ class __$$_SftpServerCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SftpServer implements _SftpServer {
-  _$_SftpServer(
+class _$SftpServerImpl implements _SftpServer {
+  _$SftpServerImpl(
       {required this.id,
       required this.host,
       this.port = 22,
@@ -186,8 +186,8 @@ class _$_SftpServer implements _SftpServer {
       this.privateKeyFile,
       this.label});
 
-  factory _$_SftpServer.fromJson(Map<String, dynamic> json) =>
-      _$$_SftpServerFromJson(json);
+  factory _$SftpServerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SftpServerImplFromJson(json);
 
   @override
   final int id;
@@ -214,7 +214,7 @@ class _$_SftpServer implements _SftpServer {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SftpServer &&
+            other is _$SftpServerImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.host, host) || other.host == host) &&
             (identical(other.port, port) || other.port == port) &&
@@ -235,12 +235,12 @@ class _$_SftpServer implements _SftpServer {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SftpServerCopyWith<_$_SftpServer> get copyWith =>
-      __$$_SftpServerCopyWithImpl<_$_SftpServer>(this, _$identity);
+  _$$SftpServerImplCopyWith<_$SftpServerImpl> get copyWith =>
+      __$$SftpServerImplCopyWithImpl<_$SftpServerImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SftpServerToJson(
+    return _$$SftpServerImplToJson(
       this,
     );
   }
@@ -254,10 +254,10 @@ abstract class _SftpServer implements SftpServer {
       required final String username,
       final String? password,
       final String? privateKeyFile,
-      final String? label}) = _$_SftpServer;
+      final String? label}) = _$SftpServerImpl;
 
   factory _SftpServer.fromJson(Map<String, dynamic> json) =
-      _$_SftpServer.fromJson;
+      _$SftpServerImpl.fromJson;
 
   @override
   int get id;
@@ -275,6 +275,6 @@ abstract class _SftpServer implements SftpServer {
   String? get label;
   @override
   @JsonKey(ignore: true)
-  _$$_SftpServerCopyWith<_$_SftpServer> get copyWith =>
+  _$$SftpServerImplCopyWith<_$SftpServerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
